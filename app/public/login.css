@@ -1,0 +1,53 @@
+body{
+    background-image: url("../public/images/fondos/pngtree-jungle-cartoon-background-picture-image_2149057.jpg");
+}
+
+.loginConteiner{
+    width: 30em;
+    height: 30em;
+    margin: auto;
+    background-color: #be945b;
+    position: relative;
+}
+
+.formulario{
+
+}
+
+.tituloFormulario{
+    text-align: center;
+}
+
+label{
+    font-size: x-large;
+}
+
+.tituloFormulario{
+    font-size: x-large;
+}
+
+.campo{
+    margin: 1em 0em 1em 0em;
+}
+
+button{
+    background-color: #422f25 !important;
+    color: white !important;
+
+}
+
+.mono {
+    position: absolute;
+    right: -12.3em;
+    top: 1em;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.body{
+    display: flex;
+    height: 48.75em;
+    align-items: center;
+    justify-content: center;
+}
