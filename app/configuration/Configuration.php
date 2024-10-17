@@ -8,6 +8,8 @@ include_once("helper/MustachePresenter.php");
 include_once("model/PokedexModel.php");
 include_once("controller/PokedexController.php");
 
+include_once("controller/PerfilController.php");
+
 include_once("controller/UsuarioController.php");
 include_once("model/UsuarioModel.php");
 
@@ -27,6 +29,9 @@ class Configuration
         return new UsuarioController($this->getUsuarioModel(), $this->getPresenter());
     }
 
+    public function getPerfilController(){
+        return new PerfilController($this->getUsuarioModel(), $this->getPresenter());
+    }
     private function getPokedexModel()
     {
         return new PokedexModel($this->getDatabase());
