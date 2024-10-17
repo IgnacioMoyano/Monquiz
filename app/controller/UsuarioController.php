@@ -27,8 +27,12 @@ class UsuarioController
         exit();
     }
 
-    public function list(){
+    public function login(){
         $this->presenter->show("login");
+    }
+
+    public function list(){
+        $this->presenter->show("register");
     }
 
 

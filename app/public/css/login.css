@@ -1,10 +1,10 @@
 body{
-    background-image: url("../public/images/fondos/pngtree-jungle-cartoon-background-picture-image_2149057.jpg");
+    background-image: url("../images/fondos/pngtree-jungle-cartoon-background-picture-image_2149057.jpg");
 }
 
 .loginConteiner{
-    width: 30em;
-    height: 30em;
+    width: 27.8em;
+    height: 43.4em;
     margin: auto;
     background-color: #be945b;
     position: relative;
@@ -19,11 +19,11 @@ body{
 }
 
 label{
-    font-size: x-large;
+    font-size: large;
 }
 
 .tituloFormulario{
-    font-size: x-large;
+    font-size: large;
 }
 
 .campo{
@@ -38,7 +38,7 @@ button{
 
 .mono {
     position: absolute;
-    right: -12.3em;
+    right: -17.8em;
     top: 1em;
     height: 100%;
     z-index: 1;
@@ -51,3 +51,4 @@ button{
     align-items: center;
     justify-content: center;
 }
+
