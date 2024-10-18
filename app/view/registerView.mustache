@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/Monquiz/app/public/css/register.css">
+<link rel="stylesheet" href="./public/css/register.css">
 
 <div class="body">
     <div class="registerConteiner">
@@ -6,7 +6,7 @@
         <div class="tituloFormulario">
             <p>Iniciar sesion</p>
         </div>
-        <form class="w3-container formulario" method="post" action="/Monquiz/app/usuario/createUser">
+        <form class="w3-container formulario" enctype="multipart/form-data" method="post" action="usuario/createUser">
 
             <div class="campo">
                 <label>Nombre</label>
@@ -53,15 +53,15 @@
                 <label>Repetir Contraseña</label>
                 <input class="w3-input w3-border w3-round-large" type="text" name="rep_password">
             </div>
-<!--
+
             <div class="campo">
                 <label>Foto de perfil</label>
                 <input class="w3-input w3-border w3-round-large" type="file" name="foto_perfil">
             </div>
--->
+
             <button class="w3-btn  w3-round-xlarge">Registrarse</button>
         </form>
 
     </div>
-    <img class="mono" src="/Monquiz/app/public/images/monos/mono_register.png">
+    <img class="mono" src="./public/images/monos/mono_register.png">
 </div>

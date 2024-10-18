@@ -20,9 +20,10 @@ class UsuarioController
         $fecha_nac = $_POST['fecha_nac'];
         $genero = $_POST['genero'];
         $direccion = $_POST['direccion'];
-        $foto = "poto";
         $nombre_usuario = $_POST['nombre_usuario'];
         $pass2 = $_POST['rep_password'];
+        $foto = $_FILES['foto_perfil'] ?? null;
+
 
         if ($this->model->validatePassword($pass, $pass2)){
             $validation = $this->model->createUser($user, $pass, $email, $fecha_nac, $genero, $direccion, $foto, $nombre_usuario);
