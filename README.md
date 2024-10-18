@@ -10,5 +10,5 @@ CREATE TABLE usuario (
     fecha_nac DATE NOT NULL,
     genero VARCHAR(50) NOT NULL,
     direccion VARCHAR(255) NOT NULL,
-    nusername VARCHAR(255) NOT NULL
+    username VARCHAR(255) NOT NULL
 );
