@@ -69,5 +69,14 @@ class UsuarioController
         $this->presenter->show("register",$data);
     }
 
+    public function logout(){
+
+        session_unset();
+        session_destroy();
+        header('Location: /Monquiz/app/usuario/login');
+        exit();
+    }
+
+
 
 }
