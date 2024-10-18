@@ -13,14 +13,14 @@ class UsuarioModel
         return $pass == $pass2;
     }
 
-    public function createUser($user, $pass, $email, $fecha_nac, $genero, $direccion, $foto, $nombre_usuario){
+    public function createUser($name, $pass, $email, $fecha_nac, $genero, $direccion, $foto, $username){
 
 
         if ($foto && $this->validarMoverFoto($foto)){
 
             $imagen_nombre = $foto['name'];
-            $sql = "INSERT INTO usuario (username, imagen,password, correo, fecha_nac, genero, direccion, nombre_usuario) 
-                VALUES ('" . $user . "', '/Monquiz/app/public/images/fotosPerfil/" . $imagen_nombre . "', '" . $pass . "', '" . $email . "', '" . $fecha_nac . "', '" . $genero . "', '" . $direccion . "', '" . $nombre_usuario . "');";
+            $sql = "INSERT INTO usuario (name, imagen,password, correo, fecha_nac, genero, direccion, username) 
+                VALUES ('" . $name . "', '/Monquiz/app/public/images/fotosPerfil/" . $imagen_nombre . "', '" . $pass . "', '" . $email . "', '" . $fecha_nac . "', '" . $genero . "', '" . $direccion . "', '" . $username . "');";
 
             return $this->database->execute($sql);
         }
