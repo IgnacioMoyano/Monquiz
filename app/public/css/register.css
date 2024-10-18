@@ -1,0 +1,54 @@
+body{
+    background-image: url("../images/fondos/REGISTER.jpeg");
+}
+
+.registerConteiner{
+    margin: 2em 0em 2em auto;
+    background-color: #be945b;
+}
+
+.formulario{
+
+}
+
+.tituloFormulario{
+    text-align: center;
+}
+
+label{
+    font-size: large;
+}
+
+.tituloFormulario{
+    font-size: large;
+}
+
+
+
+button{
+    background-color: #422f25 !important;
+    color: white !important;
+
+}
+
+.mono{
+    transform: scaleX(-1);
+    max-width: 70%; /* Asegura que la imagen no se salga de su columna */
+    height: auto; /* Mantiene la proporción de la imagen */
+    pointer-events: none; /* Evita que la imagen sea clickeable */
+}
+
+.body{
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales (50% cada una) */
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
+    align-items: center; /* Alinea verticalmente el contenido */
+}
+
+
+
+.juntos{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}

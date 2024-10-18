@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="./public/login.css">
+<link rel="stylesheet" href="/Monquiz/app/public/css/login.css">
 
 <div class="body">
 <div class="loginConteiner">
@@ -6,21 +6,22 @@
     <div class="tituloFormulario">
         <p>Iniciar sesion</p>
     </div>
-    <form class="w3-container formulario">
+    <form class="w3-container formulario" method="post" action="/Monquiz/app/usuario/auth">
 
         <div class="campo">
-        <label>Correo</label>
-        <input class="w3-input w3-border w3-round-large" type="text">
+        <label>Username</label>
+        <input class="w3-input w3-border w3-round-large" type="text" name="username">
         </div>
 
         <div class="campo">
-        <label>Contraseña</label>
-        <input class="w3-input w3-border w3-round-large" type="text">
+        <label>Password</label>
+        <input class="w3-input w3-border w3-round-large" type="text" name="password">
         </div>
 
         <button class="w3-btn  w3-round-xlarge">Ingresar</button>
     </form>
-    <img class="mono" src="./public/images/monos/mono_login.png">
+    <a href="/Monquiz/app/usuario/register">¿No tiene cuenta? Crear una</a>
+    <img class="mono" src="/Monquiz/app/public/images/monos/mono_login.png">
 </div>
 
 </div>
