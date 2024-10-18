@@ -1,27 +1,27 @@
 <link rel="stylesheet" href="./public/css/register.css">
 
 <div class="body">
-    <div class="loginConteiner">
+    <div class="registerConteiner">
 
         <div class="tituloFormulario">
             <p>Iniciar sesion</p>
         </div>
-        <form class="w3-container formulario">
+        <form class="w3-container formulario" method="post" action="usuario/createUser">
 
             <div class="campo">
                 <label>Nombre</label>
-                <input class="w3-input w3-border w3-round-large" type="text">
+                <input class="w3-input w3-border w3-round-large" type="text" name="username">
             </div>
 
             <div class="juntos">
             <div class="campo nacimiento">
                 <label>Año de nacimiento</label>
-                <input class="w3-input w3-border w3-round-large" type="date">
+                <input class="w3-input w3-border w3-round-large" type="date" name="fecha_nac">
             </div>
 
             <div class="campo sexo">
                 <label>Sexo</label>
-                <select class="w3-input w3-border w3-round-large">
+                <select class="w3-input w3-border w3-round-large" name="genero">
                     <option>Hombre</option>
                     <option>Mujer</option>
                     <option>Otro</option>
@@ -31,34 +31,34 @@
 
             <div class="campo">
                 <label>Direccion</label>
-                <input class="w3-input w3-border w3-round-large" type="text">
+                <input class="w3-input w3-border w3-round-large" type="text" name="direccion">
             </div>
 
             <div class="campo">
                 <label>Correo</label>
-                <input class="w3-input w3-border w3-round-large" type="text">
+                <input class="w3-input w3-border w3-round-large" type="text" name="email">
             </div>
 
             <div class="campo">
                 <label>Nombre de usuario</label>
-                <input class="w3-input w3-border w3-round-large" type="text">
+                <input class="w3-input w3-border w3-round-large" type="text" name="nombre_usuario">
             </div>
 
             <div class="campo">
                 <label>Contraseña</label>
-                <input class="w3-input w3-border w3-round-large" type="text">
+                <input class="w3-input w3-border w3-round-large" type="text" name="password">
             </div>
 
             <div class="campo">
                 <label>Repetir Contraseña</label>
-                <input class="w3-input w3-border w3-round-large" type="text">
+                <input class="w3-input w3-border w3-round-large" type="text" name="rep_password">
             </div>
-
+<!--
             <div class="campo">
                 <label>Foto de perfil</label>
-                <input class="w3-input w3-border w3-round-large" type="file">
+                <input class="w3-input w3-border w3-round-large" type="file" name="foto_perfil">
             </div>
-
+-->
             <button class="w3-btn  w3-round-xlarge">Registrarse</button>
         </form>
 

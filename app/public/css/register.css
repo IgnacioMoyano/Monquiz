@@ -1,11 +1,10 @@
 body{
-    background-image: url("../images/fondos/pngtree-jungle-cartoon-background-picture-image_2149057.jpg");
+    background-image: url("../images/fondos/REGISTER.jpeg");
 }
 
-.loginConteiner{
+.registerConteiner{
     margin: 2em 0em 2em auto;
     background-color: #be945b;
-
 }
 
 .formulario{
