@@ -1,10 +1,7 @@
 <?php
 
-class UsuarioController
+class registerController
 {
-
-    private $model;
-    private $presenter;
 
     public function __construct($model, $presenter)
     {
@@ -35,29 +32,4 @@ class UsuarioController
         $this->presenter->show("login");
         exit();
     }
-
-    public function auth()
-    {
-        $user = $_POST['username'];
-        $pass = $_POST['password'];
-
-        $validation = $this->model->validate($user, $pass);
-
-        if ($validation) {
-            $_SESSION['user'] = $user;
-        }
-
-        header('location: /pokedex');
-        exit();
-    }
-
-    public function login(){
-        $this->presenter->show("login");
-    }
-
-    public function list(){
-        $this->presenter->show("register");
-    }
-
-
 }

@@ -1,8 +1,7 @@
 <?php
 
-class UsuarioModel
+class registerModel
 {
-    private $database;
 
     public function __construct($database)
     {
@@ -19,17 +18,4 @@ class UsuarioModel
 
         return $this->database->execute($sql);
     }
-
-    public function validateLogin($user, $pass)
-    {
-        $sql = "SELECT 1 
-                FROM usuario 
-                WHERE username = '" . $user. "' 
-                AND password = '" . $pass . "'";
-
-        $usuario = $this->database->query($sql);
-
-        return sizeof($usuario) == 1;
-    }
-
 }

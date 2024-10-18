@@ -7,13 +7,27 @@ class MysqlObjectDatabase
         $this->conn = new mysqli($host, $username, $password, $database, $port);
     }
 
-    public function query($sql){
+
+    /**
+     * @throws Exception
+     */
+    public function query($sql)
+    {
         $result = $this->conn->query($sql);
-        return  $result->fetch_all( MYSQLI_ASSOC );
+
+        if ($result === false) {
+            throw new Exception("Query failed: " . $this->conn->error);
+        }
+
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function execute($sql){
-        $this->conn->query($sql);
+    public function execute($sql)
+    {
+        if ($this->conn->query($sql) === false) {
+            throw new Exception("Execution failed: " . $this->conn->error);
+        }
+
         return $this->conn->affected_rows;
     }
 
@@ -21,4 +35,7 @@ class MysqlObjectDatabase
     {
         $this->conn->close();
     }
+
+
+
 }
