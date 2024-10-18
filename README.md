@@ -1,2 +1,2 @@
 # Monquiz
- Juego web de preguntas sobre cualtura general
+ Juego web de preguntas sobre cultura general
