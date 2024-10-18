@@ -11,8 +11,7 @@ include_once("controller/PokedexController.php");
 include_once("controller/UsuarioController.php");
 include_once("model/UsuarioModel.php");
 
-include_once("model/RegisterModel.php");
-include_once("controller/RegisterController.php");
+
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 
