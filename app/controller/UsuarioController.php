@@ -41,22 +41,31 @@ class UsuarioController
         $user = $_POST['username'];
         $pass = $_POST['password'];
 
-        $validation = $this->model->validate($user, $pass);
+        $validation = $this->model->validateLogin($user, $pass);
 
         if ($validation) {
             $_SESSION['user'] = $user;
         }
 
-        header('location: /pokedex');
+
+        header('location: /Monquiz/app/usuario/register');
         exit();
     }
 
     public function login(){
-        $this->presenter->show("login");
+        $data = [];
+        if (isset($_SESSION['user'])) {
+            $data['user'] = $_SESSION['user'];
+        }
+        $this->presenter->show("login",$data);
     }
 
-    public function list(){
-        $this->presenter->show("register");
+    public function register(){
+        $data = [];
+        if (isset($_SESSION['user'])) {
+            $data['user'] = $_SESSION['user'];
+        }
+        $this->presenter->show("register",$data);
     }
 
 

@@ -59,7 +59,7 @@ class Configuration
 
     public function getRouter()
     {
-        return new Router($this, "getUsuarioController", "list");
+        return new Router($this, "getUsuarioController", "login");
     }
 
 
