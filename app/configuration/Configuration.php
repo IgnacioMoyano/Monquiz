@@ -11,6 +11,9 @@ include_once("controller/PokedexController.php");
 include_once("controller/UsuarioController.php");
 include_once("model/UsuarioModel.php");
 
+include_once("controller/PerfilController.php");
+include_once("model/PerfilModel.php");
+
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 
 class Configuration
@@ -25,6 +28,14 @@ class Configuration
 
     public function getUsuarioController(){
         return new UsuarioController($this->getUsuarioModel(), $this->getPresenter());
+    }
+
+    public function getPerfilController() {
+        return new PerfilController($this->getPerfilModel(), $this->getPresenter());
+    }
+
+    private function getPerfilModel(){
+        return new PerfilModel($this->getDatabase());
     }
 
     private function getPokedexModel()
@@ -53,13 +64,14 @@ class Configuration
 
     public function getRouter()
     {
-        return new Router($this, "getUsuarioController", "list");
+        return new Router($this, "getUsuarioController", "login");
     }
 
     private function getUsuarioModel()
     {
         return new UsuarioModel($this->getDatabase());
     }
+
 
 
 }

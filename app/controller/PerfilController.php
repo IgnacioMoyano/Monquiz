@@ -15,15 +15,24 @@ class PerfilController{
     }
 
     public function mostrarPerfil() {
-        // datos hardcodeados hasta tener una base de datos
-        $datosPerfil = [
-            'nombre' => 'Luis Alberto',
-            'edad' => 28,
-            'descripcion' => 'Experto en monos.',
-        ];
+        if (!isset($_SESSION['user'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
 
-        $this->presenter->show('perfil', $datosPerfil);
+        $user = $_SESSION['user'];
+        $datosPerfil = $this->model->getPerfil($user);
+
+        if (empty($datosPerfil)) {
+            echo "No se encontraron datos para el usuario.";
+            exit();
+        }
+
+        $perfil = $datosPerfil[0];
+
+        $this->presenter->show('perfil', $perfil);
     }
+
 
 
 }
