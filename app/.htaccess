@@ -11,6 +11,7 @@ Options -Indexes
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/(.*)/(.*)$ index.php?page=$1&action=$2&$3 [L,QSA]
+    RewriteRule ^usuario/perfil/([0-9]+)$ index.php?page=usuario&action=perfil&id=$1 [L,QSA]
     RewriteRule ^(.*)/(.*)$ index.php?page=$1&action=$2 [L,QSA]
     RewriteRule ^(.*)$ index.php?page=$1 [L,QSA]
 </IfModule>

@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="/Monquiz/app/public/css/perfil.css">
+<div class="body">
+    <div class="perfilContainer">
+        <div class="tituloFormulario">
+            <h1>{{username}}</h1>
+        </div>
+        <div class="perfil text-center">
+            <div class="container-fotos">
+                <img src="{{imagen}}" alt="Imagen de perfil" class="perfil-imagen w3-round">
+                <img src="" alt="placeholder para qr" class="perfil-imagen w3-round">
+            </div>
+            <div class="informacion">
+                <p><strong>Puntaje: </strong> 99999</p>
+                <p><strong>Correo:</strong> {{correo}}</p>
+                <p><strong>Fecha de Nacimiento:</strong> {{fecha_nac}}</p>
+                <p><strong>Género:</strong> {{genero}}</p>
+                <p><strong>Dirección:</strong> {{direccion}}</p>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/Monquiz/app/usuario/logout" class="w3-btn w3-red w3-round-xlarge">Cerrar Sesión</a>
+        </div>
+    </div>
+</div>
+
