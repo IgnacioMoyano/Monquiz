@@ -4,15 +4,15 @@ include_once("helper/MysqlObjectDatabase.php");
 include_once("helper/IncludeFilePresenter.php");
 include_once("helper/Router.php");
 include_once("helper/MustachePresenter.php");
+include_once("helper/EmailSender.php");
 
-include_once("model/PokedexModel.php");
-include_once("controller/PokedexController.php");
+
+
 
 include_once("controller/UsuarioController.php");
 include_once("model/UsuarioModel.php");
 
-include_once("controller/PerfilController.php");
-include_once("model/PerfilModel.php");
+
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 
