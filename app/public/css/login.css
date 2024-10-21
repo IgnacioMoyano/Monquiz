@@ -11,7 +11,8 @@ body{
 }
 
 .formulario{
-
+    display: flex;
+    flex-direction: column;
 }
 
 .tituloFormulario{
@@ -49,6 +50,12 @@ button{
     display: flex;
     height: 48.75em;
     align-items: center;
+    justify-content: center;
+}
+
+.redirectRegister{
+    display: flex;
+    text-align: center;
     justify-content: center;
 }
 

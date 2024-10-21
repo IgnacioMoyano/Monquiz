@@ -13,14 +13,14 @@ class UsuarioModel
         return $pass == $pass2;
     }
 
-    public function createUser($name, $pass, $email, $fecha_nac, $genero, $direccion, $foto, $username){
+    public function createUser($name, $pass, $email, $fecha_nac, $genero, $direccion, $foto, $username,$validado,$token){
 
 
         if ($foto && $this->validarMoverFoto($foto)){
 
             $imagen_nombre = $foto['name'];
-            $sql = "INSERT INTO usuario (name, imagen,password, correo, fecha_nac, genero, direccion, username) 
-                VALUES ('" . $name . "', '/Monquiz/app/public/images/fotosPerfil/" . $imagen_nombre . "', '" . $pass . "', '" . $email . "', '" . $fecha_nac . "', '" . $genero . "', '" . $direccion . "', '" . $username . "');";
+            $sql = "INSERT INTO usuario (name, imagen,password, correo, fecha_nac, genero, direccion, username,validado,token) 
+                VALUES ('" . $name . "', '/Monquiz/app/public/images/fotosPerfil/" . $imagen_nombre . "', '" . $pass . "', '" . $email . "', '" . $fecha_nac . "', '" . $genero . "', '" . $direccion . "', '" . $username . "', '" . $validado . "', '" . $token . "');";
 
             return $this->database->execute($sql);
         }
@@ -39,7 +39,7 @@ class UsuarioModel
         return sizeof($usuario) == 1;
     }
 
-    private function validarMoverFoto($foto)
+    public function validarMoverFoto($foto)
     {
         $carpeta_destino = $_SERVER['DOCUMENT_ROOT'] . "/Monquiz/app/public/images/fotosPerfil/";
 
@@ -54,4 +54,42 @@ class UsuarioModel
         return false;
     }
 
+    public function validarToken($id, $token){
+
+        $query = "SELECT token FROM usuario WHERE id = $id";
+        $resultado = $this->database->query($query);
+        $tokenUsuario =  isset($resultado[0]) ? $resultado[0]['token'] : null;
+
+
+        if ($tokenUsuario === $token) {
+
+            $updateQuery = "UPDATE usuario SET validado = 1 WHERE id = $id";
+            $this->database->execute($updateQuery);
+
+
+
+            return true;
+
+        }
+
+        return false;
+
+}
+
+    public function getUserIdByEmail($username) {
+        $sql = "SELECT id FROM usuario WHERE username = '$username'";
+        $result = $this->database->query($sql);
+        return isset($result[0]) ? $result[0]['id'] : null; // Devuelve el ID o null
+    }
+
+    public function getTokenById($userId) {
+        $sql = "SELECT token FROM usuario WHERE id = '$userId'";
+        $result = $this->database->query($sql);
+        return isset($result[0]) ? $result[0]['token'] : null; // Devuelve el token o null
+    }
+
+    public function getPerfil($username) {
+        $sql = "SELECT username, correo, fecha_nac, genero, direccion, imagen FROM usuario WHERE username = '$username'";
+        return $this->database->query($sql);
+    }
 }
