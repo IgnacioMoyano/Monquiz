@@ -21,7 +21,8 @@ class UsuarioController
         $email = $_POST['email'];
         $fecha_nac = $_POST['fecha_nac'];
         $genero = $_POST['genero'];
-        $direccion = $_POST['direccion'];
+        $pais = $_POST['direccion'];
+        $ciudad = $_POST['direccion'];
         $username = $_POST['username'];
         $pass2 = $_POST['rep_password'];
         $foto = $_FILES['foto_perfil'] ?? null;
@@ -29,7 +30,7 @@ class UsuarioController
         $validado = 0;
 
         if ($this->model->validatePassword($pass, $pass2)){
-            $validation = $this->model->createUser($name, $pass, $email, $fecha_nac, $genero, $direccion, $foto, $username,$validado,$token);
+            $validation = $this->model->createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username,$validado,$token);
 
             if ($validation) {
                 $_SESSION['username'] = $username;
