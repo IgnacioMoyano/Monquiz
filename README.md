@@ -1,6 +1,8 @@
 # Monquiz
  Juego web de preguntas sobre cultura general
 
+CREATE DATABASE monquiz;
+
 CREATE TABLE usuario (
     Id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
