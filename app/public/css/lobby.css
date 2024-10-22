@@ -1,0 +1,38 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url("../images/fondos/HOME.jpeg");
+    text-align: center;
+}
+
+h2 {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+h1 {
+    font-size: 48px;
+    margin: 10px 0;
+}
+
+button {
+    background-color: #8B4513;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #A0522D;
+}
+
+button:focus {
+    outline: none;
+}
