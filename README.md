@@ -60,6 +60,15 @@ CREATE TABLE preguntas_respondidas (
     FOREIGN KEY (pregunta_FK) REFERENCES pregunta(id)
 );
 
+CREATE TABLE reporte (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pregunta_FK INT,
+    usuario_FK INT,
+    descripcion TEXT,
+    FOREIGN KEY (pregunta_FK) REFERENCES pregunta(id),
+    FOREIGN KEY (usuario_FK) REFERENCES usuario(id)
+);
+
 Rellenar tablas:
 
 INSERT INTO categoria (descripcion, color) VALUES
@@ -176,3 +185,412 @@ VALUES
 ('¿Qué es un dron?', 8, 2, 0, 0, 0, 0),
 ('¿Qué material se utiliza en la fabricación de microchips?', 8, 2, 0, 0, 0, 0),
 ('¿Qué tipo de red es utilizada por los teléfonos móviles?', 8, 2, 0, 0, 0, 0);
+
+INSERT INTO respuesta (pregunta_FK, respuesta, es_correcta)
+VALUES
+-- Respuestas de Ciencia (pregunta_FK = 1 a 10)
+(1, 'Mercurio', 1),
+(1, 'Venus', 0),
+(1, 'Tierra', 0),
+(1, 'Marte', 0),
+
+(2, 'Pez', 1),
+(2, 'Mamífero', 0),
+(2, 'Anfibio', 0),
+(2, 'Reptil', 0),
+
+(3, 'Oxígeno', 1),
+(3, 'Dióxido de carbono', 0),
+(3, 'Hidrógeno', 0),
+(3, 'Nitrógeno', 0),
+
+(4, 'Electrón', 1),
+(4, 'Protón', 0),
+(4, 'Neutrón', 0),
+(4, 'Foton', 0),
+
+(5, 'Piel', 1),
+(5, 'Corazón', 0),
+(5, 'Hígado', 0),
+(5, 'Cerebro', 0),
+
+(6, 'Ocho', 1),
+(6, 'Siete', 0),
+(6, 'Nueve', 0),
+(6, 'Diez', 0),
+
+(7, 'Gravedad', 1),
+(7, 'Fricción', 0),
+(7, 'Inercia', 0),
+(7, 'Aceleración', 0),
+
+(8, 'Energía solar', 1),
+(8, 'Energía nuclear', 0),
+(8, 'Energía eólica', 0),
+(8, 'Energía hidráulica', 0),
+
+(9, 'H2O', 1),
+(9, 'CO2', 0),
+(9, 'O2', 0),
+(9, 'N2O', 0),
+
+(10, 'Albert Einstein', 1),
+(10, 'Isaac Newton', 0),
+(10, 'Stephen Hawking', 0),
+(10, 'Galileo Galilei', 0),
+
+-- Respuestas de Historia (pregunta_FK = 11 a 20)
+(11, 'George Washington', 1),
+(11, 'Abraham Lincoln', 0),
+(11, 'Thomas Jefferson', 0),
+(11, 'John Adams', 0),
+
+(12, 'Segunda Guerra Mundial', 1),
+(12, 'Primera Guerra Mundial', 0),
+(12, 'Guerra Civil Americana', 0),
+(12, 'Guerra de Corea', 0),
+
+(13, '1492', 1),
+(13, '1500', 0),
+(13, '1512', 0),
+(13, '1475', 0),
+
+(14, 'Gengis Khan', 1),
+(14, 'Atila', 0),
+(14, 'Alejandro Magno', 0),
+(14, 'Julio César', 0),
+
+(15, 'Segunda Guerra Mundial', 1),
+(15, 'Guerra Fría', 0),
+(15, 'Guerra de Vietnam', 0),
+(15, 'Guerra del Golfo', 0),
+
+(16, '1989', 1),
+(16, '1991', 0),
+(16, '1980', 0),
+(16, '1975', 0),
+
+(17, 'Reino Unido', 1),
+(17, 'Francia', 0),
+(17, 'Alemania', 0),
+(17, 'Italia', 0),
+
+(18, 'Keops', 1),
+(18, 'Tutankamón', 0),
+(18, 'Ramsés II', 0),
+(18, 'Cleopatra', 0),
+
+(19, 'Imperio Bizantino', 1),
+(19, 'Imperio Romano', 0),
+(19, 'Imperio Otomano', 0),
+(19, 'Imperio Egipcio', 0),
+
+(20, 'Tratado de Versalles', 1),
+(20, 'Tratado de París', 0),
+(20, 'Tratado de Ginebra', 0),
+(20, 'Tratado de Potsdam', 0),
+
+-- Respuestas de Geografía (pregunta_FK = 21 a 30)
+(21, 'Nilo', 1),
+(21, 'Amazonas', 0),
+(21, 'Yangtsé', 0),
+(21, 'Misisipi', 0),
+
+(22, 'África', 1),
+(22, 'Asia', 0),
+(22, 'América del Sur', 0),
+(22, 'Australia', 0),
+
+(23, 'Tokio', 1),
+(23, 'Kyoto', 0),
+(23, 'Osaka', 0),
+(23, 'Hiroshima', 0),
+
+(24, 'Egipto', 1),
+(24, 'India', 0),
+(24, 'China', 0),
+(24, 'Grecia', 0),
+
+(25, 'China', 1),
+(25, 'India', 0),
+(25, 'Estados Unidos', 0),
+(25, 'Indonesia', 0),
+
+(26, 'Océano Pacífico', 1),
+(26, 'Océano Atlántico', 0),
+(26, 'Océano Índico', 0),
+(26, 'Océano Ártico', 0),
+
+(27, 'Monte Everest', 1),
+(27, 'K2', 0),
+(27, 'Mont Blanc', 0),
+(27, 'Aconcagua', 0),
+
+(28, 'Vaticano', 1),
+(28, 'Mónaco', 0),
+(28, 'Liechtenstein', 0),
+(28, 'San Marino', 0),
+
+(29, 'Estados Unidos', 1),
+(29, 'Canadá', 0),
+(29, 'México', 0),
+(29, 'Cuba', 0),
+
+(30, 'Italia', 1),
+(30, 'Grecia', 0),
+(30, 'Francia', 0),
+(30, 'España', 0),
+-- Respuestas de Entretenimiento (pregunta_FK = 31 a 40)
+(31, 'Robert Downey Jr.', 1),
+(31, 'Chris Evans', 0),
+(31, 'Chris Hemsworth', 0),
+(31, 'Mark Ruffalo', 0),
+
+(32, 'Walter White', 1),
+(32, 'Jesse Pinkman', 0),
+(32, 'Gustavo Fring', 0),
+(32, 'Hank Schrader', 0),
+
+(33, 'Grecia', 1),
+(33, 'Italia', 0),
+(33, 'Egipto', 0),
+(33, 'Persia', 0),
+
+(34, 'Disney', 1),
+(34, 'Warner Bros', 0),
+(34, 'DreamWorks', 0),
+(34, 'Pixar', 0),
+
+(35, 'NBC', 1),
+(35, 'CBS', 0),
+(35, 'ABC', 0),
+(35, 'FOX', 0),
+
+(36, 'Joaquin Phoenix', 1),
+(36, 'Heath Ledger', 0),
+(36, 'Jack Nicholson', 0),
+(36, 'Jared Leto', 0),
+
+(37, 'E.T.', 1),
+(37, 'Gremlins', 0),
+(37, 'Cazafantasmas', 0),
+(37, 'Poltergeist', 0),
+
+(38, 'HBO', 1),
+(38, 'Netflix', 0),
+(38, 'Amazon Prime', 0),
+(38, 'Disney+', 0),
+
+(39, 'Super Mario Bros.', 1),
+(39, 'Pac-Man', 0),
+(39, 'Sonic', 0),
+(39, 'Zelda', 0),
+
+(40, 'Steven Spielberg', 1),
+(40, 'Martin Scorsese', 0),
+(40, 'Quentin Tarantino', 0),
+(40, 'James Cameron', 0),
+
+-- Respuestas de Deportes (pregunta_FK = 41 a 50)
+(41, 'Brasil', 1),
+(41, 'Alemania', 0),
+(41, 'Argentina', 0),
+(41, 'Italia', 0),
+
+(42, 'Michael Jordan', 1),
+(42, 'Kobe Bryant', 0),
+(42, 'LeBron James', 0),
+(42, 'Shaquille O\'Neal', 0),
+
+(43, 'Fórmula 1', 1),
+(43, 'MotoGP', 0),
+(43, 'NASCAR', 0),
+(43, 'IndyCar', 0),
+
+(44, '11', 1),
+(44, '9', 0),
+(44, '12', 0),
+(44, '10', 0),
+
+(45, 'Serena Williams', 1),
+(45, 'Venus Williams', 0),
+(45, 'Steffi Graf', 0),
+(45, 'Maria Sharapova', 0),
+
+(46, 'Roger Federer', 1),
+(46, 'Rafael Nadal', 0),
+(46, 'Novak Djokovic', 0),
+(46, 'Pete Sampras', 0),
+
+(47, 'Grecia', 1),
+(47, 'Francia', 0),
+(47, 'Italia', 0),
+(47, 'España', 0),
+
+(48, 'Los Angeles Lakers', 1),
+(48, 'Chicago Bulls', 0),
+(48, 'Boston Celtics', 0),
+(48, 'Golden State Warriors', 0),
+
+(49, 'Maratón', 1),
+(49, 'Ciclismo', 0),
+(49, 'Natación', 0),
+(49, 'Remo', 0),
+
+(50, 'Pelé', 1),
+(50, 'Diego Maradona', 0),
+(50, 'Lionel Messi', 0),
+(50, 'Cristiano Ronaldo', 0),
+
+-- Respuestas de Arte (pregunta_FK = 51 a 60)
+(51, 'Leonardo da Vinci', 1),
+(51, 'Miguel Ángel', 0),
+(51, 'Vincent van Gogh', 0),
+(51, 'Pablo Picasso', 0),
+
+(52, 'La Noche Estrellada', 1),
+(52, 'Guernica', 0),
+(52, 'La Última Cena', 0),
+(52, 'El Grito', 0),
+
+(53, 'Escultura', 1),
+(53, 'Pintura', 0),
+(53, 'Fotografía', 0),
+(53, 'Música', 0),
+
+(54, 'Salvador Dalí', 1),
+(54, 'Claude Monet', 0),
+(54, 'Edvard Munch', 0),
+(54, 'Jackson Pollock', 0),
+
+(55, 'Renacimiento', 1),
+(55, 'Impresionismo', 0),
+(55, 'Barroco', 0),
+(55, 'Romanticismo', 0),
+
+(56, 'Miguel Ángel', 1),
+(56, 'Donatello', 0),
+(56, 'Leonardo da Vinci', 0),
+(56, 'Rafael', 0),
+
+(57, 'Edvard Munch', 1),
+(57, 'Vincent van Gogh', 0),
+(57, 'Paul Gauguin', 0),
+(57, 'Henri Matisse', 0),
+
+(58, 'Andy Warhol', 1),
+(58, 'Roy Lichtenstein', 0),
+(58, 'Jean-Michel Basquiat', 0),
+(58, 'Keith Haring', 0),
+
+(59, 'Florencia', 1),
+(59, 'Venecia', 0),
+(59, 'Roma', 0),
+(59, 'Milán', 0),
+
+(60, 'La Piedad', 1),
+(60, 'El David', 0),
+(60, 'Moisés', 0),
+(60, 'Baco', 0),
+
+-- Respuestas de Mitología (pregunta_FK = 61 a 70)
+(61, 'Poseidón', 1),
+(61, 'Zeus', 0),
+(61, 'Hades', 0),
+(61, 'Apolo', 0),
+
+(62, 'Perseo', 1),
+(62, 'Hércules', 0),
+(62, 'Teseo', 0),
+(62, 'Aquiles', 0),
+
+(63, 'Ave Fénix', 1),
+(63, 'Grifo', 0),
+(63, 'Quimera', 0),
+(63, 'Pegaso', 0),
+
+(64, 'Estigia', 1),
+(64, 'Nilo', 0),
+(64, 'Ganges', 0),
+(64, 'Leteo', 0),
+
+(65, 'Ra', 1),
+(65, 'Osiris', 0),
+(65, 'Horus', 0),
+(65, 'Anubis', 0),
+
+(66, 'Rayo', 1),
+(66, 'Tridente', 0),
+(66, 'Espada', 0),
+(66, 'Arco', 0),
+
+(67, 'Quimera', 1),
+(67, 'Hidra', 0),
+(67, 'Minotauro', 0),
+(67, 'Cerbero', 0),
+
+(68, 'Dionisio', 1),
+(68, 'Apolo', 0),
+(68, 'Hermes', 0),
+(68, 'Hefesto', 0),
+
+(69, 'Odiseo', 1),
+(69, 'Aquiles', 0),
+(69, 'Hércules', 0),
+(69, 'Teseo', 0),
+
+(70, 'Cerbero', 1),
+(70, 'Minotauro', 0),
+(70, 'Grifo', 0),
+(70, 'Sátiro', 0),
+
+-- Respuestas de Tecnología (pregunta_FK = 71 a 80)
+(71, 'Bill Gates', 1),
+(71, 'Steve Jobs', 0),
+(71, 'Elon Musk', 0),
+(71, 'Mark Zuckerberg', 0),
+
+(72, 'World Wide Web', 1),
+(72, 'Wireless Wide Web', 0),
+(72, 'Web World Wide', 0),
+(72, 'Wide Web World', 0),
+
+(73, 'Termómetro', 1),
+(73, 'Barómetro', 0),
+(73, 'Altímetro', 0),
+(73, 'Odómetro', 0),
+
+(74, 'Energía solar', 1),
+(74, 'Energía nuclear', 0),
+(74, 'Energía eólica', 0),
+(74, 'Energía hidráulica', 0),
+
+(75, 'CD-ROM', 1),
+(75, 'Blu-ray', 0),
+(75, 'Disquete', 0),
+(75, 'USB', 0),
+
+(76, 'AMD', 1),
+(76, 'Intel', 0),
+(76, 'Qualcomm', 0),
+(76, 'NVIDIA', 0),
+
+(77, 'Bitcoin', 1),
+(77, 'Ethereum', 0),
+(77, 'Ripple', 0),
+(77, 'Litecoin', 0),
+
+(78, '1991', 1),
+(78, '1989', 0),
+(78, '1995', 0),
+(78, '2000', 0),
+
+(79, 'JavaScript', 1),
+(79, 'Python', 0),
+(79, 'Java', 0),
+(79, 'C++', 0),
+
+(80, 'HTML', 1),
+(80, 'CSS', 0),
+(80, 'PHP', 0),
+(80, 'SQL', 0);
