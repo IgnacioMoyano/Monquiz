@@ -71,7 +71,7 @@ CREATE TABLE reporte (
     FOREIGN KEY (usuario_FK) REFERENCES usuario(id)
 );
 
-Rellenar tablas:
+--Rellenar tablas:
 
 INSERT INTO categoria (descripcion, color) VALUES
 ('Ciencia', 'verde'),
