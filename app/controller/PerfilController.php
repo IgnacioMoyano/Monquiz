@@ -5,6 +5,10 @@ class PerfilController{
     //su perfil.
     private $model;
     private $presenter;
+
+
+
+
     public function __construct($model, $presenter){
         $this->model = $model;
         $this->presenter = $presenter;
@@ -34,11 +38,21 @@ class PerfilController{
 
         $perfil = $datosPerfil[0];
 
+        $url = "http://localhost/Monquiz/app/perfil/mostrarPerfil?username=$usernamePerfil";
+
+        $temp = 'D:/XAMPP/htdocs/Monquiz/app/public/qr/';
+        $fileName = 'qrcode_' . $usernamePerfil . '.png';
+        $filePath = $temp . $fileName;
+        QRcode::png($url, $filePath, QR_ECLEVEL_L, 4);
+
+        $qrPath = "/Monquiz/app/public/qr/" . $fileName;
 
         $data = [
             'user' => $userLogueado,
             'perfil' => $perfil,
-            'imagenUsuarioLogueado' => $datosUsuarioLogueado[0]['imagen']
+            'imagenUsuarioLogueado' => $datosUsuarioLogueado[0]['imagen'],
+            'qrCodePath' => $qrPath
+
         ];
 
         $this->presenter->show('perfil', $data);

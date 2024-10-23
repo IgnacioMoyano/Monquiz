@@ -6,6 +6,7 @@ include_once("helper/Router.php");
 include_once("helper/MustachePresenter.php");
 include_once("helper/EmailSender.php");
 
+
 include_once("controller/PerfilController.php");
 include_once("model/PerfilModel.php");
 
@@ -16,7 +17,7 @@ include_once("model/UsuarioModel.php");
 
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
-
+include_once('vendor/phpqrcode/qrlib.php');
 class Configuration
 {
     public function __construct()
