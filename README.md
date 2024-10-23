@@ -3,6 +3,8 @@
 
 CREATE DATABASE monquiz;
 
+Use monquiz;
+
 CREATE TABLE usuario (
     Id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
@@ -71,7 +73,6 @@ CREATE TABLE reporte (
     FOREIGN KEY (usuario_FK) REFERENCES usuario(id)
 );
 
---Rellenar tablas:
 
 INSERT INTO categoria (descripcion, color) VALUES
 ('Ciencia', 'verde'),
@@ -92,7 +93,7 @@ INSERT INTO estado (descripcion) VALUES
 
 INSERT INTO pregunta (pregunta, categoria_FK, estado_FK, reportada, creada_usuarios, cantidad_vista, cantidad_correctas)
 VALUES
--- Ciencia
+
 ('¿Cuál es el planeta más cercano al Sol?', 1, 2, 0, 0, 0, 0),
 ('¿Qué tipo de animal es un tiburón?', 1, 2, 0, 0, 0, 0),
 ('¿Qué gas es esencial para la respiración humana?', 1, 2, 0, 0, 0, 0),
@@ -104,7 +105,7 @@ VALUES
 ('¿Cuál es la fórmula química del agua?', 1, 2, 0, 0, 0, 0),
 ('¿Qué científico desarrolló la teoría de la relatividad?', 1, 2, 0, 0, 0, 0),
 
--- Historia
+
 ('¿Quién fue el primer presidente de los Estados Unidos?', 2, 2, 0, 0, 0, 0),
 ('¿Qué evento histórico terminó en 1945?', 2, 2, 0, 0, 0, 0),
 ('¿En qué año llegó Cristóbal Colón a América?', 2, 2, 0, 0, 0, 0),
@@ -116,7 +117,7 @@ VALUES
 ('¿Qué imperio cayó en 1453 con la toma de Constantinopla?', 2, 2, 0, 0, 0, 0),
 ('¿Qué tratado puso fin a la Primera Guerra Mundial?', 2, 2, 0, 0, 0, 0),
 
--- Geografía
+
 ('¿Cuál es el río más largo del mundo?', 3, 2, 0, 0, 0, 0),
 ('¿En qué continente se encuentra el desierto del Sahara?', 3, 2, 0, 0, 0, 0),
 ('¿Cuál es la capital de Japón?', 3, 2, 0, 0, 0, 0),
@@ -128,7 +129,7 @@ VALUES
 ('¿Qué país está entre Canadá y México?', 3, 2, 0, 0, 0, 0),
 ('¿Qué país tiene la forma de una bota?', 3, 2, 0, 0, 0, 0),
 
--- Entretenimiento
+
 ('¿Quién interpretó a Jack Sparrow en "Piratas del Caribe"?', 4, 2, 0, 0, 0, 0),
 ('¿En qué año se estrenó la película "Titanic"?', 4, 2, 0, 0, 0, 0),
 ('¿Qué superhéroe es conocido como el "Hombre Araña"?', 4, 2, 0, 0, 0, 0),
@@ -140,7 +141,7 @@ VALUES
 ('¿Qué personaje de "Friends" es paleontólogo?', 4, 2, 0, 0, 0, 0),
 ('¿Quién es el autor de las novelas "Harry Potter"?', 4, 2, 0, 0, 0, 0),
 
--- Deportes
+
 ('¿Cuántos jugadores hay en un equipo de fútbol?', 5, 2, 0, 0, 0, 0),
 ('¿En qué año se celebraron los primeros Juegos Olímpicos modernos?', 5, 2, 0, 0, 0, 0),
 ('¿En qué país nació Lionel Messi?', 5, 2, 0, 0, 0, 0),
@@ -152,7 +153,7 @@ VALUES
 ('¿Qué país ha ganado más Copas Mundiales de fútbol?', 5, 2, 0, 0, 0, 0),
 ('¿En qué equipo de fútbol jugaba Diego Maradona cuando ganó la Copa del Mundo en 1986?', 5, 2, 0, 0, 0, 0),
 
--- Arte
+
 ('¿Quién pintó "La Mona Lisa"?', 6, 2, 0, 0, 0, 0),
 ('¿En qué país se encuentra el Museo del Louvre?', 6, 2, 0, 0, 0, 0),
 ('¿Qué estilo de arte es conocido por sus formas geométricas?', 6, 2, 0, 0, 0, 0),
@@ -164,7 +165,7 @@ VALUES
 ('¿Qué movimiento artístico es Salvador Dalí famoso por representar?', 6, 2, 0, 0, 0, 0),
 ('¿En qué país nació Pablo Picasso?', 6, 2, 0, 0, 0, 0),
 
--- Mitología
+
 ('¿Quién es el dios del trueno en la mitología nórdica?', 7, 2, 0, 0, 0, 0),
 ('¿Qué criatura mitológica tiene la cabeza de un toro y el cuerpo de un hombre?', 7, 2, 0, 0, 0, 0),
 ('¿Cuál es el nombre del dios griego del mar?', 7, 2, 0, 0, 0, 0),
@@ -176,7 +177,7 @@ VALUES
 ('¿Qué criatura mitológica tenía el cuerpo de una cabra, la cabeza de un león y la cola de una serpiente?', 7, 2, 0, 0, 0, 0),
 ('¿Quién es el dios del vino en la mitología griega?', 7, 2, 0, 0, 0, 0),
 
--- Tecnología
+
 ('¿Quién es el fundador de Microsoft?', 8, 2, 0, 0, 0, 0),
 ('¿Qué significa "www" en una dirección web?', 8, 2, 0, 0, 0, 0),
 ('¿Qué dispositivo se utiliza para medir la temperatura corporal?', 8, 2, 0, 0, 0, 0),
@@ -190,7 +191,7 @@ VALUES
 
 INSERT INTO respuesta (pregunta_FK, respuesta, es_correcta)
 VALUES
--- Respuestas de Ciencia (pregunta_FK = 1 a 10)
+(pregunta_FK = 1 a 10)
 (1, 'Mercurio', 1),
 (1, 'Venus', 0),
 (1, 'Tierra', 0),
@@ -241,7 +242,7 @@ VALUES
 (10, 'Stephen Hawking', 0),
 (10, 'Galileo Galilei', 0),
 
--- Respuestas de Historia (pregunta_FK = 11 a 20)
+(pregunta_FK = 11 a 20)
 (11, 'George Washington', 1),
 (11, 'Abraham Lincoln', 0),
 (11, 'Thomas Jefferson', 0),
@@ -292,7 +293,7 @@ VALUES
 (20, 'Tratado de Ginebra', 0),
 (20, 'Tratado de Potsdam', 0),
 
--- Respuestas de Geografía (pregunta_FK = 21 a 30)
+(pregunta_FK = 21 a 30)
 (21, 'Nilo', 1),
 (21, 'Amazonas', 0),
 (21, 'Yangtsé', 0),
@@ -342,7 +343,7 @@ VALUES
 (30, 'Grecia', 0),
 (30, 'Francia', 0),
 (30, 'España', 0),
--- Respuestas de Entretenimiento (pregunta_FK = 31 a 40)
+(pregunta_FK = 31 a 40)
 (31, 'Robert Downey Jr.', 1),
 (31, 'Chris Evans', 0),
 (31, 'Chris Hemsworth', 0),
@@ -393,7 +394,7 @@ VALUES
 (40, 'Quentin Tarantino', 0),
 (40, 'James Cameron', 0),
 
--- Respuestas de Deportes (pregunta_FK = 41 a 50)
+(pregunta_FK = 41 a 50)
 (41, 'Brasil', 1),
 (41, 'Alemania', 0),
 (41, 'Argentina', 0),
@@ -444,7 +445,7 @@ VALUES
 (50, 'Lionel Messi', 0),
 (50, 'Cristiano Ronaldo', 0),
 
--- Respuestas de Arte (pregunta_FK = 51 a 60)
+(pregunta_FK = 51 a 60)
 (51, 'Leonardo da Vinci', 1),
 (51, 'Miguel Ángel', 0),
 (51, 'Vincent van Gogh', 0),
@@ -495,7 +496,7 @@ VALUES
 (60, 'Moisés', 0),
 (60, 'Baco', 0),
 
--- Respuestas de Mitología (pregunta_FK = 61 a 70)
+(pregunta_FK = 61 a 70)
 (61, 'Poseidón', 1),
 (61, 'Zeus', 0),
 (61, 'Hades', 0),
@@ -546,7 +547,7 @@ VALUES
 (70, 'Grifo', 0),
 (70, 'Sátiro', 0),
 
--- Respuestas de Tecnología (pregunta_FK = 71 a 80)
+(pregunta_FK = 71 a 80)
 (71, 'Bill Gates', 1),
 (71, 'Steve Jobs', 0),
 (71, 'Elon Musk', 0),
