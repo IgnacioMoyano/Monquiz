@@ -5,6 +5,10 @@ class PerfilController{
     //su perfil.
     private $model;
     private $presenter;
+
+
+
+
     public function __construct($model, $presenter){
         $this->model = $model;
         $this->presenter = $presenter;
@@ -14,13 +18,43 @@ class PerfilController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
-        $username = $_SESSION['username'];
-        $datosPerfil = $this->model->getPerfil($username);
+
+        $userLogueado = $_SESSION['username'];
+        $datosUsuarioLogueado = $this->model->getPerfil($userLogueado);
+
+
+        if (isset($_GET['username'])) {
+            $usernamePerfil = $_GET['username'];
+        } else {
+            $usernamePerfil = $userLogueado;
+        }
+
+        $datosPerfil = $this->model->getPerfil($usernamePerfil);
+
         if (empty($datosPerfil)) {
             echo "No se encontraron datos para el usuario.";
             exit();
         }
+
         $perfil = $datosPerfil[0];
-        $this->presenter->show('perfil', $perfil);
+
+        $url = "http://localhost/Monquiz/app/perfil/mostrarPerfil?username=$usernamePerfil";
+
+        $path = 'D:/XAMPP/htdocs/Monquiz/app/public/qr/';
+        $fileName = 'qrcode_' . $usernamePerfil . '.png';
+        $savePath = $path . $fileName;
+        QRcode::png($url, $savePath, QR_ECLEVEL_L, 4);
+
+        $qrPath = "/Monquiz/app/public/qr/" . $fileName;
+
+        $data = [
+            'user' => $userLogueado,
+            'perfil' => $perfil,
+            'imagenUsuarioLogueado' => $datosUsuarioLogueado[0]['imagen'],
+            'qrCodePath' => $qrPath
+
+        ];
+
+        $this->presenter->show('perfil', $data);
     }
 }
