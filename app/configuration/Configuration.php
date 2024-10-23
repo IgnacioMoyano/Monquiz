@@ -6,7 +6,8 @@ include_once("helper/Router.php");
 include_once("helper/MustachePresenter.php");
 include_once("helper/EmailSender.php");
 
-
+include_once("controller/PerfilController.php");
+include_once("model/PerfilModel.php");
 
 
 include_once("controller/UsuarioController.php");

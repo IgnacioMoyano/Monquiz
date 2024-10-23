@@ -88,8 +88,4 @@ class UsuarioModel
         return isset($result[0]) ? $result[0]['token'] : null; // Devuelve el token o null
     }
 
-    public function getPerfil($username) {
-        $sql = "SELECT username, correo, fecha_nac, genero, pais,ciudad, imagen FROM usuario WHERE username = '$username'";
-        return $this->database->query($sql);
-    }
 }
