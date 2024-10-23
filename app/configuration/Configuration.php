@@ -6,6 +6,8 @@ include_once("helper/Router.php");
 include_once("helper/MustachePresenter.php");
 include_once("helper/EmailSender.php");
 
+include_once("controller/LobbyController.php");
+include_once("model/LobbyModel.php");
 
 
 
@@ -32,6 +34,10 @@ class Configuration
 
     public function getPerfilController() {
         return new PerfilController($this->getPerfilModel(), $this->getPresenter());
+    }
+
+    public function getLobbyController() {
+        return new LobbyController($this->getLobbyModel(), $this->getPresenter());
     }
 
     private function getPerfilModel(){
@@ -72,6 +78,10 @@ class Configuration
         return new UsuarioModel($this->getDatabase());
     }
 
+    private function getLobbyModel()
+    {
+        return new LobbyModel($this->getDatabase());
+    }
 
 
 }

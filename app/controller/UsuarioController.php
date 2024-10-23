@@ -57,10 +57,13 @@ class UsuarioController
 
         if ($validation) {
             $_SESSION['username'] = $username;
+            $userId = $this->model->getUserIdByEmail($username);
+            $_SESSION['userId'] = $userId;
+
         }
 
 
-        header('location: /Monquiz/app/usuario/mostrarPerfil');
+        header('location: /Monquiz/app/lobby/mostrarLobby/');
         exit();
     }
 
