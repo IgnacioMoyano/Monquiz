@@ -61,7 +61,7 @@ class UsuarioController
         }
 
 
-        header('location: /Monquiz/app/usuario/mostrarPerfil');
+        header('location: /Monquiz/app/perfil/mostrarPerfil');
         exit();
     }
 
