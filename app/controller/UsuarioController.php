@@ -102,30 +102,6 @@ class UsuarioController
 
     }
 
-    public function mostrarPerfil() {
 
-
-
-        if (!isset($_SESSION['username'])) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-
-        $username = $_SESSION['username'];
-        $datosPerfil = $this->model->getPerfil($username);
-
-
-        if (empty($datosPerfil)) {
-            echo "No se encontraron datos para el usuario.";
-            exit();
-        }
-
-        $perfil = $datosPerfil[0];
-
-
-
-
-        $this->presenter->show('perfil', $perfil);
-    }
 
 }
