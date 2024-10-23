@@ -14,13 +14,33 @@ class PerfilController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
-        $username = $_SESSION['username'];
-        $datosPerfil = $this->model->getPerfil($username);
+
+        $userLogueado = $_SESSION['username'];
+        $datosUsuarioLogueado = $this->model->getPerfil($userLogueado);
+
+
+        if (isset($_GET['username'])) {
+            $usernamePerfil = $_GET['username'];
+        } else {
+            $usernamePerfil = $userLogueado;
+        }
+
+        $datosPerfil = $this->model->getPerfil($usernamePerfil);
+
         if (empty($datosPerfil)) {
             echo "No se encontraron datos para el usuario.";
             exit();
         }
+
         $perfil = $datosPerfil[0];
-        $this->presenter->show('perfil', $perfil);
+
+
+        $data = [
+            'user' => $userLogueado,
+            'perfil' => $perfil,
+            'imagenUsuarioLogueado' => $datosUsuarioLogueado[0]['imagen']
+        ];
+
+        $this->presenter->show('perfil', $data);
     }
 }
