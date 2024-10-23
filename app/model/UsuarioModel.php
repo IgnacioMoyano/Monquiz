@@ -13,14 +13,14 @@ class UsuarioModel
         return $pass == $pass2;
     }
 
-    public function createUser($name, $pass, $email, $fecha_nac, $genero, $direccion, $foto, $username,$validado,$token){
+    public function createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username,$validado,$token){
 
 
         if ($foto && $this->validarMoverFoto($foto)){
 
             $imagen_nombre = $foto['name'];
-            $sql = "INSERT INTO usuario (name, imagen,password, correo, fecha_nac, genero, direccion, username,validado,token) 
-                VALUES ('" . $name . "', '/Monquiz/app/public/images/fotosPerfil/" . $imagen_nombre . "', '" . $pass . "', '" . $email . "', '" . $fecha_nac . "', '" . $genero . "', '" . $direccion . "', '" . $username . "', '" . $validado . "', '" . $token . "');";
+            $sql = "INSERT INTO usuario (name, imagen,password, correo, fecha_nac, genero, pais, ciudad, username,validado,token) 
+                VALUES ('" . $name . "', '/Monquiz/app/public/images/fotosPerfil/" . $imagen_nombre . "', '" . $pass . "', '" . $email . "', '" . $fecha_nac . "', '" . $genero . "', '" . $pais . "', '" . $ciudad . "', '" . $username . "', '" . $validado . "', '" . $token . "');";
 
             return $this->database->execute($sql);
         }
@@ -89,7 +89,7 @@ class UsuarioModel
     }
 
     public function getPerfil($username) {
-        $sql = "SELECT username, correo, fecha_nac, genero, direccion, imagen FROM usuario WHERE username = '$username'";
+        $sql = "SELECT username, correo, fecha_nac, genero, pais,ciudad, imagen FROM usuario WHERE username = '$username'";
         return $this->database->query($sql);
     }
 }
