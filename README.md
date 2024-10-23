@@ -191,7 +191,7 @@ VALUES
 
 INSERT INTO respuesta (pregunta_FK, respuesta, es_correcta)
 VALUES
-(pregunta_FK = 1 a 10)
+
 (1, 'Mercurio', 1),
 (1, 'Venus', 0),
 (1, 'Tierra', 0),
@@ -242,7 +242,7 @@ VALUES
 (10, 'Stephen Hawking', 0),
 (10, 'Galileo Galilei', 0),
 
-(pregunta_FK = 11 a 20)
+
 (11, 'George Washington', 1),
 (11, 'Abraham Lincoln', 0),
 (11, 'Thomas Jefferson', 0),
@@ -293,7 +293,7 @@ VALUES
 (20, 'Tratado de Ginebra', 0),
 (20, 'Tratado de Potsdam', 0),
 
-(pregunta_FK = 21 a 30)
+
 (21, 'Nilo', 1),
 (21, 'Amazonas', 0),
 (21, 'Yangtsé', 0),
@@ -343,7 +343,7 @@ VALUES
 (30, 'Grecia', 0),
 (30, 'Francia', 0),
 (30, 'España', 0),
-(pregunta_FK = 31 a 40)
+
 (31, 'Robert Downey Jr.', 1),
 (31, 'Chris Evans', 0),
 (31, 'Chris Hemsworth', 0),
@@ -394,7 +394,7 @@ VALUES
 (40, 'Quentin Tarantino', 0),
 (40, 'James Cameron', 0),
 
-(pregunta_FK = 41 a 50)
+
 (41, 'Brasil', 1),
 (41, 'Alemania', 0),
 (41, 'Argentina', 0),
@@ -445,7 +445,7 @@ VALUES
 (50, 'Lionel Messi', 0),
 (50, 'Cristiano Ronaldo', 0),
 
-(pregunta_FK = 51 a 60)
+
 (51, 'Leonardo da Vinci', 1),
 (51, 'Miguel Ángel', 0),
 (51, 'Vincent van Gogh', 0),
@@ -496,7 +496,7 @@ VALUES
 (60, 'Moisés', 0),
 (60, 'Baco', 0),
 
-(pregunta_FK = 61 a 70)
+
 (61, 'Poseidón', 1),
 (61, 'Zeus', 0),
 (61, 'Hades', 0),
@@ -547,7 +547,7 @@ VALUES
 (70, 'Grifo', 0),
 (70, 'Sátiro', 0),
 
-(pregunta_FK = 71 a 80)
+
 (71, 'Bill Gates', 1),
 (71, 'Steve Jobs', 0),
 (71, 'Elon Musk', 0),
