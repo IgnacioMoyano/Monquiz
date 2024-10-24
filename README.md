@@ -89,7 +89,7 @@ INSERT INTO estado (descripcion) VALUES
 ('aprobada'),
 ('rechazada'),
 ('reportada'),
-('descativada')
+('descativada');
 
 INSERT INTO pregunta (pregunta, categoria_FK, estado_FK, reportada, creada_usuarios, cantidad_vista, cantidad_correctas)
 VALUES
@@ -403,7 +403,7 @@ VALUES
 (42, 'Michael Jordan', 1),
 (42, 'Kobe Bryant', 0),
 (42, 'LeBron James', 0),
-(42, 'Shaquille O\'Neal', 0),
+(42, 'Shaquille O Neal', 0),
 
 (43, 'Fórmula 1', 1),
 (43, 'MotoGP', 0),
