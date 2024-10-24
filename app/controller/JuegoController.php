@@ -9,6 +9,10 @@ class JuegoController{
 
     public function mostrar()
     {
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
         $this->presenter->show('ruleta');
     }
 
@@ -18,6 +22,10 @@ class JuegoController{
     }
 
     public function resultado() {
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
 
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
