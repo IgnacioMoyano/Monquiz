@@ -14,7 +14,7 @@ include_once("model/PerfilModel.php");
 include_once("controller/UsuarioController.php");
 include_once("model/UsuarioModel.php");
 
-
+include_once("controller/JuegoController.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 include_once('vendor/phpqrcode/qrlib.php');
@@ -26,6 +26,10 @@ class Configuration
 
     public function getPokedexController(){
         return new PokedexController($this->getPokedexModel(), $this->getPresenter());
+    }
+
+    public function getJuegoController(){
+        return new JuegoController($this->getPresenter());
     }
 
     public function getUsuarioController(){
