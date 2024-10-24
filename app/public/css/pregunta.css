@@ -1,0 +1,45 @@
+body{
+    background-image: url("../images/fondos/PARTIDA.jpeg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.conteiner{
+    background-color: #FE9301;
+    width: 50%;
+    margin: 1% auto;
+}
+
+.conteinerPregunta{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.mono{
+    width: 25%;
+}
+
+
+.conteinerRespuesta{
+    display: flex;
+    flex-direction: column;
+}
+
+.conteinerRespuesta button{
+    width: 90%;
+    margin: 1% auto;
+    background-color: #422F25;
+    border: none;
+    color: white;
+    padding: 1% 0;
+}
+
+.conteinerRespuesta button:hover{
+    cursor: pointer;
+    background-color: #FE9301;
+    color: #422F25;
+    border: 1px solid #422F25;
+}

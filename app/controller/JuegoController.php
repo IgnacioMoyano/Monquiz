@@ -12,6 +12,11 @@ class JuegoController{
         $this->presenter->show('ruleta');
     }
 
+    public function mostrarPregunta()
+    {
+        $this->presenter->show('pregunta');
+    }
+
     public function resultado() {
 
         $jsonData = file_get_contents('php://input');
@@ -37,4 +42,20 @@ class JuegoController{
 
     }
 
+    public function validarRespuesta()
+    {
+        $valorRespuesta = isset($_POST['respuesta']) ? $_POST['respuesta'] : null;
+
+        if ($valorRespuesta != null && $valorRespuesta == 'lionel') {
+        echo json_encode([
+            'status' => 'success',
+            'mensaje' => 'Respuesta correcta'
+        ]);
+        } else {
+        echo json_encode([
+            'status' => 'error',
+            'mensaje' => 'Respuesta incorrecta'
+        ]);
+        }
+    }
 }
