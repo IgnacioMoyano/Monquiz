@@ -89,7 +89,7 @@ INSERT INTO estado (descripcion) VALUES
 ('aprobada'),
 ('rechazada'),
 ('reportada'),
-('descativada')
+('descativada');
 
 INSERT INTO pregunta (pregunta, categoria_FK, estado_FK, reportada, creada_usuarios, cantidad_vista, cantidad_correctas)
 VALUES
