@@ -1,0 +1,6 @@
+To: asdsad@gmail.com
+Subject: Validación de cuenta
+Body:
+Gracias por registrarte. Por favor, valida tu cuenta haciendo clic en el siguiente enlace.
+
+Validation URL: http://localhost/Monquiz/app/usuario/validar?id=1&token=1738

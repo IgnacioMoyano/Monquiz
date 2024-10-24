@@ -1,0 +1,20 @@
+body{
+    background-image: url("../images/fondos/PARTIDA.jpeg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.conteiner{
+    display: flex;
+
+    position: relative;
+}
+
+.mono{
+    position: absolute;
+    right: 70em;
+    top: 1em;
+    height: 100%;
+    pointer-events: none;
+}

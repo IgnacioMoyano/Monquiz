@@ -1,5 +1,8 @@
 body{
     background-image: url("../images/fondos/REGISTER.jpeg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .registerConteiner{
@@ -34,16 +37,16 @@ button{
 
 .mono{
     transform: scaleX(-1);
-    max-width: 70%; /* Asegura que la imagen no se salga de su columna */
-    height: auto; /* Mantiene la proporción de la imagen */
-    pointer-events: none; /* Evita que la imagen sea clickeable */
+    max-width: 70%;
+    height: auto;
+    pointer-events: none;
 }
 
 .body{
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas iguales (50% cada una) */
-    width: 100%; /* Asegura que ocupe todo el ancho disponible */
-    align-items: center; /* Alinea verticalmente el contenido */
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    align-items: center;
 }
 
 

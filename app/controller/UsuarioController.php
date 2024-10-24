@@ -21,7 +21,8 @@ class UsuarioController
         $email = $_POST['email'];
         $fecha_nac = $_POST['fecha_nac'];
         $genero = $_POST['genero'];
-        $direccion = $_POST['direccion'];
+        $pais = $_POST['direccion'];
+        $ciudad = $_POST['direccion'];
         $username = $_POST['username'];
         $pass2 = $_POST['rep_password'];
         $foto = $_FILES['foto_perfil'] ?? null;
@@ -29,13 +30,13 @@ class UsuarioController
         $validado = 0;
 
         if ($this->model->validatePassword($pass, $pass2)){
-            $validation = $this->model->createUser($name, $pass, $email, $fecha_nac, $genero, $direccion, $foto, $username,$validado,$token);
+            $validation = $this->model->createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username,$validado,$token);
 
             if ($validation) {
                 $_SESSION['username'] = $username;
 
                 $userId = $this->model->getUserIdByEmail($username);
-                $subject = "Validación de cuenta";
+                $subject = "Validacion de cuenta";
                 $body = "Gracias por registrarte. Por favor, valida tu cuenta haciendo clic en el siguiente enlace.\n";
 
                 $this->emailSender->send($email, $subject, $body, $userId, $token);
@@ -57,13 +58,10 @@ class UsuarioController
 
         if ($validation) {
             $_SESSION['username'] = $username;
-            $userId = $this->model->getUserIdByEmail($username);
-            $_SESSION['userId'] = $userId;
-
         }
 
 
-        header('location: /Monquiz/app/lobby/mostrarLobby/');
+        header('location: /Monquiz/app/perfil/mostrarPerfil');
         exit();
     }
 
@@ -104,30 +102,6 @@ class UsuarioController
 
     }
 
-    public function mostrarPerfil() {
 
-
-
-        if (!isset($_SESSION['username'])) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-
-        $username = $_SESSION['username'];
-        $datosPerfil = $this->model->getPerfil($username);
-
-
-        if (empty($datosPerfil)) {
-            echo "No se encontraron datos para el usuario.";
-            exit();
-        }
-
-        $perfil = $datosPerfil[0];
-
-
-
-
-        $this->presenter->show('perfil', $perfil);
-    }
 
 }
