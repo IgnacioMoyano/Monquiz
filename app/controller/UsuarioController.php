@@ -36,7 +36,7 @@ class UsuarioController
                 $_SESSION['username'] = $username;
 
                 $userId = $this->model->getUserIdByEmail($username);
-                $subject = "Validación de cuenta";
+                $subject = "Validacion de cuenta";
                 $body = "Gracias por registrarte. Por favor, valida tu cuenta haciendo clic en el siguiente enlace.\n";
 
                 $this->emailSender->send($email, $subject, $body, $userId, $token);
