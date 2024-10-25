@@ -18,24 +18,39 @@ class JuegoController{
         $this->presenter->show('ruleta');
     }
 
-    public function mostrarPregunta()
-    {
+    public function mostrarPregunta() {
         $resultado_ruleta = $_SESSION['resultado_ruleta'];
 
 
-       $categoria = $this->model->traerCategoria($resultado_ruleta);
-
-        if ($categoria) {
-            $data = [
-                'resultado_ruleta' => $_SESSION['resultado_ruleta'],
-                'descripcion' => $categoria['descripcion'],
-                'color' => $categoria['color']
-            ];
-
-            $this->presenter->show('pregunta', $data);
-        } else {
-            echo "Categoría no encontrada";
+        $pregunta = $this->model->traerPregunta($resultado_ruleta);
+        if (!$pregunta) {
+            echo "Pregunta no encontrada.";
+            return;
         }
+
+        $respuestas = $this->model->traerRespuesta($pregunta['id']);
+        if ($respuestas === null) {
+            echo "No se encontraron respuestas.";
+            return;
+        }
+
+        $categoria = $this->model->traerCategoria($resultado_ruleta);
+        if (!$categoria) {
+            echo "Categoría no encontrada.";
+            return;
+        }
+
+
+        $data = [
+            'resultado_ruleta' => $_SESSION['resultado_ruleta'],
+            'descripcion' => $categoria['descripcion'],
+            'color' => $categoria['color'],
+            'pregunta' => $pregunta['pregunta'],
+            'respuestas' => $respuestas
+        ];
+
+        // Muestra la vista con los datos
+        $this->presenter->show('pregunta', $data);
     }
 
     public function resultado() {
