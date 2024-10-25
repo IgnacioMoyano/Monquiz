@@ -32,6 +32,8 @@ class JuegoController{
         if ($respuestas === null) {
             echo "No se encontraron respuestas.";
             return;
+        } else{
+            shuffle($respuestas);
         }
 
         $categoria = $this->model->traerCategoria($resultado_ruleta);
@@ -87,17 +89,24 @@ class JuegoController{
 
     public function validarRespuesta()
     {
-        $valorRespuesta = isset($_POST['respuesta']) ? $_POST['respuesta'] : null;
+        $idRespuesta = isset($_POST['respuesta']) ? $_POST['respuesta'] : null;
 
-        if ($valorRespuesta != null && $valorRespuesta == 'lionel') {
+        $respuestaCorrecta = $this->model->respuestaCorrecta($idRespuesta);
+
+        if ($idRespuesta == $respuestaCorrecta['id']) {
         echo json_encode([
+            'respuesta correcta' => $respuestaCorrecta['id'],
+            'id respuesta enviada' => $idRespuesta,
             'status' => 'success',
-            'mensaje' => 'Respuesta correcta'
+            'mensaje' => 'Respuesta correcta',
         ]);
         } else {
         echo json_encode([
+           'respuesta correcta' => $respuestaCorrecta['id'],
+            'id respuesta enviada' => $idRespuesta,
             'status' => 'error',
-            'mensaje' => 'Respuesta incorrecta'
+            'mensaje' => 'Respuesta incorrecta',
+            
         ]);
         }
     }

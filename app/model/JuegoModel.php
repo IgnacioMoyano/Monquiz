@@ -37,5 +37,14 @@ class JuegoModel
         return $result[0] ?? null;
     }
 
+    public function respuestaCorrecta($idRespuesta){
+        $sql = "SELECT id FROM respuesta WHERE id = $idRespuesta and es_correcta = 1 ";
+
+        $result = $this->database->query($sql);
+
+        return $result[0] ?? null;
+
+
+    }
 
 }
