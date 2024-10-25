@@ -50,13 +50,19 @@ function wheelOfFortune(selector) {
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Respuesta del servidor:', data);
+                    if (data.status === 'success') {
+                        setTimeout(function (){
+                            window.location.href = '/Monquiz/app/juego/mostrarPregunta';
+                        }, 500);
+
+                    } else {
+                        console.error('Error:', data.mensaje);
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 })
                 .finally(() => {
-
                     spin.disabled = false;
                 });
         };
