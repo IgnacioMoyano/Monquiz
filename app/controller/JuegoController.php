@@ -3,8 +3,10 @@
 class JuegoController{
 
     private $presenter;
-    public function __construct($presenter){
+    private $model;
+    public function __construct($model, $presenter){
         $this->presenter = $presenter;
+        $this->model = $model;
     }
 
     public function mostrar()
@@ -18,11 +20,22 @@ class JuegoController{
 
     public function mostrarPregunta()
     {
-        $data = [
-            'resultado_ruleta' => $_SESSION['resultado_ruleta']
-        ];
+        $resultado_ruleta = $_SESSION['resultado_ruleta'];
 
-        $this->presenter->show('pregunta', $data);
+
+       $categoria = $this->model->traerCategoria($resultado_ruleta);
+
+        if ($categoria) {
+            $data = [
+                'resultado_ruleta' => $_SESSION['resultado_ruleta'],
+                'descripcion' => $categoria['descripcion'],
+                'color' => $categoria['color']
+            ];
+
+            $this->presenter->show('pregunta', $data);
+        } else {
+            echo "Categoría no encontrada";
+        }
     }
 
     public function resultado() {
