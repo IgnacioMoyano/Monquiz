@@ -39,7 +39,7 @@ function wheelOfFortune(selector) {
             console.log('Casilla seleccionada:', selectedValue);
 
 
-            fetch('/Monquiz/app/juego/resultado', {
+            fetch('/Monquiz/app/partida/resultado', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ function wheelOfFortune(selector) {
                 .then(data => {
                     if (data.status === 'success') {
                         setTimeout(function (){
-                            window.location.href = '/Monquiz/app/juego/mostrarPregunta';
+                            window.location.href = '/Monquiz/app/partida/mostrarPregunta';
                         }, 500);
 
                     } else {

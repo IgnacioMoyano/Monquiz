@@ -6,16 +6,15 @@
 
         <img src="/Monquiz/app/public/images/monos/mono_deporte.png" alt="mono deporte" class="mono">
 
-        <h3> Como se llama Messi?</h3>
+        <h3> {{pregunta}}</h3>
 
     </div>
 
     <div>
-        <form action="/Monquiz/app/juego/validarRespuesta" method="post" class="conteinerRespuesta">
-            <button type="submit" name="respuesta" value="emiliano">Emiliano</button>
-            <button type="submit" name="respuesta" value="igna">Igna</button>
-            <button type="submit" name="respuesta" value="nico">Nico</button>
-            <button type="submit" name="respuesta" value="lionel">Lionel</button>
+        <form action="/Monquiz/app/partida/validarRespuesta" method="post" class="conteinerRespuesta">
+            {{#respuestas}}
+                <button type="submit" name="respuesta" value="{{id}}">{{respuesta}}</button>
+            {{/respuestas}}
         </form>
     </div>
 </div>

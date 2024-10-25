@@ -14,8 +14,14 @@ include_once("model/PerfilModel.php");
 include_once("controller/UsuarioController.php");
 include_once("model/UsuarioModel.php");
 
-include_once("controller/JuegoController.php");
-include_once("model/JuegoModel.php");
+include_once("controller/PartidaController.php");
+include_once("model/PartidaModel.php");
+
+include_once("controller/LobbyController.php");
+include_once("model/LobbyModel.php");
+
+include_once("controller/RankingController.php");
+include_once("model/RankingModel.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 include_once('vendor/phpqrcode/qrlib.php');
@@ -29,8 +35,8 @@ class Configuration
         return new PokedexController($this->getPokedexModel(), $this->getPresenter());
     }
 
-    public function getJuegoController(){
-        return new JuegoController($this->getJuegoModel() ,$this->getPresenter());
+    public function getPartidaController(){
+        return new PartidaController($this->getPartidaModel() ,$this->getPresenter());
     }
 
     public function getUsuarioController(){
@@ -41,13 +47,30 @@ class Configuration
         return new PerfilController($this->getPerfilModel(), $this->getPresenter());
     }
 
+    public function getLobbyController(){
+        return new LobbyController($this->getLobbyModel(), $this->getPresenter());
+    }
+
+    public function getRankingController(){
+        return new RankingController($this->getRankingModel(), $this->getPresenter());
+    }
+
     private function getPerfilModel(){
         return new PerfilModel($this->getDatabase());
     }
 
-    private function getJuegoModel(){
-        return new JuegoModel($this->getDatabase());
+    private function getPartidaModel(){
+        return new PartidaModel($this->getDatabase());
     }
+
+    private function getLobbyModel(){
+        return new LobbyModel($this->getDatabase());
+    }
+
+    private function getRankingModel(){
+        return new RankingModel($this->getDatabase());
+    }
+
 
     private function getPokedexModel()
     {
