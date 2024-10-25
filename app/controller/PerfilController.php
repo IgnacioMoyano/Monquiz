@@ -49,10 +49,16 @@ class PerfilController{
 
         $data = [
             'user' => $userLogueado,
-            'perfil' => $perfil,
-            'imagenUsuarioLogueado' => $datosUsuarioLogueado[0]['imagen'],
+            'perfil' => [
+                'username' => $perfil['username'] ?? 'Usuario no disponible',
+                'imagen' => $perfil['imagen'] ?? '/Monquiz/app/public/images/fotosPerfil/Designer.jpeg',
+                'correo' => $perfil['correo'] ?? 'Correo no disponible',
+                'fecha_nac' => $perfil['fecha_nac'] ?? 'Fecha no disponible',
+                'genero' => $perfil['genero'] ?? 'No especificado',
+                'ciudad' => $perfil['ciudad'] ?? 'Dirección no disponible'
+            ],
+            'imagenUsuarioLogueado' => $datosUsuarioLogueado[0]['imagen'] ?? '/Monquiz/app/public/images/fotosPerfil/Designer.jpeg',
             'qrCodePath' => $qrPath
-
         ];
 
         $this->presenter->show('perfil', $data);

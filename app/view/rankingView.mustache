@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="/Monquiz/app/public/css/ranking.css">
+<div class="fondo">
+    <div class="ranking-mundial">
+        <div class="tabla-contenido">
+            <h1 class="titulo-ranking">{{ ranking_mundial_titulo }}</h1>
+            <table class="tabla-ranking">
+                {{#ranking_mundial}}
+                    <tr>
+                        <td>{{usuario}}</td>
+                        <td>{{puntos}}</td>
+                    </tr>
+                {{/ranking_mundial}}
+            </table>
+        </div>
+    </div>
+
+    <div class="historial">
+        <div class="tabla-contenido">
+            <h1 class="titulo-historial">{{ historial_titulo }}</h1>
+            <table class="tabla-historial">
+                {{#historial}}
+                    <tr>
+                        <td>{{fecha}}</td>
+                        <td>{{evento}}</td>
+                    </tr>
+                {{/historial}}
+            </table>
+        </div>
+    </div>
+</div>
