@@ -6,20 +6,16 @@ include_once("helper/Router.php");
 include_once("helper/MustachePresenter.php");
 include_once("helper/EmailSender.php");
 
-include_once("controller/LobbyController.php");
-include_once("model/LobbyModel.php");
 
 include_once("controller/PerfilController.php");
 include_once("model/PerfilModel.php");
-
-include_once("controller/RankingController.php");
-include_once("model/RankingModel.php");
 
 
 include_once("controller/UsuarioController.php");
 include_once("model/UsuarioModel.php");
 
 include_once("controller/JuegoController.php");
+include_once("model/JuegoModel.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 include_once('vendor/phpqrcode/qrlib.php');
@@ -34,7 +30,7 @@ class Configuration
     }
 
     public function getJuegoController(){
-        return new JuegoController($this->getPresenter());
+        return new JuegoController($this->getJuegoModel() ,$this->getPresenter());
     }
 
     public function getUsuarioController(){
@@ -45,28 +41,18 @@ class Configuration
         return new PerfilController($this->getPerfilModel(), $this->getPresenter());
     }
 
-    public function getLobbyController() {
-        return new LobbyController($this->getLobbyModel(), $this->getPresenter());
-    }
-
-    public function getRankingController(){
-        return new RankingController($this->getRankingModel(), $this->getPresenter());
-    }
-
-
     private function getPerfilModel(){
         return new PerfilModel($this->getDatabase());
     }
 
-    public function getRankingModel(){
-        return new RankingModel($this->getDatabase());
+    private function getJuegoModel(){
+        return new JuegoModel($this->getDatabase());
     }
 
     private function getPokedexModel()
     {
         return new PokedexModel($this->getDatabase());
     }
-
 
 
     private function getPresenter()
@@ -97,10 +83,6 @@ class Configuration
         return new UsuarioModel($this->getDatabase());
     }
 
-    private function getLobbyModel()
-    {
-        return new LobbyModel($this->getDatabase());
-    }
 
 
 }
