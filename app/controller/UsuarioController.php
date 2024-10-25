@@ -56,10 +56,10 @@ class UsuarioController
 
         $validation = $this->model->validateLogin($username, $pass);
 
-        if ($validation) {
+        if ($validation != null) {
             $_SESSION['username'] = $username;
+            $_SESSION['imagen'] = $validation['imagen'];
         }
-
 
         header('location: /Monquiz/app/perfil/mostrarPerfil');
         exit();

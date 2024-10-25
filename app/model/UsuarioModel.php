@@ -29,14 +29,14 @@ class UsuarioModel
 
     public function validateLogin($user, $pass)
     {
-        $sql = "SELECT 1 
+        $sql = "SELECT imagen, username   
                 FROM usuario 
                 WHERE username = '" . $user. "' 
                 AND password = '" . $pass . "'";
 
         $usuario = $this->database->query($sql);
 
-        return sizeof($usuario) == 1;
+        return $usuario[0] ?? null;
     }
 
     public function validarMoverFoto($foto)

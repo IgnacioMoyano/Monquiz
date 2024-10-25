@@ -15,18 +15,33 @@ class JuegoController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
-        $this->presenter->show('ruleta');
+
+        $imagenUser = $_SESSION['imagen'];
+        $nombreUsuarioSesion = $_SESSION['username'];
+
+        $data = [
+            'imagen' => $imagenUser,
+            'user' => $nombreUsuarioSesion
+        ];
+
+        $this->presenter->show('ruleta', $data);
     }
 
     public function mostrarPregunta()
     {
+
+        $imagenUser = $_SESSION['imagen'];
+        $nombreUsuarioSesion = $_SESSION['username'];
+
+
         $resultado_ruleta = $_SESSION['resultado_ruleta'];
 
-
-       $categoria = $this->model->traerCategoria($resultado_ruleta);
+        $categoria = $this->model->traerCategoria($resultado_ruleta);
 
         if ($categoria) {
             $data = [
+                'imagen' => $imagenUser,
+                'user' => $nombreUsuarioSesion,
                 'resultado_ruleta' => $_SESSION['resultado_ruleta'],
                 'descripcion' => $categoria['descripcion'],
                 'color' => $categoria['color']

@@ -21,4 +21,6 @@ class JuegoModel
 
         return $result[0] ?? null;
     }
+
+
 }

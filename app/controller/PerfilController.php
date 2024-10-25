@@ -19,6 +19,8 @@ class PerfilController{
             exit();
         }
 
+        $imagenUser = $_SESSION['imagen'];
+
         $userLogueado = $_SESSION['username'];
         $datosUsuarioLogueado = $this->model->getPerfil($userLogueado);
 
@@ -50,7 +52,7 @@ class PerfilController{
         $data = [
             'user' => $userLogueado,
             'perfil' => $perfil,
-            'imagenUsuarioLogueado' => $datosUsuarioLogueado[0]['imagen'],
+            'imagen' => $imagenUser,
             'qrCodePath' => $qrPath
 
         ];
