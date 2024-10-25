@@ -12,6 +12,9 @@ include_once("model/LobbyModel.php");
 include_once("controller/PerfilController.php");
 include_once("model/PerfilModel.php");
 
+include_once("controller/RankingController.php");
+include_once("model/RankingModel.php");
+
 
 include_once("controller/UsuarioController.php");
 include_once("model/UsuarioModel.php");
@@ -46,14 +49,24 @@ class Configuration
         return new LobbyController($this->getLobbyModel(), $this->getPresenter());
     }
 
+    public function getRankingController(){
+        return new RankingController($this->getRankingModel(), $this->getPresenter());
+    }
+
+
     private function getPerfilModel(){
         return new PerfilModel($this->getDatabase());
+    }
+
+    public function getRankingModel(){
+        return new RankingModel($this->getDatabase());
     }
 
     private function getPokedexModel()
     {
         return new PokedexModel($this->getDatabase());
     }
+
 
 
     private function getPresenter()
