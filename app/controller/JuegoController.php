@@ -18,7 +18,11 @@ class JuegoController{
 
     public function mostrarPregunta()
     {
-        $this->presenter->show('pregunta');
+        $data = [
+            'resultado_ruleta' => $_SESSION['resultado_ruleta']
+        ];
+
+        $this->presenter->show('pregunta', $data);
     }
 
     public function resultado() {
@@ -34,11 +38,14 @@ class JuegoController{
         if (isset($data['valor'])) {
             $valor = $data['valor'];
 
+            $_SESSION['resultado_ruleta'] = $valor;
+
             echo json_encode([
                 'status' => 'success',
                 'mensaje' => 'Valor recibido correctamente',
                 'valor' => $valor
             ]);
+
         } else {
 
             echo json_encode([
