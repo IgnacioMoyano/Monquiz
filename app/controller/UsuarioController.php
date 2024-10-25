@@ -21,28 +21,26 @@ class UsuarioController
         $email = $_POST['email'];
         $fecha_nac = $_POST['fecha_nac'];
         $genero = $_POST['genero'];
-        $pais = $_POST['direccion'];
-        $ciudad = $_POST['direccion'];
+        $pais = $_POST['pais'];
+        $ciudad = $_POST['ciudad'];
         $username = $_POST['username'];
         $pass2 = $_POST['rep_password'];
         $foto = $_FILES['foto_perfil'] ?? null;
-        $token = random_int(1,10000);
+        $token = random_int(1, 10000);
         $validado = 0;
 
         if ($this->model->validatePassword($pass, $pass2)){
-            $validation = $this->model->createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username,$validado,$token);
+            $validation = $this->model->createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username, $validado, $token);
 
             if ($validation) {
                 $_SESSION['username'] = $username;
 
                 $userId = $this->model->getUserIdByEmail($username);
-                $subject = "Validacion de cuenta";
+                $subject = "Validación de cuenta";
                 $body = "Gracias por registrarte. Por favor, valida tu cuenta haciendo clic en el siguiente enlace.\n";
 
                 $this->emailSender->send($email, $subject, $body, $userId, $token);
             }
-
-
         }
 
         $this->presenter->show("login");

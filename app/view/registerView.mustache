@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/Monquiz/app/public/css/register.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
 <div class="body">
     <div class="registerConteiner">
@@ -30,9 +31,12 @@
             </div>
 
             <div class="campo">
-                <label>Direccion</label>
-                <input class="w3-input w3-border w3-round-large" type="text" name="direccion" required>
+                <label>Selecciona tu ubicación</label>
+                <div id="map" style="height: 300px;"></div>
             </div>
+
+            <input type="hidden" name="pais" id="country">
+            <input type="hidden" name="ciudad" id="city">
 
             <div class="campo">
                 <label>Correo</label>
@@ -65,3 +69,35 @@
     </div>
     <img class="mono" src="/Monquiz/app/public/images/monos/mono_register.png">
 </div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<script>
+    const map = L.map('map').setView([20.5937, 78.9629], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+    }).addTo(map);
+
+    let marker;
+
+    map.on('click', function(e) {
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
+
+        if (marker) {
+            marker.setLatLng([lat, lng]);
+        } else {
+            marker = L.marker([lat, lng]).addTo(map);
+        }
+
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+                .then(response => response.json())
+                .then(data => {
+                    const address = data.address;
+                    document.getElementById('country').value = address.country || '';
+                    document.getElementById('city').value = address.city || address.town || address.village || '';
+                })
+                .catch(error => console.error('Error:', error));
+    });
+</script>
