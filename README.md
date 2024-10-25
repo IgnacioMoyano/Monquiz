@@ -597,3 +597,11 @@ VALUES
 (80, 'CSS', 0),
 (80, 'PHP', 0),
 (80, 'SQL', 0);
+
+CREATE TABLE partida (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    puntuacion INT NOT NULL DEFAULT 0,
+    usuario_FK INT NOT NULL,
+    estado INT NOT NULL DEFAULT 1,
+    FOREIGN KEY (usuario_FK) REFERENCES usuario(id)
+);
