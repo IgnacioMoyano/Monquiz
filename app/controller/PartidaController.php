@@ -1,6 +1,6 @@
 <?php
 
-class JuegoController{
+class PartidaController{
 
     private $presenter;
     private $model;
@@ -15,6 +15,11 @@ class JuegoController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
+
+        $_SESSION['puntuacion'] = 0;
+
+      $this->model->crearPartida($_SESSION['username']);
+
         $this->presenter->show('ruleta');
     }
 
@@ -90,24 +95,20 @@ class JuegoController{
     public function validarRespuesta()
     {
         $idRespuesta = isset($_POST['respuesta']) ? $_POST['respuesta'] : null;
-
+        
         $respuestaCorrecta = $this->model->respuestaCorrecta($idRespuesta);
 
-        if ($idRespuesta == $respuestaCorrecta['id']) {
-        echo json_encode([
-            'respuesta correcta' => $respuestaCorrecta['id'],
-            'id respuesta enviada' => $idRespuesta,
-            'status' => 'success',
-            'mensaje' => 'Respuesta correcta',
-        ]);
+        if ($respuestaCorrecta && isset($respuestaCorrecta['id']) && $idRespuesta == $respuestaCorrecta['id']) {
+            $puntuacion = $_SESSION['puntuacion'];
+
+            $_SESSION['puntuacion'] = $this->model->sumarPuntuacion($puntuacion);
+            $this->presenter->show('ruleta');
         } else {
-        echo json_encode([
-           'respuesta correcta' => $respuestaCorrecta['id'],
-            'id respuesta enviada' => $idRespuesta,
-            'status' => 'error',
-            'mensaje' => 'Respuesta incorrecta',
-            
-        ]);
+            $puntuacion = $_SESSION['puntuacion'];
+            $username = $_SESSION['username'];
+
+            $this->model->finalizarPartida($puntuacion, $username);
+            $this->mostrar();
         }
     }
 }
