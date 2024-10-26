@@ -9,10 +9,6 @@ class UsuarioModel
         $this->database = $database;
     }
 
-    public function validatePassword($pass, $pass2){
-        return $pass == $pass2;
-    }
-
     public function createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username,$validado,$token){
 
 
@@ -88,4 +84,29 @@ class UsuarioModel
         return isset($result[0]) ? $result[0]['token'] : null; // Devuelve el token o null
     }
 
+
+    public function validateFields($name, $pass, $email, $fecha_nac, $username): bool
+    {
+        $fechaHoy = new DateTime();
+
+        $contra = true;
+        $nombreUsuario = true;
+        $nombre = true;
+        $fecha = true;
+
+        if(strlen($pass) <= 10 && !preg_match('/[A-Z]/', $pass) && !preg_match('/[a-z]/', $pass) ){
+            $contra = false;
+        }
+        if(!preg_match('/^[a-zA-Z0-9_]+$/', $username)){
+            $nombreUsuario = false;
+        }
+        if(!preg_match('/^[a-zA-Z]+$/', $username)){
+            $nombre = false;
+        }
+        if ($fecha_nac > $fechaHoy) {
+            $fecha = false;
+        }
+
+        return $contra && $nombreUsuario && $nombre && $fecha;
+    }
 }

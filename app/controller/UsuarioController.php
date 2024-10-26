@@ -29,21 +29,35 @@ class UsuarioController
         $token = random_int(1, 10000);
         $validado = 0;
 
-        if ($this->model->validatePassword($pass, $pass2)){
-            $validation = $this->model->createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username, $validado, $token);
+        if ($this->validatePassword($pass, $pass2)){
 
-            if ($validation) {
-                $_SESSION['username'] = $username;
+            if ($this->model->validateFields($name, $pass, $email, $fecha_nac, $username)) {
 
-                $userId = $this->model->getUserIdByEmail($username);
-                $subject = "Validación de cuenta";
-                $body = "Gracias por registrarte. Por favor, valida tu cuenta haciendo clic en el siguiente enlace.\n";
+                $validationCreateUser = $this->model->createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username, $validado, $token);
 
-                $this->emailSender->send($email, $subject, $body, $userId, $token);
+                if ($validationCreateUser) {
+                    $_SESSION['username'] = $username;
+
+                    $userId = $this->model->getUserIdByEmail($username);
+                    $subject = "Validación de cuenta";
+                    $body = "Gracias por registrarte. Por favor, valida tu cuenta haciendo clic en el siguiente enlace.\n";
+
+                    $this->emailSender->send($email, $subject, $body, $userId, $token);
+                    $this->presenter->show("login");
+                }
+            } else {
+                $data['error'] =  "Faltan campos por completar";
+                $this->presenter->show("register", $data);
             }
+
+        } else {
+
+            $data['error'] =  "Las contraseñas no coinciden";
+
+            $this->presenter->show("register", $data);
         }
 
-        $this->presenter->show("login");
+        $this->presenter->show("register");
         exit();
     }
 
@@ -100,6 +114,10 @@ class UsuarioController
 
     }
 
+    public function validatePassword($pass, $pass2): bool
+    {
+        return $pass == $pass2;
+    }
 
 
 }
