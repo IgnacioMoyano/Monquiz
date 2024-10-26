@@ -59,7 +59,7 @@ class PerfilController{
                 'genero' => $perfil['genero'] ?? 'No especificado',
                 'ciudad' => $perfil['ciudad'] ?? 'Dirección no disponible'
             ],
-            'imagen' => $imagenUserLogueado,
+            'imagenHeader' => $imagenUserLogueado,
             'qrCodePath' => $qrPath
         ];
 

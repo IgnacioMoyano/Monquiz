@@ -59,7 +59,7 @@ class UsuarioController
             $_SESSION['imagen'] = $validation['imagen'];
         }
 
-        header('location: /Monquiz/app/perfil/mostrarPerfil');
+        header('location: /Monquiz/app/lobby/mostrarLobby');
         exit();
     }
 

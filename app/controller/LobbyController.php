@@ -14,8 +14,13 @@ class LobbyController{
     public function mostrarLobby(){
 
        // $puntaje = $this->model->getPuntajeMaximo(1)
+        $data = [
+            'user' => $_SESSION['username'],
+            'imagenHeader' => $_SESSION['imagen']
+        ];
 
-        $this->presenter->show('lobby');
+
+        $this->presenter->show('lobby', $data);
     }
 
 }

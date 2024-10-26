@@ -18,9 +18,15 @@ class PartidaController{
 
         $_SESSION['puntuacion'] = 0;
 
-      $this->model->crearPartida($_SESSION['username']);
 
-        $this->presenter->show('ruleta');
+        $this->model->crearPartida($_SESSION['username']);
+
+        $data = [
+            'user' => $_SESSION['username'],
+            'imagenHeader' => $_SESSION['imagen']
+        ];
+
+        $this->presenter->show('ruleta', $data);
     }
 
     public function mostrarPregunta() {
@@ -47,13 +53,14 @@ class PartidaController{
             return;
         }
 
-
         $data = [
             'resultado_ruleta' => $_SESSION['resultado_ruleta'],
             'descripcion' => $categoria['descripcion'],
             'color' => $categoria['color'],
             'pregunta' => $pregunta['pregunta'],
-            'respuestas' => $respuestas
+            'respuestas' => $respuestas,
+            'user' => $_SESSION['username'],
+            'imagenHeader' => $_SESSION['imagen']
         ];
 
         // Muestra la vista con los datos
