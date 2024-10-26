@@ -40,7 +40,7 @@ class PerfilController{
 
         $url = "http://localhost/Monquiz/app/perfil/mostrarPerfil?username=$usernamePerfil";
 
-        $path = 'D:/XAMPP/htdocs/Monquiz/app/public/qr/';
+        $path = '/XAMPP/htdocs/Monquiz/app/public/qr/';
         $fileName = 'qrcode_' . $usernamePerfil . '.png';
         $savePath = $path . $fileName;
         QRcode::png($url, $savePath, QR_ECLEVEL_L, 4);

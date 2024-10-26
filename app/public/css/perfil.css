@@ -1,8 +1,12 @@
-body{
+body {
+    margin: 0;
+    padding: 0;
     background-image: url("../images/fondos/PERFIL.jpeg");
-    background-repeat: no-repeat;
-    background-position: center;
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw; 
+    overflow-x: hidden;
 }
 
 .body {
@@ -17,7 +21,9 @@ body{
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     text-align: center;
-    width: 300px;
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
 .perfil-imagen {
@@ -34,9 +40,64 @@ body{
 
 .informacion p {
     margin: 10px 0;
+    color: white;
 }
 
 .text-center {
     margin-top: 20px;
 }
 
+@media (max-width: 768px) {
+    .perfilContainer {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .perfil-imagen {
+        width: 120px;
+        height: 120px;
+    }
+
+    .informacion p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .perfilContainer {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .perfil-imagen {
+        width: 100px;
+        height: 100px;
+    }
+
+    .informacion p {
+        font-size: 12px;
+    }
+
+    .text-center {
+        margin-top: 15px;
+    }
+}
+
+@media (max-width: 375px) {
+    body {
+        background-size: cover;
+    }
+
+    .perfilContainer {
+        padding: 8px;
+    }
+
+    .perfil-imagen {
+        width: 90px;
+        height: 90px;
+    }
+
+    .informacion p {
+        font-size: 11px;
+    }
+}
