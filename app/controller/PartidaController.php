@@ -108,7 +108,11 @@ class PartidaController{
             $username = $_SESSION['username'];
 
             $this->model->finalizarPartida($puntuacion, $username);
-            $this->mostrar();
+            header(
+                'Location: /Monquiz/app/lobby/mostrarLobby'
+            ); exit();
+
+
         }
     }
 }
