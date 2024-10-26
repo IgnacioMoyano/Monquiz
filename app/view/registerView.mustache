@@ -32,7 +32,9 @@
 
             <div class="campo">
                 <label>Selecciona tu ubicación</label>
+                <p style="margin: 10px">¡Acerca el mapa para mayor precisión!</p>
                 <div id="map" style="height: 300px;"></div>
+                <p id="location-status"></p>
             </div>
 
             <input type="hidden" name="pais" id="country">
@@ -80,6 +82,7 @@
     }).addTo(map);
 
     let marker;
+    const statusElement = document.getElementById('location-status');
 
     map.on('click', function(e) {
         const lat = e.latlng.lat;
@@ -90,6 +93,8 @@
         } else {
             marker = L.marker([lat, lng]).addTo(map);
         }
+
+        statusElement.textContent = "Cargando ubicación...";
 
         fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
                 .then(response => response.json())
@@ -103,6 +108,8 @@
 
                     if (country && city) {
                         document.getElementById('register-btn').disabled = false;
+                        statusElement.textContent = "Ubicación lista. Puedes continuar con el registro.";
+
                     }
                 })
                 .catch(error => console.error('Error:', error));
