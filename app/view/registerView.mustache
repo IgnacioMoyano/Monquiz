@@ -63,7 +63,7 @@
                 <input class="w3-input w3-border w3-round-large" type="file" name="foto_perfil" required>
             </div>
 
-            <button class="w3-btn  w3-round-xlarge">Registrarse</button>
+            <button class="w3-btn w3-round-xlarge" id="register-btn" disabled>Registrarse</button>
         </form>
 
     </div>
@@ -95,8 +95,15 @@
                 .then(response => response.json())
                 .then(data => {
                     const address = data.address;
-                    document.getElementById('country').value = address.country || '';
-                    document.getElementById('city').value = address.city || address.town || address.village || '';
+                    const country = address.country || '';
+                    const city = address.city || address.town || address.village || '';
+
+                    document.getElementById('country').value = country;
+                    document.getElementById('city').value = city;
+
+                    if (country && city) {
+                        document.getElementById('register-btn').disabled = false;
+                    }
                 })
                 .catch(error => console.error('Error:', error));
     });
