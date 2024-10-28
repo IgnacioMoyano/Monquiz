@@ -15,6 +15,26 @@ class UsuarioModel
 
     public function createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username,$validado,$token){
 
+        if (empty($name) || empty($pass) || empty($email) || empty($fecha_nac) || empty($username)) {
+            return false;
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+
+        if (!preg_match("/^[a-zA-Z\s]+$/", $name) || strlen($name) > 30) {
+            return false;
+        }
+
+        if (!preg_match("/^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/", $pass)) {
+            return false;
+        }
+
+        if(!$this->validarUsuario($email, $username)){
+            return false;
+        }
+
 
         if ($foto && $this->validarMoverFoto($foto)){
 
@@ -86,6 +106,17 @@ class UsuarioModel
         $sql = "SELECT token FROM usuario WHERE id = '$userId'";
         $result = $this->database->query($sql);
         return isset($result[0]) ? $result[0]['token'] : null; // Devuelve el token o null
+    }
+
+    public function validarUsuario($email, $username): bool
+    {
+        $sql = "SELECT COUNT(*) FROM usuario WHERE correo = '$email' OR username = '$username'";
+        $result = $this->database->query($sql);
+
+        if ($result && $result->fetchColumn() > 0) {
+            return false;
+        }
+        return true;
     }
 
 }
