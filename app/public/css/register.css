@@ -3,7 +3,6 @@ body{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    height: 100vh;
 }
 
 .registerConteiner{
@@ -48,6 +47,7 @@ button{
     grid-template-columns: 1fr 1fr;
     width: 100%;
     align-items: center;
+    height: 100vh;
 }
 
 
