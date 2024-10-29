@@ -6,11 +6,18 @@ body{
 
 }
 
+h3{
+    text-align: center;
+}
+
 .conteiner{
-    background-color: #FE9301;
     width: 40%;
+    margin: 5% auto;
+    height: 70%;
+}
+
+.body{
     height: 100vh;
-    margin: 1% auto;
 }
 
 .conteinerPregunta{
@@ -42,7 +49,7 @@ body{
 
 .conteinerRespuesta button:hover{
     cursor: pointer;
-    background-color: #FE9301;
+    background-color: #422f2500;
     color: #422F25;
     border: 2px solid #422F25;
 }
