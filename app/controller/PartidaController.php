@@ -26,8 +26,9 @@ class PartidaController{
     public function mostrarPregunta() {
         $resultado_ruleta = $_SESSION['resultado_ruleta'];
 
+        $userId = $_SESSION['id'];
 
-        $pregunta = $this->model->traerPregunta($resultado_ruleta);
+        $pregunta = $this->model->traerPregunta($resultado_ruleta,$userId);
         if (!$pregunta) {
             echo "Pregunta no encontrada.";
             return;

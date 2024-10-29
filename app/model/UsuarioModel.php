@@ -108,15 +108,15 @@ class UsuarioModel
         return isset($result[0]) ? $result[0]['token'] : null; // Devuelve el token o null
     }
 
-    public function validarUsuario($email, $username): bool
-    {
-        $sql = "SELECT COUNT(*) FROM usuario WHERE correo = '$email' OR username = '$username'";
-        $result = $this->database->query($sql);
+        public function validarUsuario($email, $username): bool
+        {
+            $sql = "SELECT COUNT(*) FROM usuario WHERE correo = '$email' OR username = '$username'";
+            $result = $this->database->query($sql);
 
-        if ($result && $result->fetchColumn() > 0) {
-            return false;
+            if ($result && count($result) > 0) {
+                return false;
+            }
+            return true;
         }
-        return true;
-    }
 
 }

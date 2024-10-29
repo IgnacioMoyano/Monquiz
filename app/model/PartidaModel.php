@@ -31,7 +31,7 @@ class PartidaModel
         }
     }
 
-    public function traerPregunta($resultado_ruleta){
+    public function traerPregunta($resultado_ruleta,$userId){
 
         $sql = "SELECT id,pregunta FROM pregunta WHERE categoria_FK = $resultado_ruleta";
 
@@ -40,7 +40,21 @@ class PartidaModel
         $count = count($result);
         $random = random_int(0,$count-1);
 
-        return $result[$random] ?? null;
+        $preguntaSeleccionada = $result[$random];
+
+        if ($preguntaSeleccionada) {
+            $preguntaId = $preguntaSeleccionada['id'];
+
+
+            $insertSql = "INSERT INTO preguntas_respondidas (usuario_FK,pregunta_FK) VALUES ($userId,$preguntaId)";
+            $this->database->execute($insertSql);
+
+
+            $updateSql = "UPDATE pregunta SET cantidad_vista = cantidad_vista + 1 WHERE id = $preguntaId";
+            $this->database->execute($updateSql);
+        }
+
+        return $preguntaSeleccionada ?? null;
     }
     public function traerRespuesta($id_pregunta){
     $sql = "SELECT id,respuesta FROM respuesta WHERE pregunta_FK = $id_pregunta";
@@ -64,7 +78,12 @@ class PartidaModel
 
         $result = $this->database->query($sql);
 
-        return $result[0] ?? null;
+        if($this->preguntaRespuestaExitosa($idRespuesta)){
+
+            return $result[0];
+        }
+
+        return null;
 
 
     }
@@ -94,6 +113,25 @@ class PartidaModel
 
             echo "Error: No se encontró un usuario con el nombre de usuario $username";
         }
+    }
+
+    public function preguntaRespuestaExitosa($idRespuesta) {
+
+        $sql = "SELECT pregunta_FK FROM respuesta WHERE id = $idRespuesta AND es_correcta = 1";
+        $result = $this->database->query($sql);
+
+        if ($result != null && count($result) > 0) {
+
+            $preguntaId = $result[0]['pregunta_FK'];
+
+
+            $updateSql = "UPDATE pregunta SET cantidad_correctas = cantidad_correctas + 1 WHERE id = $preguntaId";
+            $this->database->execute($updateSql);
+
+            return true;
+        }
+
+        return false;
     }
 
 }
