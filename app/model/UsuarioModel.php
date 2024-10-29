@@ -9,30 +9,26 @@ class UsuarioModel
         $this->database = $database;
     }
 
-    public function validatePassword($pass, $pass2){
-        return $pass == $pass2;
-    }
-
     public function createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username,$validado,$token){
 
         if (empty($name) || empty($pass) || empty($email) || empty($fecha_nac) || empty($username)) {
-            return false;
+            return "Todos los campos son obligatorios";
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return false;
+            return "El email no es válido";
         }
 
         if (!preg_match("/^[a-zA-Z\s]+$/", $name) || strlen($name) > 30) {
-            return false;
+            return "El nombre no es válido";
         }
 
         if (!preg_match("/^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/", $pass)) {
-            return false;
+            return "La contraseña no es válida";
         }
 
         if(!$this->validarUsuario($email, $username)){
-            return false;
+            return "El usuario ya existe";
         }
 
 
@@ -44,6 +40,7 @@ class UsuarioModel
 
             return $this->database->execute($sql);
         }
+
         return false;
     }
 
@@ -110,10 +107,10 @@ class UsuarioModel
 
     public function validarUsuario($email, $username): bool
     {
-        $sql = "SELECT COUNT(*) FROM usuario WHERE correo = '$email' OR username = '$username'";
+        $sql = "SELECT 1 FROM usuario WHERE correo = '$email' OR username = '$username'";
         $result = $this->database->query($sql);
 
-        if ($result && $result->fetchColumn() > 0) {
+        if ($result->num_rows > 0) {
             return false;
         }
         return true;

@@ -33,13 +33,9 @@ class UsuarioController
 
         if ($this->validatePassword($pass, $pass2)){
 
-            $errorRegistro = $this->model->validateFields($name, $pass, $email, $fecha_nac, $username);
-
-            if ($errorRegistro == null) {
-
                 $validationCreateUser = $this->model->createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username, $validado, $token);
 
-                if ($validationCreateUser) {
+                if ($validationCreateUser == 1) {
                     $_SESSION['username'] = $username;
 
                     $userId = $this->model->getUserIdByEmail($username);
@@ -49,11 +45,10 @@ class UsuarioController
                     $this->emailSender->send($email, $subject, $body, $userId, $token);
                     $this->presenter->show("login");
                 }
-            } else {
-                $data['error'] =  $errorRegistro;
-                $this->presenter->show("register", $data);
-
-            }
+                else {
+                    $data['error'] =  $validationCreateUser;
+                    $this->presenter->show("register", $data);
+                }
 
         } else {
 
@@ -72,6 +67,7 @@ class UsuarioController
         $validation = $this->model->validateLogin($username, $pass);
 
         if ($validation != null) {
+            $_SESSION['id'] = $validation['id'];
             $_SESSION['username'] = $username;
             $_SESSION['imagen'] = $validation['imagen'];
         }
