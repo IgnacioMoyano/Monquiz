@@ -31,30 +31,45 @@ class PartidaModel
         }
     }
 
-    public function traerPregunta($resultado_ruleta,$userId){
-
-        $sql = "SELECT id,pregunta FROM pregunta WHERE categoria_FK = $resultado_ruleta";
-
+    public function traerPregunta($resultado_ruleta, $userId) {
+        $sql = "SELECT id, pregunta FROM pregunta WHERE categoria_FK = $resultado_ruleta";
         $result = $this->database->query($sql);
 
         $count = count($result);
-        $random = random_int(0,$count-1);
+        if ($count == 0) {
+            return null;
+        }
 
-        $preguntaSeleccionada = $result[$random];
+        $preguntaSeleccionada = null;
+        $intentos = 0;
 
-        if ($preguntaSeleccionada) {
+        do {
+            $random = random_int(0, $count - 1);
+            $preguntaSeleccionada = $result[$random];
             $preguntaId = $preguntaSeleccionada['id'];
 
 
-            $insertSql = "INSERT INTO preguntas_respondidas (usuario_FK,pregunta_FK) VALUES ($userId,$preguntaId)";
-            $this->database->execute($insertSql);
+            $checkSql = "SELECT 1 FROM preguntas_respondidas WHERE usuario_FK = $userId AND pregunta_FK = $preguntaId";
+            $checkResult = $this->database->query($checkSql);
+
+            $intentos++;
+            if ($intentos > $count) {
+
+                $deleteSql = "DELETE FROM preguntas_respondidas WHERE usuario_FK = $userId AND pregunta_FK IN (SELECT id FROM pregunta WHERE categoria_FK = $resultado_ruleta)";
+                $this->database->execute($deleteSql);
+                $intentos = 0;
+            }
+        } while (!empty($checkResult));
 
 
-            $updateSql = "UPDATE pregunta SET cantidad_vista = cantidad_vista + 1 WHERE id = $preguntaId";
-            $this->database->execute($updateSql);
-        }
+        $insertSql = "INSERT INTO preguntas_respondidas (usuario_FK, pregunta_FK) VALUES ($userId, $preguntaId)";
+        $this->database->execute($insertSql);
 
-        return $preguntaSeleccionada ?? null;
+
+        $updateSql = "UPDATE pregunta SET cantidad_vista = cantidad_vista + 1 WHERE id = $preguntaId";
+        $this->database->execute($updateSql);
+
+        return $preguntaSeleccionada;
     }
     public function traerRespuesta($id_pregunta){
     $sql = "SELECT id,respuesta FROM respuesta WHERE pregunta_FK = $id_pregunta";
@@ -132,6 +147,15 @@ class PartidaModel
         }
 
         return false;
+    }
+
+    public function enviarReporte($idPreguntaReportada, $descripcion, $idUser){
+
+        $sql = "INSERT INTO reporte (pregunta_FK, usuario_FK, descripcion) VALUES ($idPreguntaReportada, $idUser,'$descripcion')";
+        $this->database->execute($sql);
+
+        $sqlUpdate = "UPDATE pregunta SET reportada = 1 WHERE id = $idPreguntaReportada";
+        $this->database->execute($sqlUpdate);
     }
 
 }
