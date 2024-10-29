@@ -16,7 +16,7 @@ CREATE TABLE preguntas_respondidas ( id INT AUTO_INCREMENT PRIMARY KEY, usuario_
 
 CREATE TABLE reporte ( id INT AUTO_INCREMENT PRIMARY KEY, pregunta_FK INT, usuario_FK INT, descripcion TEXT, FOREIGN KEY (pregunta_FK) REFERENCES pregunta(id), FOREIGN KEY (usuario_FK) REFERENCES usuario(id) );
 
-INSERT INTO categoria (descripcion, color) VALUES ('Ciencia', 'verde'), ('Historia', 'amarillo'), ('Geografía', 'azul'), ('Entretenimiento', 'rosa'), ('Deportes', 'naranja'), ('Arte', 'rojo'), ('Mitología', 'celeste'), ('Tecnología', 'violeta');
+INSERT INTO categoria (descripcion, color) VALUES ('Ciencia', '#FFDF80'), ('Historia', '#BFFF80'), ('Geografía', '#80FF9F'), ('Entretenimiento', '#80FFFF'), ('Deportes', '#809FFF'), ('Arte', '#BF80FF'), ('Mitología', '#FF80DF'), ('Tecnología', '#FF8080');
 
 INSERT INTO estado (descripcion) VALUES ('pendiente'), ('aprobada'), ('rechazada'), ('reportada'), ('descativada');
 

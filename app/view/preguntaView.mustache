@@ -1,10 +1,11 @@
 <link rel="stylesheet" href="/Monquiz/app/public/css/pregunta.css">
-<div class="conteiner">
+<div class="body">
+<div class="conteiner" style="background-color: {{color}} ">
     <div class="conteinerPregunta">
 
         <h1> {{descripcion}} </h1>
 
-        <img src="/Monquiz/app/public/images/monos/mono_deporte.png" alt="mono deporte" class="mono">
+        <img src="/Monquiz/app/public/images/monos/mono_{{descripcion}}.png" alt="mono categoria" class="mono">
 
         <h3> {{pregunta}}</h3>
 
@@ -17,4 +18,5 @@
             {{/respuestas}}
         </form>
     </div>
+</div>
 </div>

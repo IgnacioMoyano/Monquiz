@@ -42,7 +42,7 @@ button{
 
 .mono {
     position: absolute;
-    right: -17.8em;
+    right: -17.88em;
     top: 1em;
     height: 100%;
     z-index: 1;
@@ -51,9 +51,9 @@ button{
 
 .body{
     display: flex;
-    height: 48.75em;
     align-items: center;
     justify-content: center;
+    height: 100vh;
 }
 
 .redirectRegister{
