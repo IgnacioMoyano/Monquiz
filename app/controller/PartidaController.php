@@ -59,12 +59,13 @@ class PartidaController{
             'descripcion' => $categoria['descripcion'],
             'color' => $categoria['color'],
             'pregunta' => $pregunta['pregunta'],
+            'preguntaId' => $pregunta['id'],
             'respuestas' => $respuestas,
             'user' => $_SESSION['username'],
             'imagenHeader' => $_SESSION['imagen']
         ];
 
-        // Muestra la vista con los datos
+
         $this->presenter->show('pregunta', $data);
     }
 
@@ -122,5 +123,39 @@ class PartidaController{
 
 
         }
+    }
+
+    public function reportar()
+    {
+
+       $idPreguntaReportada = isset($_POST['preguntaId']) ? $_POST['preguntaId'] : null;
+        $pregunta = isset($_POST['pregunta']) ? $_POST['pregunta'] : null;
+        $respuestas = isset($_POST['respuestas']) ? $_POST['respuestas'] : [];
+
+
+        $data = [
+            'user' => $_SESSION['username'],
+            'imagenHeader' => $_SESSION['imagen'],
+            'preguntaReportada' => $idPreguntaReportada,
+            'pregunta' => $pregunta,
+            'respuestas' => $respuestas
+        ];
+       $this->presenter->show('reportar', $data);
+    }
+
+    public function enviarReporte(){
+
+        $idPreguntaReportada = isset($_POST['preguntaReportada']) ? $_POST['preguntaReportada'] : null;
+        $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : null;
+        $idUser = $_SESSION['id'];
+
+        $puntuacion = $_SESSION['puntuacion'];
+        $username = $_SESSION['username'];
+
+        $this->model->enviarReporte($idPreguntaReportada, $descripcion, $idUser);
+        $this->model->finalizarPartida($puntuacion, $username);
+        header(
+            'Location: /Monquiz/app/lobby/mostrarLobby'
+        ); exit();
     }
 }
