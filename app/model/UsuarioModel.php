@@ -9,7 +9,31 @@ class UsuarioModel
         $this->database = $database;
     }
 
+    public function validatePassword($pass, $pass2){
+        return $pass == $pass2;
+    }
+
     public function createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username,$validado,$token){
+
+        if (empty($name) || empty($pass) || empty($email) || empty($fecha_nac) || empty($username)) {
+            return false;
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+
+        if (!preg_match("/^[a-zA-Z\s]+$/", $name) || strlen($name) > 30) {
+            return false;
+        }
+
+        if (!preg_match("/^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/", $pass)) {
+            return false;
+        }
+
+        if(!$this->validarUsuario($email, $username)){
+            return false;
+        }
 
 
         if ($foto && $this->validarMoverFoto($foto)){
@@ -25,14 +49,14 @@ class UsuarioModel
 
     public function validateLogin($user, $pass)
     {
-        $sql = "SELECT imagen, username   
+        $sql = "SELECT 1 
                 FROM usuario 
                 WHERE username = '" . $user. "' 
                 AND password = '" . $pass . "'";
 
         $usuario = $this->database->query($sql);
 
-        return $usuario[0] ?? null;
+        return sizeof($usuario) == 1;
     }
 
     public function validarMoverFoto($foto)
@@ -84,27 +108,15 @@ class UsuarioModel
         return isset($result[0]) ? $result[0]['token'] : null; // Devuelve el token o null
     }
 
-
-    public function validateFields($name, $pass, $email, $fecha_nac, $username)
+    public function validarUsuario($email, $username): bool
     {
-        $fechaHoy = new DateTime();
+        $sql = "SELECT COUNT(*) FROM usuario WHERE correo = '$email' OR username = '$username'";
+        $result = $this->database->query($sql);
 
-        if(!preg_match('/^[a-zA-Z]+$/', $name)){
-            return "El nombre solo puede contener letras";
+        if ($result && $result->fetchColumn() > 0) {
+            return false;
         }
-
-        if ($fecha_nac > $fechaHoy) {
-            return "La fecha de nacimiento no puede ser mayor a la fecha actual";
-        }
-
-        if(!preg_match('/^[a-zA-Z0-9_]+$/', $username)){
-            return "El nombre de usuario solo puede contener letras, números y guiones bajos";
-        }
-
-        if(strlen($pass) <= 10 && !preg_match('/[A-Z]/', $pass) && !preg_match('/[a-z]/', $pass) ){
-            return "La contraseña debe tener al menos 10 caracteres, una mayúscula y una minúscula";
-        }
-
-        return null;
+        return true;
     }
+
 }
