@@ -66,6 +66,12 @@
             <button class="w3-btn  w3-round-xlarge">Registrarse</button>
         </form>
 
+        {{#error}}
+        <div class="error">
+            <p>{{error}}</p>
+        </div>
+        {{/error}}
+
     </div>
     <img class="mono" src="/Monquiz/app/public/images/monos/mono_register.png">
 </div>

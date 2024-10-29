@@ -29,9 +29,13 @@ class UsuarioController
         $token = random_int(1, 10000);
         $validado = 0;
 
+        $data = [];
+
         if ($this->validatePassword($pass, $pass2)){
 
-            if ($this->model->validateFields($name, $pass, $email, $fecha_nac, $username)) {
+            $errorRegistro = $this->model->validateFields($name, $pass, $email, $fecha_nac, $username);
+
+            if ($errorRegistro == null) {
 
                 $validationCreateUser = $this->model->createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username, $validado, $token);
 
@@ -46,19 +50,18 @@ class UsuarioController
                     $this->presenter->show("login");
                 }
             } else {
-                $data['error'] =  "Faltan campos por completar";
+                $data['error'] =  $errorRegistro;
                 $this->presenter->show("register", $data);
+
             }
 
         } else {
 
             $data['error'] =  "Las contraseñas no coinciden";
-
             $this->presenter->show("register", $data);
-        }
 
-        $this->presenter->show("register");
-        exit();
+        }
+        
     }
 
     public function auth()

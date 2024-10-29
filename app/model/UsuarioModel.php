@@ -85,28 +85,26 @@ class UsuarioModel
     }
 
 
-    public function validateFields($name, $pass, $email, $fecha_nac, $username): bool
+    public function validateFields($name, $pass, $email, $fecha_nac, $username)
     {
         $fechaHoy = new DateTime();
 
-        $contra = true;
-        $nombreUsuario = true;
-        $nombre = true;
-        $fecha = true;
+        if(!preg_match('/^[a-zA-Z]+$/', $name)){
+            return "El nombre solo puede contener letras";
+        }
+
+        if ($fecha_nac > $fechaHoy) {
+            return "La fecha de nacimiento no puede ser mayor a la fecha actual";
+        }
+
+        if(!preg_match('/^[a-zA-Z0-9_]+$/', $username)){
+            return "El nombre de usuario solo puede contener letras, números y guiones bajos";
+        }
 
         if(strlen($pass) <= 10 && !preg_match('/[A-Z]/', $pass) && !preg_match('/[a-z]/', $pass) ){
-            $contra = false;
-        }
-        if(!preg_match('/^[a-zA-Z0-9_]+$/', $username)){
-            $nombreUsuario = false;
-        }
-        if(!preg_match('/^[a-zA-Z]+$/', $username)){
-            $nombre = false;
-        }
-        if ($fecha_nac > $fechaHoy) {
-            $fecha = false;
+            return "La contraseña debe tener al menos 10 caracteres, una mayúscula y una minúscula";
         }
 
-        return $contra && $nombreUsuario && $nombre && $fecha;
+        return null;
     }
 }
