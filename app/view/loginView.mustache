@@ -21,6 +21,13 @@
         <button class="w3-btn  w3-round-xlarge">Ingresar</button>
     </form>
     <a class="redirectRegister" href="/Monquiz/app/usuario/register">¿No tiene cuenta? Crear una</a>
+
+    {{#error}}
+    <div class="error">
+        <p>{{error}}</p>
+    </div>
+    {{/error}}
+
     <img class="mono" src="/Monquiz/app/public/images/monos/mono_login.png">
 </div>
 

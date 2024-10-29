@@ -70,10 +70,15 @@ class UsuarioController
             $_SESSION['id'] = $validation['id'];
             $_SESSION['username'] = $username;
             $_SESSION['imagen'] = $validation['imagen'];
+
+            header('location: /Monquiz/app/lobby/mostrarLobby');
+            exit();
+        }
+        else {
+            $data['error'] = "Usuario o contraseña incorrectos";
+            $this->presenter->show("login", $data);
         }
 
-        header('location: /Monquiz/app/lobby/mostrarLobby');
-        exit();
     }
 
     public function login(){
