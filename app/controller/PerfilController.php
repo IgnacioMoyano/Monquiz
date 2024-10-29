@@ -19,6 +19,8 @@ class PerfilController{
             exit();
         }
 
+
+        $imagenUserLogueado = $_SESSION['imagen'];
         $userLogueado = $_SESSION['username'];
         $datosUsuarioLogueado = $this->model->getPerfil($userLogueado);
 
@@ -57,7 +59,7 @@ class PerfilController{
                 'genero' => $perfil['genero'] ?? 'No especificado',
                 'ciudad' => $perfil['ciudad'] ?? 'Dirección no disponible'
             ],
-            'imagenUsuarioLogueado' => $datosUsuarioLogueado[0]['imagen'] ?? '/Monquiz/app/public/images/fotosPerfil/Designer.jpeg',
+            'imagenHeader' => $imagenUserLogueado,
             'qrCodePath' => $qrPath
         ];
 

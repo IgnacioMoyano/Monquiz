@@ -29,22 +29,34 @@ class UsuarioController
         $token = random_int(1, 10000);
         $validado = 0;
 
-        if ($this->model->validatePassword($pass, $pass2)){
-            $validation = $this->model->createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username, $validado, $token);
+        $data = [];
 
-            if ($validation) {
-                $_SESSION['username'] = $username;
+        if ($this->validatePassword($pass, $pass2)){
 
-                $userId = $this->model->getUserIdByEmail($username);
-                $subject = "Validación de cuenta";
-                $body = "Gracias por registrarte. Por favor, valida tu cuenta haciendo clic en el siguiente enlace.\n";
+                $validationCreateUser = $this->model->createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username, $validado, $token);
 
-                $this->emailSender->send($email, $subject, $body, $userId, $token);
-            }
+                if ($validationCreateUser == 1) {
+                    $_SESSION['username'] = $username;
+
+                    $userId = $this->model->getUserIdByEmail($username);
+                    $subject = "Validación de cuenta";
+                    $body = "Gracias por registrarte. Por favor, valida tu cuenta haciendo clic en el siguiente enlace.\n";
+
+                    $this->emailSender->send($email, $subject, $body, $userId, $token);
+                    $this->presenter->show("login");
+                }
+                else {
+                    $data['error'] =  $validationCreateUser;
+                    $this->presenter->show("register", $data);
+                }
+
+        } else {
+
+            $data['error'] =  "Las contraseñas no coinciden";
+            $this->presenter->show("register", $data);
+
         }
-
-        $this->presenter->show("login");
-        exit();
+        
     }
 
     public function auth()
@@ -54,12 +66,13 @@ class UsuarioController
 
         $validation = $this->model->validateLogin($username, $pass);
 
-        if ($validation) {
+        if ($validation != null) {
+            $_SESSION['id'] = $validation['id'];
             $_SESSION['username'] = $username;
+            $_SESSION['imagen'] = $validation['imagen'];
         }
 
-
-        header('location: /Monquiz/app/perfil/mostrarPerfil');
+        header('location: /Monquiz/app/lobby/mostrarLobby');
         exit();
     }
 
@@ -100,6 +113,10 @@ class UsuarioController
 
     }
 
+    public function validatePassword($pass, $pass2): bool
+    {
+        return $pass == $pass2;
+    }
 
 
 }

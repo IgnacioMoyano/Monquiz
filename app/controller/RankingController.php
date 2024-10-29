@@ -25,7 +25,9 @@ class RankingController
                 ['fecha' => '2024-09-30'],
                 ['fecha' => '2024-09-30']
                 // Añadir más datos...
-            ]
+            ],
+            'user' => $_SESSION['username'],
+            'imagenHeader' => $_SESSION['imagen']
         ];
 
         $this->presenter->show("ranking", $data);
