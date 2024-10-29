@@ -110,7 +110,7 @@ class UsuarioModel
         $sql = "SELECT 1 FROM usuario WHERE correo = '$email' OR username = '$username'";
         $result = $this->database->query($sql);
 
-        if ($result->num_rows > 0) {
+        if (!empty($result)) {
             return false;
         }
         return true;
