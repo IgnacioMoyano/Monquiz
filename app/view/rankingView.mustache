@@ -7,7 +7,6 @@
                 {{#ranking_mundial}}
                     <tr>
                         <td>{{usuario}}</td>
-                        <td>{{puntos}}</td>
                     </tr>
                 {{/ranking_mundial}}
             </table>
@@ -16,15 +15,16 @@
 
     <div class="historial">
         <div class="tabla-contenido">
-            <h1 class="titulo-historial">{{ historial_titulo }}</h1>
+            <h1 class="titulo-historial">Puntuacion</h1>
             <table class="tabla-historial">
-                {{#historial}}
+                {{#ranking_mundial}}
                     <tr>
-                        <td>{{fecha}}</td>
-                        <td>{{evento}}</td>
+                        <td>{{puntuacion}}</td>
+
                     </tr>
-                {{/historial}}
+                {{/ranking_mundial}}
             </table>
         </div>
     </div>
 </div>
+

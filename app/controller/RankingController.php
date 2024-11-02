@@ -10,29 +10,24 @@ class RankingController
         $this->presenter = $presenter;
     }
 
-    public function mostrarRanking(){
+    public function mostrarRanking() {
+
+        $ranking = $this->model->getRanking();
+
+
         $data = [
             'ranking_mundial_titulo' => 'Ranking Mundial',
             'ranking_mundial' => [
-                ['usuario' => 'Usuario1'],
-                ['usuario' => 'Usuario2'],
-                ['usuario' => 'Usuario3'],
-                // Añadir más datos...
-            ],
-            'historial_titulo' => 'Historial',
-            'historial' => [
-                ['fecha' => '2024-10-01'],
-                ['fecha' => '2024-09-30'],
-                ['fecha' => '2024-09-30']
-                // Añadir más datos...
+                ['usuario' => $ranking[0]['username'], 'imagen' => $ranking[0]['imagen'], 'puntuacion' => $ranking[0]['puntuacion']],
+                ['usuario' => $ranking[1]['username'], 'imagen' => $ranking[1]['imagen'], 'puntuacion' => $ranking[1]['puntuacion']],
+                ['usuario' => $ranking[2]['username'], 'imagen' => $ranking[2]['imagen'], 'puntuacion' => $ranking[2]['puntuacion']]
             ],
             'user' => $_SESSION['username'],
             'imagenHeader' => $_SESSION['imagen']
         ];
 
+        // Muestra la vista con los datos
         $this->presenter->show("ranking", $data);
-
-
     }
 
 
