@@ -2,29 +2,29 @@
 <div class="fondo">
     <div class="ranking-mundial">
         <div class="tabla-contenido">
+
             <h1 class="titulo-ranking">{{ ranking_mundial_titulo }}</h1>
             <table class="tabla-ranking">
                 {{#ranking_mundial}}
-                    <tr>
-                        <td>{{usuario}}</td>
-                    </tr>
-                {{/ranking_mundial}}
-            </table>
-        </div>
-    </div>
+                    <th>
 
-    <div class="historial">
-        <div class="tabla-contenido">
-            <h1 class="titulo-historial">Puntuacion</h1>
-            <table class="tabla-historial">
-                {{#ranking_mundial}}
+                    </th>
+                    <th>
+                        Usuario
+                    </th>
+                    <th>
+                        Puntuacion
+                    </th>
                     <tr>
+                        <td class="imagen"><img src="{{imagen}}" width="100%"></td>
+                        <td><a href="/Monquiz/app/perfil/mostrarPerfil/{{usuario}}">  {{usuario}} </a></td>
                         <td>{{puntuacion}}</td>
-
                     </tr>
                 {{/ranking_mundial}}
             </table>
         </div>
     </div>
+
+
 </div>
 
