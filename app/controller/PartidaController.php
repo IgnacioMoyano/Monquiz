@@ -111,7 +111,12 @@ class PartidaController{
             $puntuacion = $_SESSION['puntuacion'];
 
             $_SESSION['puntuacion'] = $this->model->sumarPuntuacion($puntuacion);
-            $this->presenter->show('ruleta');
+
+            $data = [
+                'imagenHeader' => $_SESSION['imagen']
+            ];
+
+            $this->presenter->show('ruleta', $data);
         } else {
             $puntuacion = $_SESSION['puntuacion'];
             $username = $_SESSION['username'];
