@@ -12,6 +12,10 @@ class LobbyController{
     }
 
     public function mostrarLobby(){
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
 
         $idUser = $_SESSION['id'];
 
