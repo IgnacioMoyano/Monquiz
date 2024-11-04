@@ -9,7 +9,7 @@ class PartidaController{
         $this->model = $model;
     }
 
-    public function mostrar()
+    public function jugar()
     {
         if (!isset($_SESSION['username'])) {
             header('Location: /Monquiz/app/usuario/login');

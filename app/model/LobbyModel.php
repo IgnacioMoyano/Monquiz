@@ -10,22 +10,17 @@ class LobbyModel
         $this->database = $database;
     }
 
-//    public function getPuntajeMaximo($userId) {
-//        $sql = "SELECT cantidad_preg_correctas FROM usuario WHERE id = '$userId'";
-//        $result = $this->database->query($sql);
-//
-//        if ($result === false) {
-//            echo "Error en la consulta: " . $this->database->error;
-//            return 1;
-//        }
-//
-//        if ($result->num_rows > 0) {
-//            $row = $result->fetch_assoc();
-//            return $row['cantidad_preg_correctas'];
-//        }
-//
-//        return 0;
-//    }
+    public function getPuntajeMaximo($userId) {
+        $sql = "SELECT MAX(puntuacion) AS max_puntuacion FROM partida WHERE usuario_FK = '$userId'";
+        $result = $this->database->query($sql);
+
+
+        if ($result && count($result) > 0) {
+            return $result[0]['max_puntuacion'];
+        }
+
+        return null;
+    }
 
 
 }

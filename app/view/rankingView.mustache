@@ -6,9 +6,7 @@
             <h1 class="titulo-ranking">{{ ranking_mundial_titulo }}</h1>
             <table class="tabla-ranking">
                 {{#ranking_mundial}}
-                    <th>
 
-                    </th>
                     <th>
                         Usuario
                     </th>
@@ -16,9 +14,9 @@
                         Puntuacion
                     </th>
                     <tr>
-                        <td class="imagen"><img src="{{imagen}}" width="100%"></td>
-                        <td><a href="/Monquiz/app/perfil/mostrarPerfil/{{usuario}}">  {{usuario}} </a></td>
-                        <td>{{puntuacion}}</td>
+
+                        <td style="color: black"><a style="text-decoration: none" href="/Monquiz/app/perfil/mostrarPerfil/{{usuario}}">  {{usuario}} </a></td>
+                        <td style="color: black">{{puntuacion}}</td>
                     </tr>
                 {{/ranking_mundial}}
             </table>
