@@ -10,15 +10,16 @@ class PartidaModel
         $this->database = $database;
     }
 
-    public function crearPartida($username) {
+    public function crearPartida($puntuacion,$id) {
 
-        $sql = "SELECT id FROM usuario WHERE username = '$username'";
-        $result = $this->database->query($sql);
+        if (!empty($id)) {
+
+            if($this->partidaActiva($id)){
+                $this->finalizarPartida($puntuacion,$id);
+            }
 
 
-        if (!empty($result)) {
-
-            $idUser = $result[0]['id'];
+            $idUser = $id;
             $sqlInsert = "INSERT INTO partida (usuario_FK) VALUES ('$idUser')";
 
             $this->database->execute($sqlInsert);
@@ -110,23 +111,19 @@ class PartidaModel
        return $puntuacion;
     }
 
-    public function finalizarPartida($puntuacion, $username) {
-        $sqlUserId = "SELECT id FROM usuario WHERE username = '$username'";
-        $result = $this->database->query($sqlUserId);
+    public function finalizarPartida($puntuacion, $id) {
 
+        if (!empty($id)) {
 
-        if (!empty($result)) {
-            $userId = $result[0]['id'];
-
-            $sqlPuntuacionUpdate = "UPDATE partida SET puntuacion = $puntuacion WHERE usuario_FK = $userId AND estado = 1";
+            $sqlPuntuacionUpdate = "UPDATE partida SET puntuacion = '$puntuacion' WHERE usuario_FK = '$id' AND estado = 1";
             $this->database->execute($sqlPuntuacionUpdate);
 
-            $sqlEstadoUpdate = "UPDATE partida SET estado = 2 WHERE usuario_FK = $userId AND estado = 1";
+            $sqlEstadoUpdate = "UPDATE partida SET estado = 2 WHERE usuario_FK = '$id' AND estado = 1";
             $this->database->execute($sqlEstadoUpdate);
 
         } else {
 
-            echo "Error: No se encontró un usuario con el nombre de usuario $username";
+            echo "Error: No se encontró un usuario con el nombre de usuario $id";
         }
     }
 
@@ -156,6 +153,17 @@ class PartidaModel
 
         $sqlUpdate = "UPDATE pregunta SET reportada = 1 WHERE id = $idPreguntaReportada";
         $this->database->execute($sqlUpdate);
+    }
+
+    public function partidaActiva($id)
+    {
+     $sql = "SELECT * FROM partida WHERE usuario_FK = $id and estado = 1";
+     $result = $this->database->query($sql);
+
+     if(!empty($result)){
+         return true;
+     }
+     return false;
     }
 
 }

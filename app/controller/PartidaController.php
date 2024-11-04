@@ -9,22 +9,38 @@ class PartidaController{
         $this->model = $model;
     }
 
-    public function mostrar()
+    public function crearPartida(){
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        $_SESSION['puntuacion'];
+
+        $this->model->crearPartida($_SESSION['puntuacion'], $_SESSION['id']);
+
+
+        $_SESSION['puntuacion'] = 0;
+        $this->jugar();
+    }
+
+    public function jugar()
     {
         if (!isset($_SESSION['username'])) {
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
 
-        $_SESSION['puntuacion'] = 0;
-
-
-        $this->model->crearPartida($_SESSION['username']);
-
         $data = [
             'user' => $_SESSION['username'],
             'imagenHeader' => $_SESSION['imagen']
         ];
+
+        $idRespuesta = isset($_POST['respuesta']) ? $_POST['respuesta'] : null;
+
+        if(isset($idRespuesta) || $idRespuesta != null){
+            $this->validarRespuesta($idRespuesta);
+        }
+
 
         $this->presenter->show('ruleta', $data);
     }
@@ -101,10 +117,10 @@ class PartidaController{
 
     }
 
-    public function validarRespuesta()
+    public function validarRespuesta($idRespuesta)
     {
-        $idRespuesta = isset($_POST['respuesta']) ? $_POST['respuesta'] : null;
-        
+
+
         $respuestaCorrecta = $this->model->respuestaCorrecta($idRespuesta);
 
         if ($respuestaCorrecta && isset($respuestaCorrecta['id']) && $idRespuesta == $respuestaCorrecta['id']) {
@@ -112,16 +128,11 @@ class PartidaController{
 
             $_SESSION['puntuacion'] = $this->model->sumarPuntuacion($puntuacion);
 
-            $data = [
-                'imagenHeader' => $_SESSION['imagen']
-            ];
-
-            $this->presenter->show('ruleta', $data);
         } else {
             $puntuacion = $_SESSION['puntuacion'];
-            $username = $_SESSION['username'];
+            $id = $_SESSION['id'];
 
-            $this->model->finalizarPartida($puntuacion, $username);
+            $this->model->finalizarPartida($puntuacion, $id);
             header(
                 'Location: /Monquiz/app/lobby/mostrarLobby'
             ); exit();

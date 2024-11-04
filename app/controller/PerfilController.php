@@ -49,6 +49,8 @@ class PerfilController{
 
         $qrPath = "/Monquiz/app/public/qr/" . $fileName;
 
+        $esUsuarioLogeado = ($usernamePerfil === $userLogueado);
+
         $data = [
             'user' => $userLogueado,
             'perfil' => [
@@ -59,6 +61,7 @@ class PerfilController{
                 'genero' => $perfil['genero'] ?? 'No especificado',
                 'ciudad' => $perfil['ciudad'] ?? 'Dirección no disponible'
             ],
+            'esUsuarioLogeado' => $esUsuarioLogeado,
             'imagenHeader' => $imagenUserLogueado,
             'qrCodePath' => $qrPath
         ];
