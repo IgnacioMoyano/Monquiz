@@ -11,22 +11,26 @@ class RankingController
     }
 
     public function mostrarRanking() {
-
         $ranking = $this->model->getRanking();
 
 
+        $ranking_mundial = [];
+        if (!empty($ranking)) {
+
+            for ($i = 0; $i < min(3, count($ranking)); $i++) {
+                $ranking_mundial[] = [
+                    'usuario' => $ranking[$i]['username'],
+                    'puntuacion' => $ranking[$i]['puntuacion']
+                ];
+            }
+        }
+
         $data = [
-            'ranking_mundial_titulo' => 'Ranking Mundial',
-            'ranking_mundial' => [
-                ['usuario' => $ranking[0]['username'], 'imagen' => $ranking[0]['imagen'], 'puntuacion' => $ranking[0]['puntuacion']],
-                ['usuario' => $ranking[1]['username'], 'imagen' => $ranking[1]['imagen'], 'puntuacion' => $ranking[1]['puntuacion']],
-                ['usuario' => $ranking[2]['username'], 'imagen' => $ranking[2]['imagen'], 'puntuacion' => $ranking[2]['puntuacion']]
-            ],
+            'ranking_mundial' => $ranking_mundial,
             'user' => $_SESSION['username'],
             'imagenHeader' => $_SESSION['imagen']
         ];
 
-        // Muestra la vista con los datos
         $this->presenter->show("ranking", $data);
     }
 

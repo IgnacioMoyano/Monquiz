@@ -3,9 +3,10 @@
     <div class="ranking-mundial">
         <div class="tabla-contenido">
 
-            <h1 class="titulo-ranking">{{ ranking_mundial_titulo }}</h1>
+            <h1 class="titulo-ranking">Ranking Mundial</h1>
+            {{#ranking_mundial}}
             <table class="tabla-ranking">
-                {{#ranking_mundial}}
+
 
                     <th>
                         Usuario
@@ -18,8 +19,13 @@
                         <td style="color: black"><a style="text-decoration: none" href="/Monquiz/app/perfil/mostrarPerfil/{{usuario}}">  {{usuario}} </a></td>
                         <td style="color: black">{{puntuacion}}</td>
                     </tr>
-                {{/ranking_mundial}}
+
+
             </table>
+                {{/ranking_mundial}}
+            {{^ranking_mundial}}
+                <h1>Se el primero en aparecer en el ranking</h1>
+            {{/ranking_mundial}}
         </div>
     </div>
 
