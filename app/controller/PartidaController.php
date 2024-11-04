@@ -14,7 +14,9 @@ class PartidaController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
-        $_SESSION['puntuacion'];
+        if (!isset($_SESSION['puntuacion'])) {
+            $_SESSION['puntuacion'] = 0;
+        }
 
         $this->model->crearPartida($_SESSION['puntuacion'], $_SESSION['id']);
 
