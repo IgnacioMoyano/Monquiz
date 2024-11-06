@@ -14,6 +14,11 @@ class PartidaController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+
 
 
         $this->model->crearPartida($_SESSION['id']);
@@ -25,6 +30,10 @@ class PartidaController{
     public function jugar()
     {
         if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
@@ -45,6 +54,14 @@ class PartidaController{
     }
 
     public function mostrarPregunta() {
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
         $resultado_ruleta = $_SESSION['resultado_ruleta'];
 
         $userId = $_SESSION['id'];
@@ -89,6 +106,10 @@ class PartidaController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
 
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
@@ -118,7 +139,14 @@ class PartidaController{
 
     public function validarRespuesta($idRespuesta)
     {
-
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
 
         $respuestaCorrecta = $this->model->respuestaCorrecta($idRespuesta);
 
@@ -143,6 +171,14 @@ class PartidaController{
 
     public function reportar()
     {
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
 
        $idPreguntaReportada = isset($_POST['preguntaId']) ? $_POST['preguntaId'] : null;
         $pregunta = isset($_POST['pregunta']) ? $_POST['pregunta'] : null;
@@ -160,6 +196,14 @@ class PartidaController{
     }
 
     public function enviarReporte(){
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
 
         $idPreguntaReportada = isset($_POST['preguntaReportada']) ? $_POST['preguntaReportada'] : null;
         $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : null;

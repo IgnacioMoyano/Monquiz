@@ -1,8 +1,5 @@
 <?php
 class PerfilController{
-    //Haciendo click en esos jugadores, tengo que poder ver el perfil de ese jugador con sus datos (mapa
-    //incluido), con su nombre, puntaje final y partidas realizadas, y un QR para navegar rápidamente a
-    //su perfil.
     private $model;
     private $presenter;
 
@@ -15,6 +12,10 @@ class PerfilController{
     }
     public function mostrarPerfil() {
         if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }

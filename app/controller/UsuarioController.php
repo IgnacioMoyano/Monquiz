@@ -67,9 +67,16 @@ class UsuarioController
         $validation = $this->model->validateLogin($username, $pass);
 
         if ($validation != null) {
-            $_SESSION['id'] = $validation['id'];
-            $_SESSION['username'] = $username;
-            $_SESSION['imagen'] = $validation['imagen'];
+            if ($validation['validado'] != 1) {
+                //No anda el error
+                $data['error'] = "Usuario no validado, revise su casilla de correos";
+            }
+            else{
+                $_SESSION['id'] = $validation['id'];
+                $_SESSION['username'] = $username;
+                $_SESSION['imagen'] = $validation['imagen'];
+                $_SESSION['validado'] = $validation['validado'];
+            }
 
             header('location: /Monquiz/app/lobby/mostrarLobby');
             exit();
@@ -110,11 +117,14 @@ class UsuarioController
 
         if ($id != null && $token != null ) {
             $this->model->validarToken($id, $token);
+            header('location: /Monquiz/app/usuario/login');
+            exit();
         } else {
             echo "Faltan parámetros para la validación.";
             echo $id;
             echo $token;
         }
+
 
     }
 

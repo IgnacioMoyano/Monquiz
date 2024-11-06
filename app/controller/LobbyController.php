@@ -16,6 +16,10 @@ class LobbyController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
 
         $idUser = $_SESSION['id'];
 
