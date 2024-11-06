@@ -14,14 +14,11 @@ class PartidaController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
-        if (!isset($_SESSION['puntuacion'])) {
-            $_SESSION['puntuacion'] = 0;
-        }
-
-        $this->model->crearPartida($_SESSION['puntuacion'], $_SESSION['id']);
 
 
-        $_SESSION['puntuacion'] = 0;
+        $this->model->crearPartida($_SESSION['id']);
+
+
         $this->jugar();
     }
 
@@ -126,15 +123,16 @@ class PartidaController{
         $respuestaCorrecta = $this->model->respuestaCorrecta($idRespuesta);
 
         if ($respuestaCorrecta && isset($respuestaCorrecta['id']) && $idRespuesta == $respuestaCorrecta['id']) {
-            $puntuacion = $_SESSION['puntuacion'];
 
-            $_SESSION['puntuacion'] = $this->model->sumarPuntuacion($puntuacion);
-
-        } else {
-            $puntuacion = $_SESSION['puntuacion'];
             $id = $_SESSION['id'];
 
-            $this->model->finalizarPartida($puntuacion, $id);
+          $this->model->sumarPuntuacion($id);
+
+        } else {
+
+            $id = $_SESSION['id'];
+
+            $this->model->finalizarPartida($id);
             header(
                 'Location: /Monquiz/app/lobby/mostrarLobby'
             ); exit();

@@ -10,12 +10,12 @@ class PartidaModel
         $this->database = $database;
     }
 
-    public function crearPartida($puntuacion,$id) {
+    public function crearPartida($id) {
 
         if (!empty($id)) {
 
             if($this->partidaActiva($id)){
-                $this->finalizarPartida($puntuacion,$id);
+                $this->finalizarPartida($id);
             }
 
 
@@ -104,18 +104,34 @@ class PartidaModel
 
     }
 
-    public function sumarPuntuacion($puntuacion){
+    public function sumarPuntuacion($id){
 
-       $puntuacion += 1;
+        $sql = "SELECT puntuacion FROM partida WHERE usuario_FK = '$id' AND estado = 1";
+        $result = $this->database->query($sql);
 
-       return $puntuacion;
+
+        if ($result && count($result) > 0) {
+            $puntuacionActual = $result[0]['puntuacion'];
+
+
+            $puntuacionNueva = $puntuacionActual + 1;
+
+
+            $sqlUpdate = "UPDATE partida SET puntuacion = '$puntuacionNueva' WHERE usuario_FK = '$id' AND estado = 1";
+            $this->database->execute($sqlUpdate);
+        } else {
+            echo "No se encontró una partida activa para el usuario.";
+        }
     }
 
-    public function finalizarPartida($puntuacion, $id) {
+    public function finalizarPartida($id) {
 
         if (!empty($id)) {
+            $sql = "SELECT puntuacion FROM partida WHERE usuario_FK = '$id' AND estado = 1";
+            $result = $this->database->query($sql);
+            $puntuacionActual = $result[0]['puntuacion'];
 
-            $sqlPuntuacionUpdate = "UPDATE partida SET puntuacion = '$puntuacion' WHERE usuario_FK = '$id' AND estado = 1";
+            $sqlPuntuacionUpdate = "UPDATE partida SET puntuacion = '$puntuacionActual' WHERE usuario_FK = '$id' AND estado = 1";
             $this->database->execute($sqlPuntuacionUpdate);
 
             $sqlEstadoUpdate = "UPDATE partida SET estado = 2 WHERE usuario_FK = '$id' AND estado = 1";

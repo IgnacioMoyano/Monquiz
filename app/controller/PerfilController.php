@@ -19,11 +19,9 @@ class PerfilController{
             exit();
         }
 
-
         $imagenUserLogueado = $_SESSION['imagen'];
         $userLogueado = $_SESSION['username'];
         $datosUsuarioLogueado = $this->model->getPerfil($userLogueado);
-
 
         if (isset($_GET['username'])) {
             $usernamePerfil = $_GET['username'];
@@ -39,15 +37,16 @@ class PerfilController{
         }
 
         $perfil = $datosPerfil[0];
-
         $url = "http://localhost/Monquiz/app/perfil/mostrarPerfil/$usernamePerfil";
 
-        $path = '/XAMPP/htdocs/Monquiz/app/public/qr/';
-        $fileName = 'qrcode_' . $usernamePerfil . '.png';
-        $savePath = $path . $fileName;
-        QRcode::png($url, $savePath, QR_ECLEVEL_L, 4);
 
-        $qrPath = "/Monquiz/app/public/qr/" . $fileName;
+        ob_start();
+        QRcode::png($url, null, QR_ECLEVEL_L, 4);
+        $qrImage = ob_get_contents();
+        ob_end_clean();
+
+
+        $qrCodeBase64 = 'data:image/png;base64,' . base64_encode($qrImage);
 
         $esUsuarioLogeado = ($usernamePerfil === $userLogueado);
 
@@ -63,7 +62,7 @@ class PerfilController{
             ],
             'esUsuarioLogeado' => $esUsuarioLogeado,
             'imagenHeader' => $imagenUserLogueado,
-            'qrCodePath' => $qrPath
+            'qrCodeBase64' => $qrCodeBase64
         ];
 
         $this->presenter->show('perfil', $data);
