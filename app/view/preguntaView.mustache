@@ -1,26 +1,33 @@
 <link rel="stylesheet" href="/Monquiz/app/public/css/pregunta.css">
 <div class="body">
-<div class="conteiner" style="background-color: {{color}} ">
-    <div class="floating-button w3-display-container w3-right w3-button" onclick="document.getElementById('reportForm').submit();">
-        <span>!</span>
+    <div class="conteiner" style="background-color: {{color}}">
+
+        <div class="floating-timer w3-display-container w3-left">
+            <p><span id="contador">15</span></p>
+        </div>
+
+
+        <div class="floating-button w3-display-container w3-right w3-button" onclick="document.getElementById('reportForm').submit();">
+            <span>!</span>
+        </div>
+
+
+        <div class="conteinerPregunta">
+            <h1>{{descripcion}}</h1>
+            <img src="/Monquiz/app/public/images/monos/mono_{{descripcion}}.png" alt="mono categoria" class="mono">
+            <h3>{{pregunta}}</h3>
+        </div>
+
+
+        <div>
+            <form action="/Monquiz/app/partida/jugar" method="post" class="conteinerRespuesta">
+                {{#respuestas}}
+                    <button type="submit" name="respuesta" value="{{id}}">{{respuesta}}</button>
+                {{/respuestas}}
+            </form>
+        </div>
     </div>
-    <div class="conteinerPregunta">
 
-        <h1> {{descripcion}} </h1>
-
-        <img src="/Monquiz/app/public/images/monos/mono_{{descripcion}}.png" alt="mono categoria" class="mono">
-
-        <h3> {{pregunta}}</h3>
-
-    </div>
-    <div>
-        <form action="/Monquiz/app/partida/jugar" method="post" class="conteinerRespuesta">
-            {{#respuestas}}
-                <button type="submit" name="respuesta" value="{{id}}">{{respuesta}}</button>
-            {{/respuestas}}
-        </form>
-    </div>
-</div>
 
     <form id="reportForm" action="/Monquiz/app/partida/reportar" method="post" style="display: none;">
         <input type="hidden" name="preguntaId" value="{{preguntaId}}">
@@ -30,5 +37,6 @@
         {{/respuestas}}
     </form>
 
-    <script src="Monquiz/app/public/js/pregunta.js"></script>
+
+    <script src="/Monquiz/app/public/js/pregunta.js"></script>
 </div>

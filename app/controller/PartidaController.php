@@ -66,7 +66,15 @@ class PartidaController{
 
         $userId = $_SESSION['id'];
 
-        $pregunta = $this->model->traerPregunta($resultado_ruleta,$userId);
+        $dataModel = $this->model->traerPregunta($resultado_ruleta,$userId);
+        $pregunta = $dataModel[0];
+        $tiempoEntrega = $dataModel[1];
+
+        if (!isset($_SESSION['pregunta_id']) && !isset($_SESSION['tiempo_entrega'])) {
+            $_SESSION['pregunta_id'] = $pregunta['id'];
+            $_SESSION['tiempo_entrega'] = $tiempoEntrega;
+        }
+
         if (!$pregunta) {
             echo "Pregunta no encontrada.";
             return;
@@ -94,7 +102,8 @@ class PartidaController{
             'preguntaId' => $pregunta['id'],
             'respuestas' => $respuestas,
             'user' => $_SESSION['username'],
-            'imagenHeader' => $_SESSION['imagen']
+            'imagenHeader' => $_SESSION['imagen'],
+            'tiempoEntrega' => $tiempoEntrega
         ];
 
 
@@ -148,12 +157,22 @@ class PartidaController{
             exit();
         }
 
+        if (!$this->model->validarTiempoRespuesta($_SESSION['pregunta_id'])) {
+            $id = $_SESSION['id'];
+
+            $this->model->finalizarPartida($id);
+            header(
+                'Location: /Monquiz/app/lobby/mostrarLobby'
+            ); exit();
+        }
+
         $respuestaCorrecta = $this->model->respuestaCorrecta($idRespuesta);
 
         if ($respuestaCorrecta && isset($respuestaCorrecta['id']) && $idRespuesta == $respuestaCorrecta['id']) {
 
             $id = $_SESSION['id'];
-
+            unset($_SESSION['pregunta_id']);
+            unset($_SESSION['tiempo_entrega']);
           $this->model->sumarPuntuacion($id);
 
         } else {
@@ -217,5 +236,14 @@ class PartidaController{
         header(
             'Location: /Monquiz/app/lobby/mostrarLobby'
         ); exit();
+    }
+
+    public function timeOut() {
+        $userId = $_SESSION['id'] ?? null;
+        if ($userId) {
+            $this->model->finalizarPartida($userId);
+        }
+        header('Location: /Monquiz/app/lobby/mostrarLobby');
+        exit();
     }
 }
