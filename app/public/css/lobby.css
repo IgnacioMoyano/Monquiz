@@ -20,6 +20,24 @@ h2 {
     margin: 10px 0;
 }
 
+.body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: nowrap;
+}
+
+.monoUno{
+    pointer-events: none;
+    z-index: -1;
+}
+
+.monoDos{
+    pointer-events: none;
+    z-index: -1;
+}
+
 .puntaje {
     font-size: 48px;
     margin: 10px 0;
