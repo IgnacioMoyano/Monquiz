@@ -33,6 +33,8 @@ class PartidaModel
     }
 
     public function traerPregunta($resultado_ruleta, $userId) {
+        $nivelUsuario = $this->calcularTasaUsuario($userId);
+
         $sql = "SELECT id, pregunta FROM pregunta WHERE categoria_FK = $resultado_ruleta";
         $result = $this->database->query($sql);
 
@@ -52,6 +54,16 @@ class PartidaModel
 
             $checkSql = "SELECT 1 FROM preguntas_respondidas WHERE usuario_FK = $userId AND pregunta_FK = $preguntaId";
             $checkResult = $this->database->query($checkSql);
+
+            $dificultadPregunta = $this->calcularDificultadPregunta($preguntaId);
+
+            $esAdecuada = false;
+            if (($nivelUsuario === 'novato' && $dificultadPregunta === 'facil') ||
+                ($nivelUsuario === 'promedio' && $dificultadPregunta === 'facil') ||
+                ($nivelUsuario === 'mono' && $dificultadPregunta === 'dificil')) {
+                $esAdecuada = true;
+            }
+
 
             $intentos++;
             if ($intentos > $count) {
@@ -200,6 +212,62 @@ class PartidaModel
 
 
         return $diferenciaTiempo <= 15;
+    }
+
+    function calcularTasa($cantidadVistas, $cantidadCorrectas) {
+        if ($cantidadVistas == 0) {
+            return 0;
+        }
+        return $cantidadCorrectas / $cantidadVistas;
+    }
+
+    function calcularDificultadPregunta($preguntaId): string
+    {
+
+        $sql = "SELECT cantidad_correctas, cantidad_vista FROM pregunta WHERE id = $preguntaId";
+        $result = $this->database->query($sql);
+
+        $fila = $result->fetch_assoc();
+
+        $cantidadCorrectas = $fila['cantidad_correctas'];
+        $cantidadVista = $fila['cantidad_vista'];
+
+
+        if($this->calcularTasa($cantidadCorrectas, $cantidadVista) >= 0.7){
+            return "facil";
+        }
+        if($this->calcularTasa($cantidadCorrectas, $cantidadVista) == 0){
+            return "dificil";
+        }
+        if($this->calcularDificultadPregunta($preguntaId) < 0.3){
+            return "dificil";
+        }
+        else {
+            return "facil";
+        }
+
+    }
+
+    function calcularTasaUsuario($usuarioId): string
+    {
+        $sql = "SELECT cantidad_preg_vistas, cantidad_preg_correctas FROM pregunta WHERE id = $usuarioId";
+        $result = $this->database->query($sql);
+
+        $fila = $result->fetch_assoc();
+
+        $cantidadCorrectas = $fila['cantidad_preg_correctas'];
+        $cantidadVista = $fila['cantidad_preg_vistas'];
+
+        if($this->calcularTasa($cantidadCorrectas, $cantidadVista) < 0.5){
+            return "novato";
+        }
+
+        if($this->calcularTasa($cantidadCorrectas, $cantidadVista) >= 0.7){
+            return "mono"; // capo
+        }
+        else {
+            return "promedio";
+        }
     }
 
 }
