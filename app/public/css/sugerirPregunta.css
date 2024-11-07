@@ -1,0 +1,23 @@
+body{
+    background-image: url("../images/fondos/RANKING.jpeg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+}
+
+form{
+    background-color: #be945b;
+    display: flex;
+    flex-direction: column;
+}
+
+.formConteiner{
+    background-color: #be945b !important;
+}
+
+button{
+    background-color: #422f25 !important;
+    color: white !important;
+
+}
