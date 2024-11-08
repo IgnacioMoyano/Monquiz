@@ -64,6 +64,7 @@ class UsuarioController
         $username = $_POST['username'];
         $pass = $_POST['password'];
 
+
         $validation = $this->model->validateLogin($username, $pass);
 
         if ($validation != null) {
@@ -76,6 +77,7 @@ class UsuarioController
                 $_SESSION['username'] = $username;
                 $_SESSION['imagen'] = $validation['imagen'];
                 $_SESSION['validado'] = $validation['validado'];
+                $_SESSION['tipo_cuenta'] = $validation['tipo_cuenta'];
             }
 
             header('location: /Monquiz/app/lobby/mostrarLobby');

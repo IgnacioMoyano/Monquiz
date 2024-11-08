@@ -12,6 +12,10 @@ class EditorController
         $this->presenter = $presenter;
     }
 
+    public function home(){
+        $this->presenter->show('editorHome');
+    }
+
     public function verPreguntas(){
 
         $data = $this->model->getAllPreguntas();

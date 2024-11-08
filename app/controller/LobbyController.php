@@ -20,6 +20,10 @@ class LobbyController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
+        if ($_SESSION['tipo_cuenta'] == 1) {
+            header('Location: /Monquiz/app/editor/verPreguntas');
+            exit();
+        }
 
         $idUser = $_SESSION['id'];
 
