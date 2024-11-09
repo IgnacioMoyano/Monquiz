@@ -63,10 +63,9 @@ class PartidaController{
             exit();
         }
         $resultado_ruleta = $_SESSION['resultado_ruleta'];
-
         $userId = $_SESSION['id'];
 
-        $dataModel = $this->model->traerPregunta($resultado_ruleta,$userId);
+        $dataModel = $this->model->traerPregunta($resultado_ruleta, $userId);
         $pregunta = $dataModel[0];
         $tiempoEntrega = $dataModel[1];
 
@@ -80,11 +79,13 @@ class PartidaController{
             return;
         }
 
+        $dificultad = $this->model->calcularDificultadPregunta($pregunta['id']);
+
         $respuestas = $this->model->traerRespuesta($pregunta['id']);
         if ($respuestas === null) {
             echo "No se encontraron respuestas.";
             return;
-        } else{
+        } else {
             shuffle($respuestas);
         }
 
@@ -93,6 +94,7 @@ class PartidaController{
             echo "Categoría no encontrada.";
             return;
         }
+
 
         $data = [
             'resultado_ruleta' => $_SESSION['resultado_ruleta'],
@@ -103,9 +105,10 @@ class PartidaController{
             'respuestas' => $respuestas,
             'user' => $_SESSION['username'],
             'imagenHeader' => $_SESSION['imagen'],
-            'tiempoEntrega' => $tiempoEntrega
-        ];
+            'tiempoEntrega' => $tiempoEntrega,
+            'dificultad' => $dificultad
 
+        ];
 
         $this->presenter->show('pregunta', $data);
     }

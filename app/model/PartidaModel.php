@@ -32,7 +32,11 @@ class PartidaModel
         }
     }
 
-    public function traerPregunta($resultado_ruleta, $userId) {
+    /**
+     * @throws \Random\RandomException
+     */
+    public function traerPregunta($resultado_ruleta, $userId)
+    {
         $nivelUsuario = $this->calcularTasaUsuario($userId);
 
         $sql = "SELECT id, pregunta FROM pregunta WHERE categoria_FK = $resultado_ruleta";
@@ -45,6 +49,7 @@ class PartidaModel
 
         $preguntaSeleccionada = null;
         $intentos = 0;
+        $maxIntentos = 5;
 
         do {
             $random = random_int(0, $count - 1);
@@ -57,13 +62,20 @@ class PartidaModel
 
             $dificultadPregunta = $this->calcularDificultadPregunta($preguntaId);
 
-            $esAdecuada = false;
-            if (($nivelUsuario === 'novato' && $dificultadPregunta === 'facil') ||
-                ($nivelUsuario === 'promedio' && $dificultadPregunta === 'facil') ||
-                ($nivelUsuario === 'mono' && $dificultadPregunta === 'dificil')) {
-                $esAdecuada = true;
+            $esDificil = false;
+            if ($dificultadPregunta == "Dificil") {
+                if ($nivelUsuario == "mono" && random_int(1, 2) == 1) {
+                    $esDificil = true;
+                } elseif ($nivelUsuario == "promedio" && random_int(1, 4) == 1) {
+                    $esDificil = true;
+                } elseif ($nivelUsuario == "novato" && random_int(1, 8) == 1) {
+                    $esDificil = true;
+                }
             }
 
+            if ($intentos >= $maxIntentos) {
+                break;
+            }
 
             $intentos++;
             if ($intentos > $count) {
@@ -72,7 +84,7 @@ class PartidaModel
                 $this->database->execute($deleteSql);
                 $intentos = 0;
             }
-        } while (!empty($checkResult));
+        } while (!empty($checkResult) || !$esDificil);
 
 
         $insertSql = "INSERT INTO preguntas_respondidas (usuario_FK, pregunta_FK) VALUES ($userId, $preguntaId)";
@@ -215,59 +227,91 @@ class PartidaModel
     }
 
     function calcularTasa($cantidadVistas, $cantidadCorrectas) {
+
+        $cantidadVistas = (float)$cantidadVistas;
+        $cantidadCorrectas = (float)$cantidadCorrectas;
+
         if ($cantidadVistas == 0) {
             return 0;
         }
-        return $cantidadCorrectas / $cantidadVistas;
+
+        $tasa = $cantidadCorrectas / $cantidadVistas;
+
+        return $tasa;
     }
 
     function calcularDificultadPregunta($preguntaId): string
     {
-
         $sql = "SELECT cantidad_correctas, cantidad_vista FROM pregunta WHERE id = $preguntaId";
         $result = $this->database->query($sql);
 
-        $fila = $result->fetch_assoc();
-
-        $cantidadCorrectas = $fila['cantidad_correctas'];
-        $cantidadVista = $fila['cantidad_vista'];
-
-
-        if($this->calcularTasa($cantidadCorrectas, $cantidadVista) >= 0.7){
-            return "facil";
-        }
-        if($this->calcularTasa($cantidadCorrectas, $cantidadVista) == 0){
-            return "dificil";
-        }
-        if($this->calcularDificultadPregunta($preguntaId) < 0.3){
-            return "dificil";
-        }
-        else {
-            return "facil";
+        if ($result === false) {
+            return "Error en la consulta: " . $this->database->error;
         }
 
+        if (is_array($result) && count($result) > 0) {
+            $row = $result[0];
+
+            $cantidadCorrectas = $row['cantidad_correctas'] ?? null;
+            $cantidadVista = $row['cantidad_vista'] ?? null;
+
+            if ($cantidadCorrectas === null || $cantidadVista === null) {
+                return "Valores nulos";
+            }
+
+            $cantidadCorrectas = (float)$cantidadCorrectas;
+            $cantidadVista = (float)$cantidadVista;
+
+
+            $tasa = $this->calcularTasa($cantidadVista, $cantidadCorrectas);
+
+            if ($tasa >= 0.7) {
+                return "Facil";
+            }
+            if ($tasa == 0 || $tasa < 0.3) {
+                return "Dificil";
+            } else {
+                return "Facil";
+            }
+        }
+
+        return "Error: La consulta no devolvió resultados o el formato es incorrecto.";
     }
 
     function calcularTasaUsuario($usuarioId): string
     {
-        $sql = "SELECT cantidad_preg_vistas, cantidad_preg_correctas FROM pregunta WHERE id = $usuarioId";
+        $sql = "SELECT cantidad_preg_vistas, cantidad_preg_correctas FROM usuario WHERE id = $usuarioId";
         $result = $this->database->query($sql);
 
-        $fila = $result->fetch_assoc();
-
-        $cantidadCorrectas = $fila['cantidad_preg_correctas'];
-        $cantidadVista = $fila['cantidad_preg_vistas'];
-
-        if($this->calcularTasa($cantidadCorrectas, $cantidadVista) < 0.5){
-            return "novato";
+        if ($result === false) {
+            return "Error en la consulta: " . $this->database->error;
         }
 
-        if($this->calcularTasa($cantidadCorrectas, $cantidadVista) >= 0.7){
-            return "mono"; // capo
+        if (is_array($result) && count($result) > 0) {
+            $row = $result[0];
+
+            $cantidadCorrectas = $fila['cantidad_preg_correctas'] ?? null;
+            $cantidadVistas = $fila['cantidad_preg_vistas'] ?? null;
+
+            if ($cantidadCorrectas === null || $cantidadVistas === null) {
+                return "Datos incompletos o inválidos";
+            }
+
+            $cantidadCorrectas = (float)$cantidadCorrectas;
+            $cantidadVista = (float)$cantidadVistas;
+
+            $tasa = $this->calcularTasa($cantidadVista, $cantidadCorrectas);
+
+            if ($tasa < 0.5) {
+                return "novato";
+            } elseif ($tasa >= 0.7) {
+                return "mono";
+            } else {
+                return "promedio";
+            }
         }
-        else {
-            return "promedio";
-        }
+
+        return "Datos no encontrados";
     }
 
 }
