@@ -46,7 +46,7 @@ class UsuarioModel
 
     public function validateLogin($user, $pass)
     {
-        $sql = "SELECT id,username,imagen, validado 
+        $sql = "SELECT id,username,imagen, validado,tipo_cuenta 
                 FROM usuario 
                 WHERE username = '" . $user. "' 
                 AND password = '" . $pass . "'";
