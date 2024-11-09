@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="/Monquiz/app/public/css/sugerirPregunta.css">
+
+
+<div class="body">
+    <div class="w3-container w3-padding-large w3-light-grey w3-card w3-round-large w3-margin-top formConteiner" style="max-width:600px; margin:auto;">
+        <h2 class="w3-center">Sugerir Pregunta</h2>
+
+        <form method="POST" action="/Monquiz/app/lobby/enviarSugerencia">
+            <label for="pregunta"><b>Pregunta</b></label>
+            <input class="w3-input w3-border w3-round w3-margin-bottom" type="text" id="pregunta" name="pregunta" value="{{pregunta}}" required>
+
+            <label><b>Respuestas</b></label>
+            <input class="w3-input w3-border w3-round w3-margin-bottom" type="text" name="respuesta_correcta" placeholder="Respuesta correcta" required>
+            <input class="w3-input w3-border w3-round w3-margin-bottom" type="text" name="respuesta_incorrecta1" placeholder="Respuesta incorrecta 1" required>
+            <input class="w3-input w3-border w3-round w3-margin-bottom" type="text" name="respuesta_incorrecta2" placeholder="Respuesta incorrecta 2" required>
+            <input class="w3-input w3-border w3-round w3-margin-bottom" type="text" name="respuesta_incorrecta3" placeholder="Respuesta incorrecta 3" required>
+
+            <label for="categoria"><b>Categoría</b></label>
+            <select class="w3-select w3-border w3-round w3-margin-bottom" name="categoria" id="categoria" required>
+                {{#categorias}}
+                    <option value="{{id}}">{{descripcion}}</option>
+                {{/categorias}}
+            </select>
+
+            <button type="submit" class="w3-btn w3-round-xlarge">Enviar</button>
+        </form>
+
+        {{#mensaje}}
+            <div class="w3-container w3-green w3-margin-top w3-padding">
+                <p>{{mensaje}}</p>
+            </div>
+        {{/mensaje}}
+    </div>
+</div>
