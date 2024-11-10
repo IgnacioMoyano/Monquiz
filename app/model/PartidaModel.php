@@ -39,7 +39,7 @@ class PartidaModel
     {
         $nivelUsuario = $this->calcularTasaUsuario($userId);
 
-        $sql = "SELECT id, pregunta FROM pregunta WHERE categoria_FK = $resultado_ruleta";
+        $sql = "SELECT id, pregunta FROM pregunta WHERE categoria_FK = $resultado_ruleta AND estado_FK = 2";
         $result = $this->database->query($sql);
 
         $count = count($result);
