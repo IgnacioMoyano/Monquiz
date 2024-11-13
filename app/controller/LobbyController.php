@@ -21,7 +21,7 @@ class LobbyController{
             exit();
         }
         if ($_SESSION['tipo_cuenta'] == 1) {
-            header('Location: /Monquiz/app/editor/verPreguntas');
+            header('Location: /Monquiz/app/editor/home');
             exit();
         }
 
