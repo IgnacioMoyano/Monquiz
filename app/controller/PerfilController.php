@@ -51,6 +51,10 @@ class PerfilController{
 
         $esUsuarioLogeado = ($usernamePerfil === $userLogueado);
 
+        $idUser = $_SESSION['id'];
+
+        $puntaje = $this->model->getPuntajeMaximo($idUser);
+
         $data = [
             'user' => $userLogueado,
             'perfil' => [
@@ -63,7 +67,8 @@ class PerfilController{
             ],
             'esUsuarioLogeado' => $esUsuarioLogeado,
             'imagenHeader' => $imagenUserLogueado,
-            'qrCodeBase64' => $qrCodeBase64
+            'qrCodeBase64' => $qrCodeBase64,
+            'puntaje' => $puntaje
         ];
 
         $this->presenter->show('perfil', $data);
