@@ -55,7 +55,7 @@ class PartidaModel
             $random = random_int(0, $count - 1);
             $preguntaSeleccionada = $result[$random];
             $preguntaId = $preguntaSeleccionada['id'];
-            $tiempoEntrega = time();
+
 
             $checkSql = "SELECT 1 FROM preguntas_respondidas WHERE usuario_FK = $userId AND pregunta_FK = $preguntaId";
             $checkResult = $this->database->query($checkSql);
@@ -94,12 +94,7 @@ class PartidaModel
         $updateSql = "UPDATE pregunta SET cantidad_vista = cantidad_vista + 1 WHERE id = $preguntaId";
         $this->database->execute($updateSql);
 
-        $dataModel = [
-            $preguntaSeleccionada,
-            $tiempoEntrega
-        ];
-
-        return $dataModel;
+        return $preguntaSeleccionada;
     }
     public function traerRespuesta($id_pregunta){
     $sql = "SELECT id,respuesta FROM respuesta WHERE pregunta_FK = $id_pregunta";
@@ -213,17 +208,13 @@ class PartidaModel
 
     public function validarTiempoRespuesta($preguntaId) {
 
-        if ($_SESSION['pregunta_id'] !== $preguntaId) {
-            return false; // La pregunta no coincide
-        }
-
 
         $tiempoActual = time();
         $tiempoEntrega = $_SESSION['tiempo_entrega'];
-        $diferenciaTiempo = $tiempoActual - $tiempoEntrega;
+        $diferenciaTiempo = $tiempoActual  -  $tiempoEntrega;
 
 
-        return $diferenciaTiempo <= 15;
+        return $diferenciaTiempo <= 15 && $diferenciaTiempo >= 0;
     }
 
     function calcularTasa($cantidadVistas, $cantidadCorrectas) {

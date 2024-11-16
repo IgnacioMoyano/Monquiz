@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('America/Argentina/Buenos_Aires');
+
 include_once("helper/MysqlDatabase.php");
 include_once("helper/MysqlObjectDatabase.php");
 include_once("helper/IncludeFilePresenter.php");
