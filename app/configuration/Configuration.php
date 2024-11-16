@@ -10,6 +10,8 @@ include_once("helper/EmailSender.php");
 include_once("controller/PerfilController.php");
 include_once("model/PerfilModel.php");
 
+include_once("controller/EditorController.php");
+include_once("model/EditorModel.php");
 
 include_once("controller/UsuarioController.php");
 include_once("model/UsuarioModel.php");
@@ -29,6 +31,11 @@ class Configuration
 {
     public function __construct()
     {
+    }
+
+    public function getEditorController()
+    {
+        return new EditorController($this->getEditorModel(), $this->getPresenter());
     }
 
     public function getPokedexController(){
@@ -53,6 +60,11 @@ class Configuration
 
     public function getRankingController(){
         return new RankingController($this->getRankingModel(), $this->getPresenter());
+    }
+
+    public function getEditorModel()
+    {
+        return new EditorModel($this->getDatabase());
     }
 
     private function getPerfilModel(){

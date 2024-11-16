@@ -1,20 +1,46 @@
 <link rel="stylesheet" href="/Monquiz/app/public/css/pregunta.css">
-<div class="conteiner">
-    <div class="conteinerPregunta">
+<div class="body">
+    <div class="conteiner" style="background-color: {{color}}">
 
-        <h1> {{descripcion}} </h1>
+        <div class="floating-timer w3-display-container w3-left">
+            <p><span id="contador">15</span></p>
+        </div>
 
-        <img src="/Monquiz/app/public/images/monos/mono_deporte.png" alt="mono deporte" class="mono">
 
-        <h3> {{pregunta}}</h3>
+        <div class="floating-button w3-display-container w3-right w3-button" onclick="document.getElementById('reportForm').submit();">
+            <span>!</span>
+        </div>
 
+        <div class="conteinerPregunta">
+            <h1>{{dificultad}}</h1>
+        </div>
+
+
+        <div class="conteinerPregunta">
+            <h1>{{descripcion}}</h1>
+            <img src="/Monquiz/app/public/images/monos/mono_{{descripcion}}.png" alt="mono categoria" class="mono">
+            <h3>{{pregunta}}</h3>
+        </div>
+
+
+        <div>
+            <form action="/Monquiz/app/partida/jugar" method="post" class="conteinerRespuesta">
+                {{#respuestas}}
+                    <button type="submit" name="respuesta" value="{{id}}">{{respuesta}}</button>
+                {{/respuestas}}
+            </form>
+        </div>
     </div>
 
-    <div>
-        <form action="/Monquiz/app/partida/validarRespuesta" method="post" class="conteinerRespuesta">
-            {{#respuestas}}
-                <button type="submit" name="respuesta" value="{{id}}">{{respuesta}}</button>
-            {{/respuestas}}
-        </form>
-    </div>
+
+    <form id="reportForm" action="/Monquiz/app/partida/reportar" method="post" style="display: none;">
+        <input type="hidden" name="preguntaId" value="{{preguntaId}}">
+        <input type="hidden" name="pregunta" value="{{pregunta}}">
+        {{#respuestas}}
+            <input type="hidden" name="respuestas[]" value="{{respuesta}}">
+        {{/respuestas}}
+    </form>
+
+
+    <script src="/Monquiz/app/public/js/pregunta.js"></script>
 </div>

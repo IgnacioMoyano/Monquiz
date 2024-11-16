@@ -9,11 +9,27 @@ class UsuarioModel
         $this->database = $database;
     }
 
-    public function validatePassword($pass, $pass2){
-        return $pass == $pass2;
-    }
-
     public function createUser($name, $pass, $email, $fecha_nac, $genero, $pais, $ciudad, $foto, $username,$validado,$token){
+
+        if (empty($name) || empty($pass) || empty($email) || empty($fecha_nac) || empty($username)) {
+            return "Todos los campos son obligatorios";
+        }
+
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return "El email no es válido";
+        }
+
+        if (!preg_match("/^[a-zA-Z\s]+$/", $name) || strlen($name) > 30) {
+            return "El nombre no es válido";
+        }
+
+        if (!preg_match("/^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/", $pass)) {
+            return "La contraseña no es válida";
+        }
+
+        if(!$this->validarUsuario($email, $username)){
+            return "El usuario ya existe";
+        }
 
 
         if ($foto && $this->validarMoverFoto($foto)){
@@ -24,19 +40,20 @@ class UsuarioModel
 
             return $this->database->execute($sql);
         }
+
         return false;
     }
 
     public function validateLogin($user, $pass)
     {
-        $sql = "SELECT 1 
+        $sql = "SELECT id,username,imagen, validado,tipo_cuenta 
                 FROM usuario 
                 WHERE username = '" . $user. "' 
                 AND password = '" . $pass . "'";
 
         $usuario = $this->database->query($sql);
 
-        return sizeof($usuario) == 1;
+        return $usuario[0] ?? null;
     }
 
     public function validarMoverFoto($foto)
@@ -86,6 +103,17 @@ class UsuarioModel
         $sql = "SELECT token FROM usuario WHERE id = '$userId'";
         $result = $this->database->query($sql);
         return isset($result[0]) ? $result[0]['token'] : null; // Devuelve el token o null
+    }
+
+    public function validarUsuario($email, $username): bool
+    {
+        $sql = "SELECT 1 FROM usuario WHERE correo = '$email' OR username = '$username'";
+        $result = $this->database->query($sql);
+
+        if (!empty($result)) {
+            return false;
+        }
+        return true;
     }
 
 }

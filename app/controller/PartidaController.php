@@ -9,35 +9,83 @@ class PartidaController{
         $this->model = $model;
     }
 
-    public function mostrar()
+    public function crearPartida(){
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+
+
+
+        $this->model->crearPartida($_SESSION['id']);
+
+
+        $this->jugar();
+    }
+
+    public function jugar()
     {
         if (!isset($_SESSION['username'])) {
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
 
-        $_SESSION['puntuacion'] = 0;
+        $data = [
+            'user' => $_SESSION['username'],
+            'imagenHeader' => $_SESSION['imagen']
+        ];
 
-      $this->model->crearPartida($_SESSION['username']);
+        $idRespuesta = isset($_POST['respuesta']) ? $_POST['respuesta'] : null;
 
-        $this->presenter->show('ruleta');
+        if(isset($idRespuesta) || $idRespuesta != null){
+            $this->validarRespuesta($idRespuesta);
+        }
+
+
+        $this->presenter->show('ruleta', $data);
     }
 
     public function mostrarPregunta() {
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
         $resultado_ruleta = $_SESSION['resultado_ruleta'];
+        $userId = $_SESSION['id'];
 
+        $dataModel = $this->model->traerPregunta($resultado_ruleta, $userId);
+        $pregunta = $dataModel[0];
+        $tiempoEntrega = $dataModel[1];
 
-        $pregunta = $this->model->traerPregunta($resultado_ruleta);
+        if (!isset($_SESSION['pregunta_id']) && !isset($_SESSION['tiempo_entrega'])) {
+            $_SESSION['pregunta_id'] = $pregunta['id'];
+            $_SESSION['tiempo_entrega'] = $tiempoEntrega;
+        }
+
         if (!$pregunta) {
             echo "Pregunta no encontrada.";
             return;
         }
 
+        $dificultad = $this->model->calcularDificultadPregunta($pregunta['id']);
+
         $respuestas = $this->model->traerRespuesta($pregunta['id']);
         if ($respuestas === null) {
             echo "No se encontraron respuestas.";
             return;
-        } else{
+        } else {
             shuffle($respuestas);
         }
 
@@ -53,15 +101,24 @@ class PartidaController{
             'descripcion' => $categoria['descripcion'],
             'color' => $categoria['color'],
             'pregunta' => $pregunta['pregunta'],
-            'respuestas' => $respuestas
+            'preguntaId' => $pregunta['id'],
+            'respuestas' => $respuestas,
+            'user' => $_SESSION['username'],
+            'imagenHeader' => $_SESSION['imagen'],
+            'tiempoEntrega' => $tiempoEntrega,
+            'dificultad' => $dificultad
+
         ];
 
-        // Muestra la vista con los datos
         $this->presenter->show('pregunta', $data);
     }
 
     public function resultado() {
         if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
@@ -92,27 +149,104 @@ class PartidaController{
 
     }
 
-    public function validarRespuesta()
+    public function validarRespuesta($idRespuesta)
     {
-        $idRespuesta = isset($_POST['respuesta']) ? $_POST['respuesta'] : null;
-        
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+
+        if (!$this->model->validarTiempoRespuesta($_SESSION['pregunta_id'])) {
+            $id = $_SESSION['id'];
+
+            $this->model->finalizarPartida($id);
+            header(
+                'Location: /Monquiz/app/lobby/mostrarLobby'
+            ); exit();
+        }
+
         $respuestaCorrecta = $this->model->respuestaCorrecta($idRespuesta);
 
         if ($respuestaCorrecta && isset($respuestaCorrecta['id']) && $idRespuesta == $respuestaCorrecta['id']) {
-            $puntuacion = $_SESSION['puntuacion'];
 
-            $_SESSION['puntuacion'] = $this->model->sumarPuntuacion($puntuacion);
-            $this->presenter->show('ruleta');
+            $id = $_SESSION['id'];
+            unset($_SESSION['pregunta_id']);
+            unset($_SESSION['tiempo_entrega']);
+          $this->model->sumarPuntuacion($id);
+
         } else {
-            $puntuacion = $_SESSION['puntuacion'];
-            $username = $_SESSION['username'];
 
-            $this->model->finalizarPartida($puntuacion, $username);
+            $id = $_SESSION['id'];
+
+            $this->model->finalizarPartida($id);
             header(
                 'Location: /Monquiz/app/lobby/mostrarLobby'
             ); exit();
 
 
         }
+    }
+
+    public function reportar()
+    {
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+
+       $idPreguntaReportada = isset($_POST['preguntaId']) ? $_POST['preguntaId'] : null;
+        $pregunta = isset($_POST['pregunta']) ? $_POST['pregunta'] : null;
+        $respuestas = isset($_POST['respuestas']) ? $_POST['respuestas'] : [];
+
+
+        $data = [
+            'user' => $_SESSION['username'],
+            'imagenHeader' => $_SESSION['imagen'],
+            'preguntaReportada' => $idPreguntaReportada,
+            'pregunta' => $pregunta,
+            'respuestas' => $respuestas
+        ];
+       $this->presenter->show('reportar', $data);
+    }
+
+    public function enviarReporte(){
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+
+        $idPreguntaReportada = isset($_POST['preguntaReportada']) ? $_POST['preguntaReportada'] : null;
+        $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : null;
+        $idUser = $_SESSION['id'];
+
+        $puntuacion = $_SESSION['puntuacion'];
+        $username = $_SESSION['username'];
+
+        $this->model->enviarReporte($idPreguntaReportada, $descripcion, $idUser);
+        $this->model->finalizarPartida($puntuacion, $username);
+        header(
+            'Location: /Monquiz/app/lobby/mostrarLobby'
+        ); exit();
+    }
+
+    public function timeOut() {
+        $userId = $_SESSION['id'] ?? null;
+        if ($userId) {
+            $this->model->finalizarPartida($userId);
+        }
+        header('Location: /Monquiz/app/lobby/mostrarLobby');
+        exit();
     }
 }

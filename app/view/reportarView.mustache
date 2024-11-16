@@ -1,0 +1,26 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="/Monquiz/app/public/css/reporte.css">
+<link rel="stylesheet" href="/Monquiz/app/public/css/pregunta.css">
+
+<div class="body">
+<div class="w3-container w3-padding-large w3-light-grey w3-card w3-round-large w3-margin-top formConteiner" style="max-width:600px; margin:auto;">
+    <h2 class="w3-center">Reporte de Pregunta</h2>
+
+    <form action="/Monquiz/app/partida/enviarReporte" method="post" class="w3-container">
+        <input type="hidden" name="preguntaReportada" value="{{preguntaReportada}}">
+
+        <label class=""><b>Pregunta</b></label>
+        <input class="w3-input w3-border w3-round w3-margin-bottom" type="text" name="pregunta" value="{{pregunta}}" readonly>
+
+        <label class=""><b>Respuestas</b></label>
+        {{#respuestas}}
+            <input class="w3-input w3-border w3-round w3-margin-bottom" type="text" name="respuestas[]" value="{{.}}" readonly>
+        {{/respuestas}}
+
+        <label class=""><b>Descripción del Problema</b></label>
+        <input class="w3-input w3-border w3-round w3-margin-bottom" type="text" name="descripcion" placeholder="Describe el problema">
+
+        <button type="submit" class="w3-btn  w3-round-xlarge">Enviar</button>
+    </form>
+</div>
+</div>

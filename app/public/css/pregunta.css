@@ -3,12 +3,21 @@ body{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+
+}
+
+h3{
+    text-align: center;
 }
 
 .conteiner{
-    background-color: #FE9301;
     width: 40%;
-    margin: 1% auto;
+    margin: 5% auto;
+    height: 70%;
+}
+
+.body{
+    height: 100vh;
 }
 
 .conteinerPregunta{
@@ -40,7 +49,34 @@ body{
 
 .conteinerRespuesta button:hover{
     cursor: pointer;
-    background-color: #FE9301;
+    background-color: #422f2500;
     color: #422F25;
     border: 2px solid #422F25;
+}
+
+.floating-button {
+    position: absolute;
+    margin: 1% 0% 0% 36%;
+    width: 3%;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    z-index: 1000;
+}
+
+.floating-timer {
+    position: absolute;
+    margin: 0% 0% 0% 1%;
+    width: 3%;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    z-index: 1000;
 }

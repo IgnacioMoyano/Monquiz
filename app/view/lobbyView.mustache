@@ -1,10 +1,24 @@
 <link rel="stylesheet" href="/Monquiz/app/public/css/lobby.css">
 
-<div class="lobbyContainer">
+<div class="body" >
+    <div class="monoDos">
+        <img src="/Monquiz/app/public/images/monos/mono_home1.png">
+    </div>
+    <div class="lobbyContainer">
     <h2>High Score:</h2>
-    <h1>0{{puntaje}}</h1>
+    {{#puntaje}}
+    <h1 class="puntaje">{{puntaje}}</h1>
+    {{/puntaje}}
+    {{^puntaje}}
+        <h1 class="puntaje">0</h1>
+    {{/puntaje}}
     <h2>Top: 0000000.1%</h2>
-    <a href="/Monquiz/app/partida/mostrar/"><button>Jugar Partida</button></a>
+    <a href="/Monquiz/app/partida/crearPartida/"><button>Jugar Partida</button></a>
     <a href="/Monquiz/app/ranking/mostrarRanking/"><button>Ver Ranking</button></a>
-    <button>Sugerir Pregunta</button>
+        <a href="/Monquiz/app/lobby/mostrarSugerencia/"><button>Sugerir Pregunta</button></a>
+    </div>
+    <div class="monoUno">
+        <img src="/Monquiz/app/public/images/monos/mono_home.png">
+    </div>
+
 </div>

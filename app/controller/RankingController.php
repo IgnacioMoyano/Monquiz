@@ -10,27 +10,36 @@ class RankingController
         $this->presenter = $presenter;
     }
 
-    public function mostrarRanking(){
+    public function mostrarRanking() {
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        $ranking = $this->model->getRanking();
+
+
+        $ranking_mundial = [];
+        if (!empty($ranking)) {
+
+            for ($i = 0; $i < min(3, count($ranking)); $i++) {
+                $ranking_mundial[] = [
+                    'usuario' => $ranking[$i]['username'],
+                    'puntuacion' => $ranking[$i]['puntuacion']
+                ];
+            }
+        }
+
         $data = [
-            'ranking_mundial_titulo' => 'Ranking Mundial',
-            'ranking_mundial' => [
-                ['usuario' => 'Usuario1'],
-                ['usuario' => 'Usuario2'],
-                ['usuario' => 'Usuario3'],
-                // Añadir más datos...
-            ],
-            'historial_titulo' => 'Historial',
-            'historial' => [
-                ['fecha' => '2024-10-01'],
-                ['fecha' => '2024-09-30'],
-                ['fecha' => '2024-09-30']
-                // Añadir más datos...
-            ]
+            'ranking_mundial' => $ranking_mundial,
+            'user' => $_SESSION['username'],
+            'imagenHeader' => $_SESSION['imagen']
         ];
 
         $this->presenter->show("ranking", $data);
-
-
     }
 
 

@@ -1,8 +1,5 @@
 <?php
 class PerfilController{
-    //Haciendo click en esos jugadores, tengo que poder ver el perfil de ese jugador con sus datos (mapa
-    //incluido), con su nombre, puntaje final y partidas realizadas, y un QR para navegar rápidamente a
-    //su perfil.
     private $model;
     private $presenter;
 
@@ -18,10 +15,14 @@ class PerfilController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
 
+        $imagenUserLogueado = $_SESSION['imagen'];
         $userLogueado = $_SESSION['username'];
         $datosUsuarioLogueado = $this->model->getPerfil($userLogueado);
-
 
         if (isset($_GET['username'])) {
             $usernamePerfil = $_GET['username'];
@@ -37,15 +38,18 @@ class PerfilController{
         }
 
         $perfil = $datosPerfil[0];
+        $url = "http://localhost/Monquiz/app/perfil/mostrarPerfil/$usernamePerfil";
 
-        $url = "http://localhost/Monquiz/app/perfil/mostrarPerfil?username=$usernamePerfil";
 
-        $path = '/XAMPP/htdocs/Monquiz/app/public/qr/';
-        $fileName = 'qrcode_' . $usernamePerfil . '.png';
-        $savePath = $path . $fileName;
-        QRcode::png($url, $savePath, QR_ECLEVEL_L, 4);
+        ob_start();
+        QRcode::png($url, null, QR_ECLEVEL_L, 4);
+        $qrImage = ob_get_contents();
+        ob_end_clean();
 
-        $qrPath = "/Monquiz/app/public/qr/" . $fileName;
+
+        $qrCodeBase64 = 'data:image/png;base64,' . base64_encode($qrImage);
+
+        $esUsuarioLogeado = ($usernamePerfil === $userLogueado);
 
         $data = [
             'user' => $userLogueado,
@@ -57,8 +61,9 @@ class PerfilController{
                 'genero' => $perfil['genero'] ?? 'No especificado',
                 'ciudad' => $perfil['ciudad'] ?? 'Dirección no disponible'
             ],
-            'imagenUsuarioLogueado' => $datosUsuarioLogueado[0]['imagen'] ?? '/Monquiz/app/public/images/fotosPerfil/Designer.jpeg',
-            'qrCodePath' => $qrPath
+            'esUsuarioLogeado' => $esUsuarioLogeado,
+            'imagenHeader' => $imagenUserLogueado,
+            'qrCodeBase64' => $qrCodeBase64
         ];
 
         $this->presenter->show('perfil', $data);

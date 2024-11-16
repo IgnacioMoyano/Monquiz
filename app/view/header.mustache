@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokedex</title>
+    <title>Monquiz</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="/Monquiz/app/public/css/header.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
@@ -16,13 +16,15 @@
 <header class="w3-container w3-padding">
 
     <div class="logoConteiner">
+        <a href="/Monquiz/app/lobby/mostrarLobby">
         <img class="logo w3-left" src="/Monquiz/app/public/monquiz.png">
         <h1 class="nombre w3-left">Monquiz</h1>
+        </a>
     </div>
 
     <!-- Mostrar la imagen del usuario logueado -->
     {{#user}}
-        <a href="/Monquiz/app/perfil/mostrarPerfil"><img src="{{imagenUsuarioLogueado}}" alt="Imagen de perfil" class="w3-circle w3-right logo" style="width: 5em"></a>
+        <a href="/Monquiz/app/perfil/mostrarPerfil"><img src="{{imagenHeader}}" alt="Imagen de perfil" class="w3-circle w3-right logo" style="width: 5em"></a>
     {{/user}}
 
     {{^user}}

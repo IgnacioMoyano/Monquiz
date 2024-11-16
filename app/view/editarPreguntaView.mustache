@@ -1,0 +1,128 @@
+<div class="w3-row-padding w3-container" style="display: flex;
+    align-items: center;">
+    <!-- Formulario no editable -->
+    <div class="w3-half w3-padding">
+        <div class="w3-card w3-padding">
+            <h3 class="w3-center">Datos de la Pregunta (No Editable)</h3>
+            <form>
+                <label>ID:</label>
+                <input type="text" class="w3-input" value="{{pregunta.id}}" readonly>
+
+                <label>Pregunta:</label>
+                <input type="text" class="w3-input" value="{{pregunta.pregunta}}" readonly>
+
+                <label>Categoría:</label>
+                <input type="text" class="w3-input" value="{{pregunta.categoria_FK}}" readonly>
+
+                <label>Estado:</label>
+                <input type="text" class="w3-input" value="{{pregunta.estado_FK}}" readonly>
+
+                <label>Reportada:</label>
+                <input type="text" class="w3-input" value="{{pregunta.reportada}}" readonly>
+
+                <label>Cantidad de vistas:</label>
+                <input type="text" class="w3-input" value="{{pregunta.cantidad_vista}}" readonly>
+
+                <label>Cantidad de respuestas correctas:</label>
+                <input type="text" class="w3-input" value="{{pregunta.cantidad_correctas}}" readonly>
+
+                <label>Creado por usuario:</label>
+                <input type="text" class="w3-input" value="{{pregunta.creada_usuarios}}" readonly>
+                <label>Respuestas (Primera correcta)</label>
+                {{#respuestas}}
+                    <input type="text" class="w3-input" name="respuestas[]" value="{{respuesta}}" readonly>
+                {{/respuestas}}
+            </form>
+        </div>
+    </div>
+
+    <div class="w3-container">
+        <table class="w3-table w3-bordered w3-striped w3-hoverable">
+            <thead>
+            <tr class="w3-light-grey">
+                <th>ID</th>
+                <th>Categoria</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>Ciencia</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Historia</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Geografía</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Entretenimiento</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Deportes</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Arte</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>Mitología</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>Tecnología</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <!-- Formulario editable -->
+    <div class="w3-half w3-padding">
+        <div class="w3-card w3-padding">
+            <h3 class="w3-center">Editar Pregunta</h3>
+            <form action="/MONQUIZ/app/editor/modificarPregunta" method="POST">
+                <label>ID:</label>
+                <input type="text" class="w3-input" name="id" value="{{pregunta.id}}" readonly>
+
+                <label>Pregunta:</label>
+                <input type="text" class="w3-input" name="pregunta" value="{{pregunta.pregunta}}">
+
+                <label>Categoría:</label>
+                <input type="text" class="w3-input" name="categoria_FK" value="{{pregunta.categoria_FK}}">
+
+                <label>Estado:</label>
+                <input type="text" class="w3-input" name="estado_FK" value="{{pregunta.estado_FK}}">
+
+                <label>Reportada:</label>
+                <input type="text" class="w3-input" name="reportada" value="{{pregunta.reportada}}">
+
+                <label>Cantidad de vistas:</label>
+                <input type="text" class="w3-input" name="cantidad_vista" value="{{pregunta.cantidad_vista}}">
+
+                <label>Cantidad de respuestas correctas:</label>
+                <input type="text" class="w3-input" name="cantidad_correctas" value="{{pregunta.cantidad_correctas}}">
+
+                <label>Creado por usuario:</label>
+                <input type="text" class="w3-input" name="creada_usuarios" value="{{pregunta.creada_usuarios}}">
+                <label>Respuestas (Primera correcta)</label>
+                {{#respuestas}}
+                    <div class="w3-padding">
+                        <input type="text" class="w3-input" name="respuestas[]" value="{{respuesta}}" {{#es_correcta}}style="border: 2px solid green;"{{/es_correcta}} placeholder="Respuesta">
+                        {{#es_correcta}}
+                            <input type="hidden" name="respuesta_correcta" value="{{respuesta}}">
+                        {{/es_correcta}}
+                    </div>
+                {{/respuestas}}
+
+                <button class="w3-button w3-green w3-margin-top">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+</div>
