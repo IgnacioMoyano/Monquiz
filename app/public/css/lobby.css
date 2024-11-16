@@ -61,3 +61,24 @@ button:hover {
 button:focus {
     outline: none;
 }
+@media (max-width: 1440px){
+    .monoUno img{
+        height: 750px;
+        width: 500px;
+    }
+
+    .monoDos img{
+        height: 750px;
+        width: 500px;
+    }
+}
+
+@media (max-width: 1024px){
+    .monoUno{
+        display: none;
+    }
+
+    .monoDos{
+        display: none;
+    }
+}
