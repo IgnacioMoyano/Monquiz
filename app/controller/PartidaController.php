@@ -44,9 +44,11 @@ class PartidaController{
         ];
 
         $idRespuesta = isset($_POST['respuesta']) ? $_POST['respuesta'] : null;
+        $idPregunta = isset($_POST['pregunta_id']) ? $_POST['pregunta_id'] : null;
 
-        if(isset($idRespuesta) || $idRespuesta != null){
-            $this->validarRespuesta($idRespuesta);
+
+        if (isset($idRespuesta) && $idRespuesta != null && isset($idPregunta) && $idPregunta != null) {
+            $this->validarRespuesta($idRespuesta, $idPregunta);
         }
 
 
@@ -67,13 +69,14 @@ class PartidaController{
         $userId = $_SESSION['id'];
 
         $dataModel = $this->model->traerPregunta($resultado_ruleta,$userId);
-        $pregunta = $dataModel[0];
-        $tiempoEntrega = $dataModel[1];
+        $pregunta = $dataModel;
+        $tiempoEntrega = time();
 
-        if (!isset($_SESSION['pregunta_id']) && !isset($_SESSION['tiempo_entrega'])) {
+        if (!isset($_SESSION['pregunta_id'])) {
             $_SESSION['pregunta_id'] = $pregunta['id'];
-            $_SESSION['tiempo_entrega'] = $tiempoEntrega;
         }
+            $_SESSION['tiempo_entrega'] = $tiempoEntrega;
+
 
         if (!$pregunta) {
             echo "Pregunta no encontrada.";
@@ -146,45 +149,56 @@ class PartidaController{
 
     }
 
-    public function validarRespuesta($idRespuesta)
+    public function validarRespuesta($idRespuesta, $idPregunta)
     {
+
         if (!isset($_SESSION['username'])) {
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
+
+
         if ($_SESSION['validado'] != 1) {
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
 
-        if (!$this->model->validarTiempoRespuesta($_SESSION['pregunta_id'])) {
-            $id = $_SESSION['id'];
 
-            $this->model->finalizarPartida($id);
-            header(
-                'Location: /Monquiz/app/lobby/mostrarLobby'
-            ); exit();
-        }
-
-        $respuestaCorrecta = $this->model->respuestaCorrecta($idRespuesta);
-
-        if ($respuestaCorrecta && isset($respuestaCorrecta['id']) && $idRespuesta == $respuestaCorrecta['id']) {
+        if ($_SESSION['pregunta_id'] != $idPregunta) {
 
             $id = $_SESSION['id'];
             unset($_SESSION['pregunta_id']);
             unset($_SESSION['tiempo_entrega']);
-          $this->model->sumarPuntuacion($id);
+            $this->model->finalizarPartida($id);
+            header('Location: /Monquiz/app/lobby/mostrarLobby');
+            exit();
+        }
 
+
+        if (!$this->model->validarTiempoRespuesta($_SESSION['pregunta_id'])) {
+            $id = $_SESSION['id'];
+            $this->model->finalizarPartida($id);
+            header('Location: /Monquiz/app/lobby/mostrarLobby');
+            exit();
+        }
+
+
+        $respuestaCorrecta = $this->model->respuestaCorrecta($idRespuesta);
+
+        if ($respuestaCorrecta && isset($respuestaCorrecta['id']) && $idRespuesta == $respuestaCorrecta['id']) {
+            $id = $_SESSION['id'];
+            unset($_SESSION['pregunta_id']);
+            unset($_SESSION['tiempo_entrega']);
+
+            $this->model->sumarPuntuacion($id);
         } else {
 
             $id = $_SESSION['id'];
-
+            unset($_SESSION['pregunta_id']);
+            unset($_SESSION['tiempo_entrega']);
             $this->model->finalizarPartida($id);
-            header(
-                'Location: /Monquiz/app/lobby/mostrarLobby'
-            ); exit();
-
-
+            header('Location: /Monquiz/app/lobby/mostrarLobby');
+            exit();
         }
     }
 
