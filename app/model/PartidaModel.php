@@ -91,8 +91,13 @@ class PartidaModel
         $this->database->execute($insertSql);
 
 
-        $updateSql = "UPDATE pregunta SET cantidad_vista = cantidad_vista + 1 WHERE id = $preguntaId";
+        $updateSql = "UPDATE pregunta SET cantidad_vista = cantidad_vista + 1  WHERE id = $preguntaId";
+
         $this->database->execute($updateSql);
+
+        $updateSqlUsuario = "UPDATE usuario SET cantidad_preg_vistas = cantidad_preg_vistas + 1  WHERE id = $userId";
+
+        $this->database->execute($updateSqlUsuario);
 
         return $preguntaSeleccionada;
     }
@@ -143,6 +148,10 @@ class PartidaModel
 
             $sqlUpdate = "UPDATE partida SET puntuacion = '$puntuacionNueva' WHERE usuario_FK = '$id' AND estado = 1";
             $this->database->execute($sqlUpdate);
+
+            $sqlUpdateUsuario = "UPDATE usuario SET cantidad_preg_correctas = cantidad_preg_correctas+1 WHERE id = '$id'";
+            $this->database->execute($sqlUpdateUsuario);
+
         } else {
             echo "No se encontró una partida activa para el usuario.";
         }

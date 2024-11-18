@@ -89,13 +89,29 @@ WHERE fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'   ";
 
     public function porcentajeRespuestasCorrectasPorFecha($fechaFin, $fechaInicio, $username)
     {
-        $sql = "SELECT cantidad_preg_vistas, cantidad_preg_correctas FROM usuario WHERE username='$username' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
+        $sql = "SELECT cantidad_preg_vistas, cantidad_preg_correctas  FROM usuario WHERE username='$username' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
         $result = $this->database->query($sql);
+        if (!empty($result)) {
+            $row = $result[0]; // Obtén la primera fila del arreglo asociativo
+            $vistas = $row['cantidad_preg_vistas'];
+            $correctas = $row['cantidad_preg_correctas'];
 
+            if ($vistas > 0) {
+                $porcentaje = ($correctas / $vistas) * 100;
+            } else {
+                $porcentaje = 0; // Evita división por cero
+            }
 
+            return $porcentaje;
+        }
 
-        return $result;
+        // Si no hay resultados, retorna 0
+        return 0;
     }
+
+
+
+
 
     public function verCantidadUsuariosPorPais($pais)
     {

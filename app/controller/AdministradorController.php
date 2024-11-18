@@ -60,28 +60,40 @@ class AdministradorController
 
         $fechaActual = date('Y-m-d H:i:s');
         $fechaUltimoAno = date('Y-m-d H:i:s', strtotime('-1 year'));
-        $edad = $_GET['edad'];
+        $edad = isset($_GET['edad']) ? $_GET['edad'] : null;
         $anioInicio = date('Y', strtotime($fechaActual));
         $anioNacimiento = $anioInicio - $edad;
 
-        $username='nico';
+        $username=isset($_GET['username']) ? $_GET['username'] : null;;
+        $pais=isset($_GET['pais']) ? $_GET['pais'] : null;;
+        $sexo=isset($_GET['sexo']) ? $_GET['sexo'] : null;;
 
-        echo "El año de nacimiento es: $anioNacimiento";
 
         $usuariosUltimoAno = $this->model->obtenerCantidadUsuarios($fechaUltimoAno, $fechaActual);
         $partidasUltimoAno = $this->model->verCantidadPartidasJugadasPorFecha($fechaUltimoAno, $fechaActual);
         $preguntasUltimoAno = $this->model->verCantidadPreguntasPorFecha($fechaUltimoAno, $fechaActual);
         $preguntasCreadasUsuarioUltimoAno = $this->model->verCantidadDePreguntasCreadasPorFecha($fechaUltimoAno, $fechaActual);
-
-
         $porcentajeRespuestasCorrectasPorUltimoAno= $this->model->porcentajeRespuestasCorrectasPorFecha($fechaUltimoAno, $fechaActual,$username);
-echo $porcentajeRespuestasCorrectasPorUltimoAno[0][0];
+        $cantidadUsuariosPorPaisUltimoAno= $this->model->verCantidadUsuariosPorPaisYFecha($fechaUltimoAno, $fechaActual, $pais);
+        $cantidadUsuariosPorSexoUltimoAno=$this->model->verCantidadUsuariosPorSexoYFecha($fechaUltimoAno, $fechaActual, $sexo);
+        $cantidadUsuariosPorEdadUltimoAno=$this->model->verCantidadUsuariosPorEdadYFecha($fechaUltimoAno, $fechaActual, $edad);
+
+
+
+
+
 
         $data = [
             'usuariosCreados' => $usuariosUltimoAno,
             'partidasCreadas' => $partidasUltimoAno,
             'preguntasCreadas' => $preguntasUltimoAno,
-            'preguntasCreadasUsuario' => $preguntasCreadasUsuarioUltimoAno
+            'preguntasCreadasUsuario' => $preguntasCreadasUsuarioUltimoAno,
+            'porcentajeRespuestasCorrectas' => $porcentajeRespuestasCorrectasPorUltimoAno,
+            'cantidadUsuariosPorPais' => $cantidadUsuariosPorPaisUltimoAno,
+            'cantidadUsuariosPorSexo' => $cantidadUsuariosPorSexoUltimoAno,
+            'cantidadUsuariosPorEdad' => $cantidadUsuariosPorEdadUltimoAno,
+
+
         ];
 
         $this->presenter->show("administrador", $data);
@@ -91,16 +103,34 @@ echo $porcentajeRespuestasCorrectasPorUltimoAno[0][0];
     {
         $fechaActual = date('Y-m-d H:i:s');
         $fechaUltimoMes = date('Y-m-d H:i:s', strtotime('-1 month'));
+
+        $edad = $_GET['edad'];
+        $anioInicio = date('Y', strtotime($fechaActual));
+        $anioNacimiento = $anioInicio - $edad;
+
+        $username=$_GET['username'];
+        $pais=$_GET['pais'];
+        $sexo=$_GET['sexo'];
+
+
         $partidasUltimoMes = $this->model->verCantidadPartidasJugadasPorFecha($fechaUltimoMes, $fechaActual);
         $usuariosUltimoMes = $this->model->obtenerCantidadUsuarios($fechaUltimoMes, $fechaActual);
         $preguntasUltimoMes = $this->model->verCantidadPreguntasPorFecha($fechaUltimoMes, $fechaActual);
         $preguntasCreadasUsuarioUltimoMes = $this->model->verCantidadDePreguntasCreadasPorFecha($fechaUltimoMes, $fechaActual);
+        $porcentajeRespuestasCorrectasPorUltimoMes= $this->model->porcentajeRespuestasCorrectasPorFecha($fechaUltimoMes, $fechaActual,$username);
+        $cantidadUsuariosPorPaisUltimoMes= $this->model->verCantidadUsuariosPorPaisYFecha($fechaUltimoMes, $fechaActual, $pais);
+        $cantidadUsuariosPorSexoUltimoMes=$this->model->verCantidadUsuariosPorSexoYFecha($fechaUltimoMes, $fechaActual, $sexo);
+        $cantidadUsuariosPorEdadUltimoMes=$this->model->verCantidadUsuariosPorEdadYFecha($fechaUltimoMes, $fechaActual, $edad);
 
         $data = [
             'usuariosCreados' => $usuariosUltimoMes,
             'partidasCreadas' => $partidasUltimoMes,
             'preguntasCreadas' => $preguntasUltimoMes,
-            'preguntasCreadasUsuario' => $preguntasCreadasUsuarioUltimoMes
+            'preguntasCreadasUsuario' => $preguntasCreadasUsuarioUltimoMes,
+            'porcentajeRespuestasCorrectas' => $porcentajeRespuestasCorrectasPorUltimoMes,
+            'cantidadUsuariosPorPais' => $cantidadUsuariosPorPaisUltimoMes,
+            'cantidadUsuariosPorSexo' => $cantidadUsuariosPorSexoUltimoMes,
+            'cantidadUsuariosPorEdad' => $cantidadUsuariosPorEdadUltimoMes,
         ];
 
         $this->presenter->show("administrador", $data);
@@ -111,17 +141,33 @@ echo $porcentajeRespuestasCorrectasPorUltimoAno[0][0];
         $fechaActual = date('Y-m-d H:i:s');
         $fechaUltimaSemana = date('Y-m-d H:i:s', strtotime('-1 week'));
 
+        $edad = $_GET['edad'];
+        $anioInicio = date('Y', strtotime($fechaActual));
+        $anioNacimiento = $anioInicio - $edad;
+
+        $username=$_GET['username'];
+        $pais=$_GET['pais'];
+        $sexo=$_GET['sexo'];
+
         $usuariosUltimaSemana = $this->model->obtenerCantidadUsuarios($fechaUltimaSemana, $fechaActual);
         $partidasUltimaSemana = $this->model->verCantidadPartidasJugadasPorFecha($fechaUltimaSemana, $fechaActual);
         $preguntasUltimaSemana = $this->model->verCantidadPreguntasPorFecha($fechaUltimaSemana, $fechaActual);
         $preguntasCreadasUsuarioUltimaSemana = $this->model->verCantidadDePreguntasCreadasPorFecha($fechaUltimaSemana, $fechaActual);
+        $porcentajeRespuestasCorrectasPorUltimaSemana= $this->model->porcentajeRespuestasCorrectasPorFecha($fechaUltimaSemana, $fechaActual,$username);
+        $cantidadUsuariosPorPaisUltimaSemana= $this->model->verCantidadUsuariosPorPaisYFecha($fechaUltimaSemana, $fechaActual, $pais);
+        $cantidadUsuariosPorSexoUltimaSemana=$this->model->verCantidadUsuariosPorSexoYFecha($fechaUltimaSemana, $fechaActual, $sexo);
+        $cantidadUsuariosPorEdadUltimaSemana=$this->model->verCantidadUsuariosPorEdadYFecha($fechaUltimaSemana, $fechaActual, $edad);
 
 
         $data = [
             'usuariosCreados' => $usuariosUltimaSemana,
             'partidasCreadas' => $partidasUltimaSemana,
             'preguntasCreadas' => $preguntasUltimaSemana,
-            'preguntasCreadasUsuario' => $preguntasCreadasUsuarioUltimaSemana
+            'preguntasCreadasUsuario' => $preguntasCreadasUsuarioUltimaSemana,
+            'porcentajeRespuestasCorrectas' => $porcentajeRespuestasCorrectasPorUltimaSemana,
+            'cantidadUsuariosPorPais' => $cantidadUsuariosPorPaisUltimaSemana,
+            'cantidadUsuariosPorSexo' => $cantidadUsuariosPorSexoUltimaSemana,
+            'cantidadUsuariosPorEdad' => $cantidadUsuariosPorEdadUltimaSemana,
         ];
 
         $this->presenter->show("administrador", $data);
@@ -132,17 +178,33 @@ echo $porcentajeRespuestasCorrectasPorUltimoAno[0][0];
         $fechaActual = date('Y-m-d H:i:s');
         $fechaUltimoDia = date('Y-m-d H:i:s', strtotime('-1 day'));
 
+        $edad = $_GET['edad'];
+        $anioInicio = date('Y', strtotime($fechaActual));
+        $anioNacimiento = $anioInicio - $edad;
+
+        $username=$_GET['username'];
+        $pais=$_GET['pais'];
+        $sexo=$_GET['sexo'];
+
         $partidasUltimoDia = $this->model->verCantidadPartidasJugadasPorFecha($fechaUltimoDia, $fechaActual);
         $usuariosUltimoDia = $this->model->obtenerCantidadUsuarios($fechaUltimoDia, $fechaActual);
         $preguntasUltimoDia = $this->model->verCantidadPreguntasPorFecha($fechaUltimoDia, $fechaActual);
         $preguntasCreadasUsuarioUltimoDia = $this->model->verCantidadDePreguntasCreadasPorFecha($fechaUltimoDia, $fechaActual);
+        $porcentajeRespuestasCorrectasPorUltimoDia= $this->model->porcentajeRespuestasCorrectasPorFecha($fechaUltimoDia, $fechaActual,$username);
+        $cantidadUsuariosPorPaisUltimoDia= $this->model->verCantidadUsuariosPorPaisYFecha($fechaUltimoDia, $fechaActual, $pais);
+        $cantidadUsuariosPorSexoUltimoDia=$this->model->verCantidadUsuariosPorSexoYFecha($fechaUltimoDia, $fechaActual, $sexo);
+        $cantidadUsuariosPorEdadUltimoDia=$this->model->verCantidadUsuariosPorEdadYFecha($fechaUltimoDia, $fechaActual, $edad);
 
 
         $data = [
             'usuariosCreados' => $usuariosUltimoDia,
             'partidasCreadas' => $partidasUltimoDia,
             'preguntasCreadas' => $preguntasUltimoDia,
-            'preguntasCreadasUsuario' => $preguntasCreadasUsuarioUltimoDia
+            'preguntasCreadasUsuario' => $preguntasCreadasUsuarioUltimoDia,
+            'porcentajeRespuestasCorrectas' => $porcentajeRespuestasCorrectasPorUltimoDia,
+            'cantidadUsuariosPorPais' => $cantidadUsuariosPorPaisUltimoDia,
+            'cantidadUsuariosPorSexo' => $cantidadUsuariosPorSexoUltimoDia,
+            'cantidadUsuariosPorEdad' => $cantidadUsuariosPorEdadUltimoDia,
         ];
 
         $this->presenter->show("administrador", $data);
