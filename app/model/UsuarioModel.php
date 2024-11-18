@@ -23,7 +23,7 @@ class UsuarioModel
             return "El nombre no es válido";
         }
 
-        if (!preg_match("/^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$/", $pass)) {
+        if (!preg_match("/^(?=.*[A-Z])(?=.*\d).{8,}$/", $pass)) {
             return "La contraseña no es válida";
         }
 

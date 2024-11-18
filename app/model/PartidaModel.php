@@ -49,7 +49,7 @@ class PartidaModel
 
         $preguntaSeleccionada = null;
         $intentos = 0;
-        $maxIntentos = 5;
+        $maxIntentos = 2;
 
         do {
             $random = random_int(0, $count - 1);
@@ -64,11 +64,11 @@ class PartidaModel
 
             $esDificil = false;
             if ($dificultadPregunta == "Dificil") {
-                if ($nivelUsuario == "mono" && random_int(1, 2) == 1) {
+                if ($nivelUsuario == "mono" && random_int(1, 4) == 1) {
                     $esDificil = true;
-                } elseif ($nivelUsuario == "promedio" && random_int(1, 4) == 1) {
+                } elseif ($nivelUsuario == "promedio" && random_int(1, 8) == 1) {
                     $esDificil = true;
-                } elseif ($nivelUsuario == "novato" && random_int(1, 8) == 1) {
+                } elseif ($nivelUsuario == "novato" && random_int(1, 16) == 1) {
                     $esDificil = true;
                 }
             }
