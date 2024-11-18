@@ -11,15 +11,11 @@ class PerfilModel
         return $this->database->query($sql);
     }
 
-    public function getPuntajeMaximo($userId) {
-        $sql = "SELECT MAX(puntuacion) AS max_puntuacion FROM partida WHERE usuario_FK = '$userId'";
+    public function getPuntaje($username){
+        $sql = "SELECT cantidad_preg_correctas FROM usuario WHERE username = '$username'";
         $result = $this->database->query($sql);
 
+        return $result[0]['cantidad_preg_correctas'];
 
-        if ($result && count($result) > 0) {
-            return $result[0]['max_puntuacion'];
-        }
-
-        return null;
     }
 }

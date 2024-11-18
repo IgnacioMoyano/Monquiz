@@ -40,13 +40,12 @@ class PerfilController{
         $perfil = $datosPerfil[0];
         $url = "http://localhost/Monquiz/app/perfil/mostrarPerfil/$usernamePerfil";
 
+        $puntaje = $this->model->getPuntaje($usernamePerfil);
 
         ob_start();
         QRcode::png($url, null, QR_ECLEVEL_L, 4);
         $qrImage = ob_get_contents();
         ob_end_clean();
-
-
         $qrCodeBase64 = 'data:image/png;base64,' . base64_encode($qrImage);
 
         $esUsuarioLogeado = ($usernamePerfil === $userLogueado);
@@ -63,7 +62,8 @@ class PerfilController{
                 'correo' => $perfil['correo'] ?? 'Correo no disponible',
                 'fecha_nac' => $perfil['fecha_nac'] ?? 'Fecha no disponible',
                 'genero' => $perfil['genero'] ?? 'No especificado',
-                'ciudad' => $perfil['ciudad'] ?? 'Dirección no disponible'
+                'ciudad' => $perfil['ciudad'] ?? 'Dirección no disponible',
+                'puntaje' => $puntaje ?? 'Puntaje no disponible',
             ],
             'esUsuarioLogeado' => $esUsuarioLogeado,
             'imagenHeader' => $imagenUserLogueado,

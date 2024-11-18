@@ -9,16 +9,11 @@
             <div class="container-fotos">
                 <img src="{{imagen}}" alt="Imagen de perfil" class="perfil-imagen w3-round">
                 <img src="{{qrCodeBase64}}" alt="Código QR" class="perfil-imagen w3-round">
-                
+
+
             </div>
             <div class="informacion">
-                {{#puntaje}}
-                    <p><strong>Puntaje: </strong> {{puntaje}}</p>
-                {{/puntaje}}
-
-                {{^puntaje}}
-                    <p><strong>Puntaje: </strong> 0</p>
-                {{/puntaje}}
+                <p><strong>Puntaje: </strong> {{puntaje}}</p>
                 <p><strong>Correo:</strong> {{correo}}</p>
                 <p><strong>Fecha de Nacimiento:</strong> {{fecha_nac}}</p>
                 <p><strong>Género:</strong> {{genero}}</p>
