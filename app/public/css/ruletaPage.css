@@ -21,3 +21,32 @@ body{
     height: 100%;
     pointer-events: none;
 }
+
+@media (max-width: 1440px) {
+
+    .mono{
+        position: absolute;
+        right: 48em;
+        top: 1em;
+        height: 100%;
+        pointer-events: none;
+    }
+}
+
+@media (max-width: 1024px) {
+
+    .mono{
+        position: absolute;
+        right: 27em;
+        top: 1em;
+        height: 100%;
+        pointer-events: none;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .mono{
+        display: none;
+    }
+}

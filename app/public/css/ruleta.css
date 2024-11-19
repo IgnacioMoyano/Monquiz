@@ -71,3 +71,19 @@
     }
 }
 
+@media (max-width: 768px) {
+
+    :where(.ui-wheel-of-fortune) {
+        --_items: 8;
+        all: unset;
+        aspect-ratio: 1 / 1;
+        container-type: inline-size;
+        direction: ltr;
+        display: grid;
+        position: relative;
+        width: 80%;
+        margin: auto;
+    }
+
+}
+
