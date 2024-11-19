@@ -160,7 +160,6 @@ WHERE fecha_nac='$edad'";
     public function verCantidadUsuariosJovenesYFecha($fechaFin, $fechaInicio)
     {
         $fechaJovenes = date('Y-m-d H:i:s', strtotime('-18 year'));
-        $fechaJubilados = date('Y-m-d H:i:s', strtotime('-65 year'));
 
         $sql = "SELECT COUNT(*) AS total_usuarios_porEdad 
 FROM usuario 
@@ -183,7 +182,6 @@ WHERE fecha_nac BETWEEN '$fechaJovenes' AND '$fechaJubilados' AND fecha_creacion
 
     public function verCantidadUsuariosJubiladosYFecha($fechaFin, $fechaInicio)
     {
-        $fechaJovenes = date('Y-m-d H:i:s', strtotime('-18 year'));
         $fechaJubilados = date('Y-m-d H:i:s', strtotime('-65 year'));
 
         $sql = "SELECT COUNT(*) AS total_usuarios_porEdad 
@@ -193,16 +191,6 @@ WHERE fecha_nac < '$fechaJubilados' AND fecha_creacion BETWEEN '$fechaFin' AND '
         return $result[0]['total_usuarios_porEdad'];
     }
 
-    public function verPuntuacionPorFecha($fechaFin, $fechaInicio)
-    {
-        $sql = "SELECT sum(puntuacion) AS puntaucion_total 
-                FROM partida 
-                WHERE fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
-
-        $result = $this->database->query($sql);
-        return $result[0]['total_usuarios_porEdad'];
-
-    }
 }
 
 
