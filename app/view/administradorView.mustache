@@ -58,16 +58,16 @@
             <button type="button" class="w3-button w3-blue w3-margin-top">Buscar</button>
         </form>
     </div>
-{{#data}}
+
     <div class="middle w3-white w3-padding w3-border">
         <h3 class="w3-center">Gráficos</h3>
         <div>
             <h4>Usuarios Creados:</h4>
-            <p>{{data.usuariosCreados}}</p>
+            <p>{{usuariosCreados}}</p>
         </div>
         <div>
             <h4>Partidas Creadas:</h4>
-            <p>{{data.partidasCreadas}}</p>
+            <p>{{partidasCreadas}}</p>
         </div>
         <div>
             <h4>Preguntas Creadas:</h4>
@@ -82,12 +82,13 @@
         </div>
     </div>
 </div>
-{{/data}}
+
 </body>
 
-<div id="grafico" data-datos="{{chartData}}"></div>
+<div id="grafico" data-datos="{{data}}"></div>
 
-<canvas id="miGrafico" width="400" height="200"></canvas>
+<div id="miGrafico" width="400" height="200"></div>
+
 <script src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="/Monquiz/app/public/js/grafico.js"></script>
 </html>

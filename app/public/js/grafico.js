@@ -1,27 +1,22 @@
-
-google.charts.load('current',{packages:['corechart']});
+google.charts.load('current', { packages: ['corechart'] });
 google.charts.setOnLoadCallback(drawChart);
 
+function drawChart() {
+    const graficoDiv = document.getElementById('grafico');
+    const datos = JSON.parse(graficoDiv.dataset.datos).graficoUsuarios;
 
-const graficoDiv = document.getElementById('grafico');
-const chartData = JSON.parse(graficoDiv.dataset.datos);
+    // Crear los datos para Google Charts
+    const data = google.visualization.arrayToDataTable(datos);
 
-console.log(chartData   )
-    // Your Function
-    function drawChart() {
-        // Set Data
-        const data = google.visualization.arrayToDataTable(chartData);
+    // Opciones para el gráfico
+    const options = {
+        title: 'Estadísticas del Último Año',
+        pieHole: 0.4,
+        width: 400,
+        height: 300,
+    };
 
-
-
-// Set Options
-        const options = {
-            title: 'World Wide Wine Production'
-        };
-
-// Draw
-        const chart = new google.visualization.PieChart(document.getElementById('myChart'));
-        chart.draw(data, options);
-
-
+    // Dibujar el gráfico
+    const chart = new google.visualization.PieChart(document.getElementById('myChart'));
+    chart.draw(data, options);
 }

@@ -86,34 +86,27 @@ class AdministradorController
 
 
         $data = [
-            'cantidadJugadores' => $cantidadJugadores,
+            'graficoUsuarios' => [
+                ['Categoría', 'Cantidad'], // Encabezados para Google Charts
+                ['Usuarios Creados', (int)$usuariosUltimoAno],
+                ['Partidas Creadas', (int)$partidasUltimoAno],
+                ['Preguntas Creadas', (int)$preguntasUltimoAno],
+            ],
+            'cantidadJugadores' => (int)$cantidadJugadores,
 
-
-            'usuariosCreados' => $usuariosUltimoAno,
-            'partidasCreadas' => $partidasUltimoAno,
-            'preguntasCreadas' => $preguntasUltimoAno,
-            'preguntasCreadasUsuario' => $preguntasCreadasUsuarioUltimoAno,
-            'porcentajeRespuestasCorrectas' => $porcentajeRespuestasCorrectasPorUltimoAno,
-            'cantidadUsuariosPorPais' => $cantidadUsuariosPorPaisUltimoAno,
-            'cantidadUsuariosPorSexo' => $cantidadUsuariosPorSexoUltimoAno,
-            'cantidadUsuariosPorEdad' => $cantidadUsuariosPorEdadUltimoAno,
-
+            'preguntasCreadasUsuario' => (int)$preguntasCreadasUsuarioUltimoAno,
+            'porcentajeRespuestasCorrectas' => (int)$porcentajeRespuestasCorrectasPorUltimoAno,
+            'cantidadUsuariosPorPais' => (int)$cantidadUsuariosPorPaisUltimoAno,
+            'cantidadUsuariosPorSexo' => (int)$cantidadUsuariosPorSexoUltimoAno,
+            'cantidadUsuariosPorEdad' => (int)$cantidadUsuariosPorEdadUltimoAno,
 
         ];
 
-        $chartData = [
-            ['Metric', 'Value'], // Encabezados
-            ['Jugadores', $data['cantidadJugadores']],
-            ['Partidas Jugadas', $data['partidasCreadas']],
-            ['Preguntas Respondidas', $data['preguntasCreadas']],
-            ['Preguntas Creadas', $data['preguntasCreadasUsuario']],
-            ['Usuarios Nuevos', $data['porcentajeRespuestasCorrectas']],
-            ['Porcentaje Correctas', $data['cantidadUsuariosPorPais']]
-        ];
 
-        echo json_encode($data);
 
-        $this->presenter->show("administrador", ['chartData' => json_encode($chartData)]);
+        $this->presenter->show("administrador", [
+            'data' => json_encode($data), // Convertir a JSON para enviarlo a la vista
+        ]);
     }
 
     public function verGraficosMes()
