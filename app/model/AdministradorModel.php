@@ -87,6 +87,13 @@ WHERE fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'   ";
         return $result[0]['cantidad_usuariosNuevos'];
     }
 
+    public function verPuntuacionTotal($fechaFin, $fechaInicio)
+    {
+        $sql = "SELECT SUM(puntuacion) as puntuacion_total FROM partida WHERE fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
+        $result = $this->database->query($sql);
+        return $result[0]['puntuacion_total'];
+    }
+
     public function porcentajeRespuestasCorrectasPorFecha($fechaFin, $fechaInicio, $username)
     {
         $sql = "SELECT cantidad_preg_vistas, cantidad_preg_correctas  FROM usuario WHERE username='$username' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";

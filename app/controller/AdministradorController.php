@@ -72,7 +72,7 @@ class AdministradorController
         $sexo=isset($_GET['sexo']) ? $_GET['sexo'] : null;;
 
         $cantidadJugadores = $this->model->verCantidadJugadores();
-
+        $cantidadPartidasJugadas = $this->model->verCantidadPartidasJugadas();
 
         $usuariosUltimoAno = $this->model->obtenerCantidadUsuarios($fechaUltimoAno, $fechaActual);
         $partidasUltimoAno = $this->model->verCantidadPartidasJugadasPorFecha($fechaUltimoAno, $fechaActual);
@@ -81,27 +81,67 @@ class AdministradorController
         $porcentajeRespuestasCorrectasPorUltimoAno= $this->model->porcentajeRespuestasCorrectasPorFecha($fechaUltimoAno, $fechaActual,$username);
         $cantidadUsuariosPorPaisUltimoAno= $this->model->verCantidadUsuariosPorPaisYFecha($fechaUltimoAno, $fechaActual, $pais);
         $cantidadUsuariosPorSexoUltimoAno=$this->model->verCantidadUsuariosPorSexoYFecha($fechaUltimoAno, $fechaActual, $sexo);
-        $cantidadUsuariosPorEdadUltimoAno=$this->model->verCantidadUsuariosPorEdadYFecha($fechaUltimoAno, $fechaActual);
 
 
 
+        $puntuacionTotal = $this->model->verPuntuacionTotal($fechaUltimoAno, $fechaActual);
+        $totalPartidas = $this->model->verCantidadPartidasJugadasPorFecha($fechaUltimoAno, $fechaActual);
+
+        $totalPreguntasVistas = $puntuacionTotal + $totalPartidas;
+
+        if($puntuacionTotal == 0) {
+            $porcentajeRespuestasCorrectas = 0;
+        } else {
+            $porcentajeRespuestasCorrectas = $totalPreguntasVistas / $puntuacionTotal * 100;
+        }
 
 
+        $edadJovenes = $this->model->verCantidadUsuariosJovenesYFecha($fechaUltimoAno, $fechaActual);
+        $edadMedio = $this->model->verCantidadUsuariosMediosYFecha($fechaUltimoAno, $fechaActual);
+        $edadAdultos = $this->model->verCantidadUsuariosJubiladosYFecha($fechaUltimoAno, $fechaActual);
+
+
+
+        $totalRespuestasIncorrectas = 100 - $porcentajeRespuestasCorrectas;
 
         $data = [
-            'graficoUsuarios' => [
-                ['Categoría', 'Cantidad'], // Encabezados para Google Charts
-                ['Usuarios Creados', (int)$usuariosUltimoAno],
-                ['Partidas Creadas', (int)$partidasUltimoAno],
+            'graficoPreguntas' => [
+                ['Categoría', 'Cantidad'],
                 ['Preguntas Creadas', (int)$preguntasUltimoAno],
+                ['Preguntas por Usuario', (int)$preguntasCreadasUsuarioUltimoAno],
             ],
+
+            'graficoJugadores' => [
+                ['Categoría', 'Cantidad'],
+                ['Jugadores Totales', (int)$cantidadJugadores],
+                ['Usuarios Creados', (int)$usuariosUltimoAno]
+            ],
+
+            'graficoPartidas' => [
+                ['Categoría', 'Cantidad'],
+                ['Partidas Totales', (int)$cantidadPartidasJugadas],
+                ['Partidas jugadas', (int)$partidasUltimoAno]
+            ],
+
+            'graficoEdad' => [
+                ['Categoría', 'Cantidad'],
+                ['Usuarios jovenes', (int)$edadJovenes],
+                ['Usuarios adultos', (int)$edadMedio],
+                ['Usuarios ancianos', (int)$edadAdultos]
+            ],
+
+            'graficoPorcentaje' => [
+                ['Categoría', 'Cantidad'],
+                ['Respuestas Incorrectas', $totalRespuestasIncorrectas],
+                ['Respuestas Correctas', $porcentajeRespuestasCorrectas]
+            ],
+
             'cantidadJugadores' => (int)$cantidadJugadores,
 
             'preguntasCreadasUsuario' => (int)$preguntasCreadasUsuarioUltimoAno,
             'porcentajeRespuestasCorrectas' => (int)$porcentajeRespuestasCorrectasPorUltimoAno,
             'cantidadUsuariosPorPais' => (int)$cantidadUsuariosPorPaisUltimoAno,
             'cantidadUsuariosPorSexo' => (int)$cantidadUsuariosPorSexoUltimoAno,
-            'cantidadUsuariosPorEdad' => (int)$cantidadUsuariosPorEdadUltimoAno,
 
         ];
 

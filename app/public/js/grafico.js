@@ -33,7 +33,7 @@ function drawChart() {
     };
 
     const optionsPorcentaje = {
-        title: 'Respuestas correctas del Último Año',
+        title: 'Porcentaje de respuestas Último año',
     };
 
 
