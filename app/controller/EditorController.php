@@ -13,31 +13,108 @@ class EditorController
     }
 
     public function home(){
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 1) {
+            header('Location: /Monquiz/app/editor/verPreguntas');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
+            exit();
+        }
         $this->presenter->show('editorHome');
     }
 
     public function verPreguntas(){
-
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 1) {
+            header('Location: /Monquiz/app/editor/verPreguntas');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
+            exit();
+        }
         $data = $this->model->getAllPreguntas();
 
         $this->presenter->show('verPreguntas', ['data' => $data]);
     }
 
     public function verPreguntasReportadas(){
-
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 1) {
+            header('Location: /Monquiz/app/editor/verPreguntas');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
+            exit();
+        }
         $data = $this->model->getPreguntasReportadas();
 
         $this->presenter->show('verPreguntas', ['data' => $data]);
     }
 
     public function verPreguntasPendientes(){
-
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 1) {
+            header('Location: /Monquiz/app/editor/verPreguntas');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
+            exit();
+        }
         $data = $this->model->getPreguntasPendientes();
 
         $this->presenter->show('verPreguntas', ['data' => $data]);
     }
 
     public function editarPregunta(){
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 1) {
+            header('Location: /Monquiz/app/editor/verPreguntas');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
+            exit();
+        }
         $idPregunta = isset($_GET['id']) ? $_GET['id'] : '';
 
         $pregunta = $this->model->getPregunta($idPregunta);
@@ -54,7 +131,22 @@ class EditorController
 
     public function modificarPregunta()
     {
-
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 1) {
+            header('Location: /Monquiz/app/editor/verPreguntas');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
+            exit();
+        }
         $datosPregunta = [
             'id' => $_POST['id'],
             'pregunta' => $_POST['pregunta'],
