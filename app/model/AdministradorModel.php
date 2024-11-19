@@ -110,9 +110,6 @@ WHERE fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'   ";
     }
 
 
-
-
-
     public function verCantidadUsuariosPorPais($pais)
     {
         $sql = "SELECT COUNT(*) AS total_usuarios_porPais
@@ -140,6 +137,7 @@ WHERE genero='$sexo'";
         $result = $this->database->query($sql);
         return $result[0]['total_usuarios_porSexo'];
     }
+
     public function verCantidadUsuariosPorSexoYFecha($fechaFin, $fechaInicio, $sexo)
     {
         $sql = "SELECT COUNT(*) AS total_usuarios_porSexo 
@@ -159,45 +157,53 @@ WHERE fecha_nac='$edad'";
         return $result[0]['total_usuarios_porEdad'];
     }
 
-    public function verCantidadUsuariosJovenesYFecha($fechaFin, $fechaInicio, $edad)
+    public function verCantidadUsuariosJovenesYFecha($fechaFin, $fechaInicio)
     {
         $fechaJovenes = date('Y-m-d H:i:s', strtotime('-18 year'));
         $fechaJubilados = date('Y-m-d H:i:s', strtotime('-65 year'));
 
         $sql = "SELECT COUNT(*) AS total_usuarios_porEdad 
 FROM usuario 
-WHERE fecha_nac BETWEEN $fechaInicio AND $fechaJovenes AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
+WHERE fecha_nac BETWEEN '$fechaInicio' AND '$fechaJovenes' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
         $result = $this->database->query($sql);
         return $result[0]['total_usuarios_porEdad'];
     }
 
-    public function verCantidadUsuariosMediosYFecha($fechaFin, $fechaInicio, $edad)
+    public function verCantidadUsuariosMediosYFecha($fechaFin, $fechaInicio)
     {
         $fechaJovenes = date('Y-m-d H:i:s', strtotime('-18 year'));
         $fechaJubilados = date('Y-m-d H:i:s', strtotime('-65 year'));
 
         $sql = "SELECT COUNT(*) AS total_usuarios_porEdad 
 FROM usuario 
-WHERE fecha_nac BETWEEN $fechaJovenes AND $fechaJubilados AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
+WHERE fecha_nac BETWEEN '$fechaJovenes' AND '$fechaJubilados' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
         $result = $this->database->query($sql);
         return $result[0]['total_usuarios_porEdad'];
     }
-    public function verCantidadUsuariosJubiladosYFecha($fechaFin, $fechaInicio, $edad)
+
+    public function verCantidadUsuariosJubiladosYFecha($fechaFin, $fechaInicio)
     {
         $fechaJovenes = date('Y-m-d H:i:s', strtotime('-18 year'));
         $fechaJubilados = date('Y-m-d H:i:s', strtotime('-65 year'));
 
         $sql = "SELECT COUNT(*) AS total_usuarios_porEdad 
 FROM usuario 
-WHERE fecha_nac < $fechaJubilados AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
+WHERE fecha_nac < '$fechaJubilados' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
         $result = $this->database->query($sql);
         return $result[0]['total_usuarios_porEdad'];
     }
 
+    public function verPuntuacionPorFecha($fechaFin, $fechaInicio)
+    {
+        $sql = "SELECT sum(puntuacion) AS puntaucion_total 
+                FROM partida 
+                WHERE fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
 
+        $result = $this->database->query($sql);
+        return $result[0]['total_usuarios_porEdad'];
 
+    }
 }
-
 
 
 /*Por otro lado debe existir el usuario administrador, capaz de ver la cantidad de jugadores que tiene
