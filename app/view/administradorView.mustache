@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <style>
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .side {
+            flex: 1;
+        }
+        .middle {
+            flex: 0.5;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+
+
+
+</head>
+<body>
+<div class="w3-container w3-light-grey w3-padding-16">
+    <h2 class="w3-center">Estadísticas</h2>
+</div>
+<div class="w3-container container w3-padding-16">
+
+    <div class="side w3-light-grey w3-padding">
+        <h3>Resultados</h3>
+        <div id="resultados">
+            <div id="graficoEdad" style="max-width:700px; height:400px"></div>
+        </div>
+    </div>
+
+    <div class="side w3-light-grey w3-padding">
+        <h3>Resultados</h3>
+        <div id="resultados">
+            <div id="graficoPreguntas" style="max-width:700px; height:400px"></div>
+        </div>
+    </div>
+
+    <div class="side w3-light-grey w3-padding">
+        <h3>Resultados</h3>
+        <div id="resultados">
+            <div id="graficoJugadores" style="max-width:700px; height:400px"></div>
+        </div>
+    </div>
+
+    <div class="side w3-light-grey w3-padding">
+        <h3>Resultados</h3>
+        <div id="resultados">
+            <div id="graficoPartidas" style="max-width:700px; height:400px"></div>
+        </div>
+    </div>
+
+    <div class="side w3-light-grey w3-padding">
+        <h3>Resultados</h3>
+        <div id="resultados">
+            <div id="graficoPorcentaje" style="max-width:700px; height:400px"></div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+<div id="grafico" data-datos="{{data}}"></div>
+
+
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="/Monquiz/app/public/js/grafico.js"></script>
+</html>

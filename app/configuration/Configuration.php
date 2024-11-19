@@ -29,6 +29,10 @@ include_once("model/RankingModel.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 include_once('vendor/phpqrcode/qrlib.php');
+
+include_once('model/AdministradorModel.php');
+include_once('controller/Administradorcontroller.php');
+
 class Configuration
 {
     public function __construct()
@@ -40,28 +44,39 @@ class Configuration
         return new EditorController($this->getEditorModel(), $this->getPresenter());
     }
 
-    public function getPokedexController(){
+    public function getPokedexController()
+    {
         return new PokedexController($this->getPokedexModel(), $this->getPresenter());
     }
 
-    public function getPartidaController(){
-        return new PartidaController($this->getPartidaModel() ,$this->getPresenter());
+    public function getPartidaController()
+    {
+        return new PartidaController($this->getPartidaModel(), $this->getPresenter());
     }
 
-    public function getUsuarioController(){
+    public function getUsuarioController()
+    {
         return new UsuarioController($this->getUsuarioModel(), $this->getPresenter());
     }
 
-    public function getPerfilController() {
+    public function getPerfilController()
+    {
         return new PerfilController($this->getPerfilModel(), $this->getPresenter());
     }
 
-    public function getLobbyController(){
+    public function getLobbyController()
+    {
         return new LobbyController($this->getLobbyModel(), $this->getPresenter());
     }
 
-    public function getRankingController(){
+    public function getRankingController()
+    {
         return new RankingController($this->getRankingModel(), $this->getPresenter());
+    }
+
+    public function getAdministradorController()
+    {
+        return new AdministradorController($this->getAdministradorModel(), $this->getPresenter());
     }
 
     public function getEditorModel()
@@ -69,19 +84,23 @@ class Configuration
         return new EditorModel($this->getDatabase());
     }
 
-    private function getPerfilModel(){
+    private function getPerfilModel()
+    {
         return new PerfilModel($this->getDatabase());
     }
 
-    private function getPartidaModel(){
+    private function getPartidaModel()
+    {
         return new PartidaModel($this->getDatabase());
     }
 
-    private function getLobbyModel(){
+    private function getLobbyModel()
+    {
         return new LobbyModel($this->getDatabase());
     }
 
-    private function getRankingModel(){
+    private function getRankingModel()
+    {
         return new RankingModel($this->getDatabase());
     }
 
@@ -91,6 +110,10 @@ class Configuration
         return new PokedexModel($this->getDatabase());
     }
 
+    private function getAdministradorModel()
+    {
+        return new AdministradorModel($this->getDatabase());
+    }
 
     private function getPresenter()
     {
@@ -119,7 +142,6 @@ class Configuration
     {
         return new UsuarioModel($this->getDatabase());
     }
-
 
 
 }

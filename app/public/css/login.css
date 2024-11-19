@@ -1,11 +1,12 @@
-body{
+body {
     background-image: url("../images/fondos/LOGIN.jpeg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+
 }
 
-.loginConteiner{
+.loginConteiner {
     width: 27.8em;
     height: 43.4em;
     margin: auto;
@@ -13,52 +14,168 @@ body{
     position: relative;
 }
 
-.formulario{
+.formulario {
     display: flex;
     flex-direction: column;
 }
 
-.tituloFormulario{
+.tituloFormulario {
     text-align: center;
-}
-
-label{
     font-size: large;
 }
 
-.tituloFormulario{
+label {
     font-size: large;
 }
 
-.campo{
+.campo {
     margin: 1em 0em 1em 0em;
 }
 
-button{
+button {
     background-color: #422f25 !important;
     color: white !important;
-
 }
 
 .mono {
     position: absolute;
-    right: -17.88em;
+    right: -17.8em;
     top: 1em;
     height: 100%;
     z-index: 1;
     pointer-events: none;
 }
 
-.body{
+.body {
     display: flex;
+    height: 48.75em;
+
     align-items: center;
     justify-content: center;
-    height: 100vh;
 }
 
-.redirectRegister{
+.redirectRegister {
     display: flex;
     text-align: center;
     justify-content: center;
+}
+
+@media (max-width: 576px) {
+    .loginConteiner {
+        width: 90%;
+        padding: 15px;
+        height: auto;
+    }
+
+    .tituloFormulario {
+        font-size: 1.2em;
+    }
+
+    .mono {
+        position: absolute;
+        left: -15%;
+        top: 121%;
+        transform: translate(-50%, -50%);
+
+    }
+
+    button {
+        font-size: 0.9em;
+        padding: 0.7em;
+    }
+
+    .redirectRegister {
+        font-size: 0.8em;
+    }
+}
+
+
+@media (min-width: 577px) and (max-width: 768px) {
+
+    .body {
+        display: flex;
+        min-height: 100vh;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+
+    .loginConteiner {
+        width: 80%;
+        height: auto;
+        padding: 20px;
+    }
+
+    .tituloFormulario {
+        font-size: 1.4em;
+    }
+
+    .mono {
+        position: absolute;
+        top: 5vh;
+        left: 75.6vw;
+        transform: translate(-50%, -15%);
+        max-width: 100%;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 0.8em;
+    }
+
+    .redirectRegister {
+        font-size: 0.9em;
+    }
+}
+
+
+@media (min-width: 769px) and (max-width: 1024px) and (min-height: 600px) {
+    .body {
+        display: flex;
+        min-height: 100vh;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .loginConteiner {
+        width: 80%;
+        height: auto;
+        background-color: #be945b;
+        padding: 20px;
+        margin: auto;
+        position: relative;
+    }
+
+    .tituloFormulario {
+        font-size: 1.4em;
+    }
+
+    .mono {
+        position: absolute;
+        top: 5vh;
+        left: 76vw;
+        transform: translate(-50%, -15%);
+        max-width: 100%;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 0.8em;
+    }
+
+    .redirectRegister {
+        font-size: 0.9em;
+    }
+}
+
+
+@media (min-width: 1024px) and (max-width: 1024px) and (max-height: 600px) {
+    .mono {
+        top: 8vh;
+        left: 76.8vw;
+        transform: translate(-50%, -15%);
+    }
 }
 
