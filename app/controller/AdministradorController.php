@@ -68,6 +68,8 @@ class AdministradorController
         $pais=isset($_GET['pais']) ? $_GET['pais'] : null;;
         $sexo=isset($_GET['sexo']) ? $_GET['sexo'] : null;;
 
+        $cantidadJugadores = $this->model->verCantidadJugadores();
+
 
         $usuariosUltimoAno = $this->model->obtenerCantidadUsuarios($fechaUltimoAno, $fechaActual);
         $partidasUltimoAno = $this->model->verCantidadPartidasJugadasPorFecha($fechaUltimoAno, $fechaActual);
@@ -84,6 +86,9 @@ class AdministradorController
 
 
         $data = [
+            'cantidadJugadores' => $cantidadJugadores,
+
+
             'usuariosCreados' => $usuariosUltimoAno,
             'partidasCreadas' => $partidasUltimoAno,
             'preguntasCreadas' => $preguntasUltimoAno,
@@ -96,7 +101,19 @@ class AdministradorController
 
         ];
 
-        $this->presenter->show("administrador", $data);
+        $chartData = [
+            ['Metric', 'Value'], // Encabezados
+            ['Jugadores', $data['cantidadJugadores']],
+            ['Partidas Jugadas', $data['partidasCreadas']],
+            ['Preguntas Respondidas', $data['preguntasCreadas']],
+            ['Preguntas Creadas', $data['preguntasCreadasUsuario']],
+            ['Usuarios Nuevos', $data['porcentajeRespuestasCorrectas']],
+            ['Porcentaje Correctas', $data['cantidadUsuariosPorPais']]
+        ];
+
+        echo json_encode($data);
+
+        $this->presenter->show("administrador", ['chartData' => json_encode($chartData)]);
     }
 
     public function verGraficosMes()
@@ -132,6 +149,8 @@ class AdministradorController
             'cantidadUsuariosPorSexo' => $cantidadUsuariosPorSexoUltimoMes,
             'cantidadUsuariosPorEdad' => $cantidadUsuariosPorEdadUltimoMes,
         ];
+
+        echo json_encode($data);
 
         $this->presenter->show("administrador", $data);
     }
@@ -169,6 +188,8 @@ class AdministradorController
             'cantidadUsuariosPorSexo' => $cantidadUsuariosPorSexoUltimaSemana,
             'cantidadUsuariosPorEdad' => $cantidadUsuariosPorEdadUltimaSemana,
         ];
+
+
 
         $this->presenter->show("administrador", $data);
     }

@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estadísticas</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
     <style>
         .container {
             display: flex;
@@ -20,6 +22,9 @@
             margin-bottom: 15px;
         }
     </style>
+
+
+
 </head>
 <body>
 <div class="w3-container w3-light-grey w3-padding-16">
@@ -53,29 +58,36 @@
             <button type="button" class="w3-button w3-blue w3-margin-top">Buscar</button>
         </form>
     </div>
-
+{{#data}}
     <div class="middle w3-white w3-padding w3-border">
         <h3 class="w3-center">Gráficos</h3>
         <div>
             <h4>Usuarios Creados:</h4>
-            <p>{{usuariosCreados}}</p>
+            <p>{{data.usuariosCreados}}</p>
         </div>
         <div>
             <h4>Partidas Creadas:</h4>
-            <p>{{partidasCreadas}}</p>
+            <p>{{data.partidasCreadas}}</p>
         </div>
         <div>
             <h4>Preguntas Creadas:</h4>
             <p>{{preguntasCreadas}}</p>
         </div>
     </div>
-    
+
     <div class="side w3-light-grey w3-padding">
         <h3>Resultados</h3>
         <div id="resultados">
-            <p>No hay resultados por ahora</p>
+            <div id="myChart" style="max-width:700px; height:400px"></div>
         </div>
     </div>
 </div>
+{{/data}}
 </body>
+
+<div id="grafico" data-datos="{{chartData}}"></div>
+
+<canvas id="miGrafico" width="400" height="200"></canvas>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="/Monquiz/app/public/js/grafico.js"></script>
 </html>
