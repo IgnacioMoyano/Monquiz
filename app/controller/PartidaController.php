@@ -18,6 +18,14 @@ class PartidaController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
+        if ($_SESSION['tipo_cuenta'] == 1) {
+            header('Location: /Monquiz/app/editor/verPreguntas');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
+            exit();
+        }
 
 
 
@@ -35,6 +43,14 @@ class PartidaController{
         }
         if ($_SESSION['validado'] != 1) {
             header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 1) {
+            header('Location: /Monquiz/app/editor/verPreguntas');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
             exit();
         }
 
@@ -62,6 +78,14 @@ class PartidaController{
         }
         if ($_SESSION['validado'] != 1) {
             header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 1) {
+            header('Location: /Monquiz/app/editor/verPreguntas');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
             exit();
         }
         $resultado_ruleta = $_SESSION['resultado_ruleta'];
@@ -114,14 +138,7 @@ class PartidaController{
     }
 
     public function resultado() {
-        if (!isset($_SESSION['username'])) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-        if ($_SESSION['validado'] != 1) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
+
 
         $jsonData = file_get_contents('php://input');
         $data = json_decode($jsonData, true);
@@ -156,10 +173,16 @@ class PartidaController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
-
-
         if ($_SESSION['validado'] != 1) {
             header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 1) {
+            header('Location: /Monquiz/app/editor/verPreguntas');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
             exit();
         }
 
@@ -235,6 +258,14 @@ class PartidaController{
         }
         if ($_SESSION['validado'] != 1) {
             header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 1) {
+            header('Location: /Monquiz/app/editor/verPreguntas');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
             exit();
         }
 

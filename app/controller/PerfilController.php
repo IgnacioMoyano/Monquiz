@@ -19,6 +19,14 @@ class PerfilController{
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
+        if ($_SESSION['tipo_cuenta'] == 1) {
+            header('Location: /Monquiz/app/editor/verPreguntas');
+            exit();
+        }
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
+            exit();
+        }
 
         $imagenUserLogueado = $_SESSION['imagen'];
         $userLogueado = $_SESSION['username'];
