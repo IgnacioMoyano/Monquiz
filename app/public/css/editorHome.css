@@ -1,0 +1,23 @@
+.main-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.main-container a {
+    display: inline-block;
+    margin: 10px;
+    padding: 15px 25px;
+    text-decoration: none;
+    color: #000;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
