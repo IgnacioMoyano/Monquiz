@@ -21,10 +21,7 @@ class EditorController
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
-        if ($_SESSION['tipo_cuenta'] == 1) {
-            header('Location: /Monquiz/app/editor/verPreguntas');
-            exit();
-        }
+
         if ($_SESSION['tipo_cuenta'] == 2) {
             header('Location: /Monquiz/app/administrador/verGraficosAno');
             exit();
@@ -41,10 +38,7 @@ class EditorController
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
-        if ($_SESSION['tipo_cuenta'] == 1) {
-            header('Location: /Monquiz/app/editor/verPreguntas');
-            exit();
-        }
+
         if ($_SESSION['tipo_cuenta'] == 2) {
             header('Location: /Monquiz/app/administrador/verGraficosAno');
             exit();
@@ -63,10 +57,7 @@ class EditorController
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
-        if ($_SESSION['tipo_cuenta'] == 1) {
-            header('Location: /Monquiz/app/editor/verPreguntas');
-            exit();
-        }
+
         if ($_SESSION['tipo_cuenta'] == 2) {
             header('Location: /Monquiz/app/administrador/verGraficosAno');
             exit();
@@ -85,10 +76,7 @@ class EditorController
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
-        if ($_SESSION['tipo_cuenta'] == 1) {
-            header('Location: /Monquiz/app/editor/verPreguntas');
-            exit();
-        }
+
         if ($_SESSION['tipo_cuenta'] == 2) {
             header('Location: /Monquiz/app/administrador/verGraficosAno');
             exit();
@@ -107,10 +95,7 @@ class EditorController
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
-        if ($_SESSION['tipo_cuenta'] == 1) {
-            header('Location: /Monquiz/app/editor/verPreguntas');
-            exit();
-        }
+
         if ($_SESSION['tipo_cuenta'] == 2) {
             header('Location: /Monquiz/app/administrador/verGraficosAno');
             exit();
@@ -139,10 +124,7 @@ class EditorController
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
-        if ($_SESSION['tipo_cuenta'] == 1) {
-            header('Location: /Monquiz/app/editor/verPreguntas');
-            exit();
-        }
+
         if ($_SESSION['tipo_cuenta'] == 2) {
             header('Location: /Monquiz/app/administrador/verGraficosAno');
             exit();
@@ -171,6 +153,69 @@ class EditorController
 
             echo "Error al actualizar la pregunta. Detalles del error: ";
         }
+    }
+
+    public function verCrearPregunta()
+    {
+
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
+            exit();
+        }
+
+        $categorias = $this->model->getCategorias();
+
+        $data = [
+            "categorias" => $categorias,
+            'user' => $_SESSION['username'],
+            'imagenHeader' => $_SESSION['imagen']
+        ];
+
+        $this->presenter->show('editorCrearPregunta', $data);
+    }
+
+    public function enviarPregunta(){
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+        if ($_SESSION['validado'] != 1) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
+
+        if ($_SESSION['tipo_cuenta'] == 2) {
+            header('Location: /Monquiz/app/administrador/verGraficosAno');
+            exit();
+        }
+
+        $pregunta = $_POST['pregunta'] ?? null;
+        $respuesta_correcta = $_POST['respuesta_correcta'] ?? null;
+        $respuesta_incorrecta1 = $_POST['respuesta_incorrecta1'] ?? null;
+        $respuesta_incorrecta2 = $_POST['respuesta_incorrecta2'] ?? null;
+        $respuesta_incorrecta3 = $_POST['respuesta_incorrecta3'] ?? null;
+        $categoria = $_POST['categoria'] ?? null;
+
+        if (empty($pregunta) || empty($respuesta_correcta) || empty($respuesta_incorrecta1) || empty($respuesta_incorrecta2) || empty($respuesta_incorrecta3) || empty($categoria)) {
+            echo "Debes llenar todos los campos.";
+        }
+
+        $resultado = $this->model->crearPregunta($pregunta, $categoria, $respuesta_correcta, $respuesta_incorrecta1, $respuesta_incorrecta2, $respuesta_incorrecta3);
+
+        $data = [
+            "categorias" => $this->model->getCategorias(),
+        ];
+
+        $this->presenter->show("editorCrearPregunta", $data);
     }
 
 }
