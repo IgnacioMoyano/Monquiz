@@ -29,6 +29,7 @@ include_once("model/RankingModel.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 include_once('vendor/phpqrcode/qrlib.php');
+include_once ('vendor/fpdf/fpdf.php');
 
 include_once('model/AdministradorModel.php');
 include_once('controller/Administradorcontroller.php');
