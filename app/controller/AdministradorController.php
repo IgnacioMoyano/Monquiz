@@ -78,9 +78,7 @@ class AdministradorController
         $partidasUltimoAno = $this->model->verCantidadPartidasJugadasPorFecha($fechaUltimoAno, $fechaActual);
         $preguntasUltimoAno = $this->model->verCantidadPreguntasPorFecha($fechaUltimoAno, $fechaActual);
         $preguntasCreadasUsuarioUltimoAno = $this->model->verCantidadDePreguntasCreadasPorFecha($fechaUltimoAno, $fechaActual);
-        $porcentajeRespuestasCorrectasPorUltimoAno= $this->model->porcentajeRespuestasCorrectasPorFecha($fechaUltimoAno, $fechaActual,$username);
-        $cantidadUsuariosPorPaisUltimoAno= $this->model->verCantidadUsuariosPorPaisYFecha($fechaUltimoAno, $fechaActual, $pais);
-        $cantidadUsuariosPorSexoUltimoAno=$this->model->verCantidadUsuariosPorSexoYFecha($fechaUltimoAno, $fechaActual, $sexo);
+
 
 
 
@@ -92,9 +90,9 @@ class AdministradorController
         if($puntuacionTotal == 0) {
             $porcentajeRespuestasCorrectas = 0;
         } else {
-            $porcentajeRespuestasCorrectas = $totalPreguntasVistas / $puntuacionTotal * 100;
+            $porcentajeRespuestasCorrectas =  ($puntuacionTotal * 100) / $totalPreguntasVistas;
         }
-
+        $totalRespuestasIncorrectas = 100 - $porcentajeRespuestasCorrectas;
 
         $edadJovenes = $this->model->verCantidadUsuariosJovenesYFecha($fechaUltimoAno, $fechaActual);
         $edadMedio = $this->model->verCantidadUsuariosMediosYFecha($fechaUltimoAno, $fechaActual);
@@ -102,7 +100,16 @@ class AdministradorController
 
 
 
-        $totalRespuestasIncorrectas = 100 - $porcentajeRespuestasCorrectas;
+        //Usuario pais
+
+        $hombre = $this->model->verCantidadUsuariosPorSexoHombre();
+        $mujer = $this->model->verCantidadUsuariosPorSexoMujer();
+        $otro = $this->model->verCantidadUsuariosPorSexoOtro();
+
+        $paises = $this->model->verCantidadUsuariosPais();
+
+
+
 
         $data = [
             'graficoPreguntas' => [
@@ -135,17 +142,24 @@ class AdministradorController
                 ['Respuestas Incorrectas', $totalRespuestasIncorrectas],
                 ['Respuestas Correctas', $porcentajeRespuestasCorrectas]
             ],
-
-            'cantidadJugadores' => (int)$cantidadJugadores,
-
-            'preguntasCreadasUsuario' => (int)$preguntasCreadasUsuarioUltimoAno,
-            'porcentajeRespuestasCorrectas' => (int)$porcentajeRespuestasCorrectasPorUltimoAno,
-            'cantidadUsuariosPorPais' => (int)$cantidadUsuariosPorPaisUltimoAno,
-            'cantidadUsuariosPorSexo' => (int)$cantidadUsuariosPorSexoUltimoAno,
+            'graficoGenero' => [
+                ['Categoría', 'Cantidad'],
+                ['Hombres', (int)$hombre],
+                ['Mujeres', (int)$mujer],
+                ['Otro', (int)$otro],
+            ],
+            'graficoPais' => [
+                ['Categoría', 'Cantidad']
+            ],
 
         ];
 
-
+        foreach ($paises as $row) {
+            $data['graficoPais'][] = [
+                (string) $row['pais'],
+                (int)$row['total_usuarios_pais']
+            ];
+        }
 
         $this->presenter->show("administrador", [
             'data' => json_encode($data), // Convertir a JSON para enviarlo a la vista
@@ -269,11 +283,32 @@ class AdministradorController
 
     public function pdf()
     {
+       $preguntas = $_POST['variablePreguntas'];
+           $jugadores = $_POST['variableJugadores'];
+           $partidas = $_POST['variablePartidas'];
+               $edad = $_POST['variableEdad'];
+                   $porcentaje = $_POST['variablePorcentaje'];
+                       $genero = $_POST['variableGenero'];
+                           $pais = $_POST['variablePais'];
 
         $pdf = new FPDF();
-        $pdf->AddPage();
-        $pdf->SetFont('Arial','B',16);
-        $pdf->Cell(40,10,'¡Hola, Mundo!');
+        $pdf->AddPage('L', 'A3'); // Cambia a orientación horizontal A3
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->Cell(40, 10, 'Graficos');
+
+
+        $pdf->image($preguntas, 20, 20, 150, 100, 'png'); 
+        $pdf->image($jugadores, 150, 20, 150, 100,'png');
+        $pdf->image($partidas, 280, 20, 150, 100, 'png');
+
+
+        $pdf->image($edad, 20, 100, 150, 100, 'png');
+        $pdf->image($porcentaje, 150, 100, 150, 100, 'png');
+        $pdf->image($genero, 280, 100, 150, 100, 'png');
+
+
+        $pdf->image($pais, 20, 200, 150, 100, 'png');
+
         $pdf->Output();
     }
 

@@ -136,11 +136,27 @@ WHERE pais='$pais' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
     }
 
 
-    public function verCantidadUsuariosPorSexo($sexo)
+    public function verCantidadUsuariosPorSexoHombre()
     {
         $sql = "SELECT COUNT(*) AS total_usuarios_porSexo 
 FROM usuario 
-WHERE genero='$sexo'";
+WHERE genero like 'Hombre'";
+        $result = $this->database->query($sql);
+        return $result[0]['total_usuarios_porSexo'];
+    }
+    public function verCantidadUsuariosPorSexoMujer()
+    {
+        $sql = "SELECT COUNT(*) AS total_usuarios_porSexo 
+FROM usuario 
+WHERE genero like 'Mujer'";
+        $result = $this->database->query($sql);
+        return $result[0]['total_usuarios_porSexo'];
+    }
+    public function verCantidadUsuariosPorSexoOtro()
+    {
+        $sql = "SELECT COUNT(*) AS total_usuarios_porSexo 
+FROM usuario 
+WHERE genero like 'Otro'";
         $result = $this->database->query($sql);
         return $result[0]['total_usuarios_porSexo'];
     }
@@ -166,36 +182,64 @@ WHERE fecha_nac='$edad'";
 
     public function verCantidadUsuariosJovenesYFecha($fechaFin, $fechaInicio)
     {
-        $fechaJovenes = date('Y-m-d H:i:s', strtotime('-18 year'));
+        // Calculamos la fecha de hace 18 años desde hoy
+        $fechaJovenes = date('Y-m-d H:i:s', strtotime('-18 years'));
 
-        $sql = "SELECT COUNT(*) AS total_usuarios_porEdad 
-FROM usuario 
-WHERE fecha_nac BETWEEN '$fechaInicio' AND '$fechaJovenes' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
+        // Consulta para usuarios menores de 18 años
+        $sql = "
+        SELECT COUNT(*) AS total_usuarios_porEdad 
+        FROM usuario 
+        WHERE fecha_nac > '$fechaJovenes' 
+          AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'
+    ";
+
         $result = $this->database->query($sql);
         return $result[0]['total_usuarios_porEdad'];
     }
 
     public function verCantidadUsuariosMediosYFecha($fechaFin, $fechaInicio)
     {
-        $fechaJovenes = date('Y-m-d H:i:s', strtotime('-18 year'));
-        $fechaJubilados = date('Y-m-d H:i:s', strtotime('-65 year'));
+        // Calculamos las fechas para los rangos de edad media (18 a 65 años)
+        $fechaJovenes = date('Y-m-d H:i:s', strtotime('-18 years'));
+        $fechaJubilados = date('Y-m-d H:i:s', strtotime('-65 years'));
 
-        $sql = "SELECT COUNT(*) AS total_usuarios_porEdad 
-FROM usuario 
-WHERE fecha_nac BETWEEN '$fechaJovenes' AND '$fechaJubilados' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
+        // Consulta para usuarios entre 18 y 65 años
+        $sql = "
+        SELECT COUNT(*) AS total_usuarios_porEdad 
+        FROM usuario 
+        WHERE fecha_nac BETWEEN '$fechaJubilados' AND '$fechaJovenes'
+          AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'
+    ";
+
         $result = $this->database->query($sql);
         return $result[0]['total_usuarios_porEdad'];
     }
 
     public function verCantidadUsuariosJubiladosYFecha($fechaFin, $fechaInicio)
     {
-        $fechaJubilados = date('Y-m-d H:i:s', strtotime('-65 year'));
+        // Calculamos la fecha para los mayores de 65 años
+        $fechaJubilados = date('Y-m-d H:i:s', strtotime('-65 years'));
 
-        $sql = "SELECT COUNT(*) AS total_usuarios_porEdad 
-FROM usuario 
-WHERE fecha_nac < '$fechaJubilados' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
+        // Consulta para usuarios mayores de 65 años
+        $sql = "
+        SELECT COUNT(*) AS total_usuarios_porEdad 
+        FROM usuario 
+        WHERE fecha_nac < '$fechaJubilados' 
+          AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'
+    ";
+
         $result = $this->database->query($sql);
         return $result[0]['total_usuarios_porEdad'];
+    }
+
+    public function verCantidadUsuariosPais()
+    {
+        $sql = "SELECT pais, COUNT(*) AS total_usuarios_pais
+FROM usuario
+GROUP BY pais";
+
+        $result = $this->database->query($sql);
+        return $result;
     }
 
 }

@@ -27,47 +27,81 @@
 
 </head>
 <body>
+
 <div class="w3-container w3-light-grey w3-padding-16">
     <h2 class="w3-center">Estadísticas</h2>
 </div>
-<div class="w3-container container w3-padding-16">
+
+<form method="post" id="hacer_pdf" action="/Monquiz/app/Administrador/pdf">
+
+<div class="w3-container container w3-padding-16 w3-row">
 
     <div class="side w3-light-grey w3-padding">
         <h3>Resultados</h3>
         <div id="resultados">
-            <div id="graficoEdad" style="max-width:700px; height:400px"></div>
+            <div id="graficoEdad" style="max-width:530px; height:400px"></div>
+            <input type="text" name="variableEdad" id="variableEdad">
         </div>
     </div>
 
     <div class="side w3-light-grey w3-padding">
         <h3>Resultados</h3>
         <div id="resultados">
-            <div id="graficoPreguntas" style="max-width:700px; height:400px"></div>
+            <div id="graficoPreguntas" style="max-width:530px; height:400px"></div>
+            <input type="text" name="variablePreguntas" id="variablePreguntas">
         </div>
     </div>
 
     <div class="side w3-light-grey w3-padding">
         <h3>Resultados</h3>
         <div id="resultados">
-            <div id="graficoJugadores" style="max-width:700px; height:400px"></div>
-        </div>
-    </div>
-
-    <div class="side w3-light-grey w3-padding">
-        <h3>Resultados</h3>
-        <div id="resultados">
-            <div id="graficoPartidas" style="max-width:700px; height:400px"></div>
-        </div>
-    </div>
-
-    <div class="side w3-light-grey w3-padding">
-        <h3>Resultados</h3>
-        <div id="resultados">
-            <div id="graficoPorcentaje" style="max-width:700px; height:400px"></div>
+            <div id="graficoJugadores" style="max-width:530px; height:400px"></div>
+            <input type="text" name="variableJugadores" id="variableJugadores">
         </div>
     </div>
 
 </div>
+
+<div class="w3-container container w3-padding-16 w3-row">
+
+    <div class="side w3-light-grey w3-padding">
+        <h3>Resultados</h3>
+        <div id="resultados">
+            <div id="graficoPartidas" style="max-width:530px; height:400px"></div>
+            <input type="text" name="variablePartidas" id="variablePartidas">
+        </div>
+    </div>
+
+    <div class="side w3-light-grey w3-padding">
+        <h3>Resultados</h3>
+        <div id="resultados">
+            <div id="graficoPorcentaje" style="max-width:530px; height:400px"></div>
+            <input type="text" name="variablePorcentaje" id="variablePorcentaje">
+        </div>
+    </div>
+
+    <div class="side w3-light-grey w3-padding">
+        <h3>Resultados</h3>
+        <div id="resultados">
+            <div id="graficoGenero" style="max-width:530px; height:400px"></div>
+            <input type="text" name="variableGenero" id="variableGenero">
+        </div>
+    </div>
+</div>
+
+    <div class="w3-container container w3-padding-16 w3-row">
+    <div class="side w3-light-grey w3-padding">
+        <h3>Resultados</h3>
+        <div id="resultados">
+            <div id="graficoPais" style="max-width:530px; height:400px"></div>
+            <input type="text" name="variablePais" id="variablePais">
+        </div>
+    </div>
+</div>
+
+    <input type="submit" value="Generar PDF" class="w3-button w3-green w3-circle">
+</form>
+
 
 </body>
 
