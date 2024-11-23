@@ -136,27 +136,27 @@ WHERE pais='$pais' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
     }
 
 
-    public function verCantidadUsuariosPorSexoHombre()
+    public function verCantidadUsuariosPorSexoHombre($fechaFin, $fechaInicio)
     {
         $sql = "SELECT COUNT(*) AS total_usuarios_porSexo 
 FROM usuario 
-WHERE genero like 'Hombre'";
+WHERE genero like 'Hombre' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
         $result = $this->database->query($sql);
         return $result[0]['total_usuarios_porSexo'];
     }
-    public function verCantidadUsuariosPorSexoMujer()
+    public function verCantidadUsuariosPorSexoMujer($fechaFin, $fechaInicio)
     {
         $sql = "SELECT COUNT(*) AS total_usuarios_porSexo 
 FROM usuario 
-WHERE genero like 'Mujer'";
+WHERE genero like 'Mujer' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
         $result = $this->database->query($sql);
         return $result[0]['total_usuarios_porSexo'];
     }
-    public function verCantidadUsuariosPorSexoOtro()
+    public function verCantidadUsuariosPorSexoOtro($fechaFin, $fechaInicio)
     {
         $sql = "SELECT COUNT(*) AS total_usuarios_porSexo 
 FROM usuario 
-WHERE genero like 'Otro'";
+WHERE genero like 'Otro' AND fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'";
         $result = $this->database->query($sql);
         return $result[0]['total_usuarios_porSexo'];
     }
@@ -232,10 +232,10 @@ WHERE fecha_nac='$edad'";
         return $result[0]['total_usuarios_porEdad'];
     }
 
-    public function verCantidadUsuariosPais()
+    public function verCantidadUsuariosPais($fechaFin, $fechaInicio)
     {
         $sql = "SELECT pais, COUNT(*) AS total_usuarios_pais
-FROM usuario
+FROM usuario WHERE fecha_creacion BETWEEN '$fechaFin' AND '$fechaInicio'
 GROUP BY pais";
 
         $result = $this->database->query($sql);
