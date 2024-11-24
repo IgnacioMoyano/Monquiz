@@ -6,8 +6,8 @@ class Router
     private $defaultMethod;
     private $configuration;
     private $allowedRoutes = [
-        0 => [
-            '/Monquiz/app/usuario/login',
+        0 => [ //RUTAS USUARIO
+            '/Monquiz/app/usuario/logout',
             '/Monquiz/app/lobby/mostrarLobby',
             '/Monquiz/app/perfil/mostrarPerfil',
             '/Monquiz/app/ranking/mostrarRanking',
@@ -21,7 +21,8 @@ class Router
             '/Monquiz/app/usuario/logout',
 
         ],
-        1 => [ // Rutas permitidas para tipo_cuenta = 1 (por ejemplo, editores)
+        1 => [ // RUTAS EDITOR:
+            '/Monquiz/app/usuario/logout',
             '/Monquiz/app/editor/home',
             '/Monquiz/app/editor/verPreguntas',
             '/Monquiz/app/editor/verPreguntasPendientes',
@@ -32,9 +33,15 @@ class Router
             '/Monquiz/app/editor/enviarPregunta'
 
         ],
-        2 => [ // Rutas permitidas para tipo_cuenta = 2 (por ejemplo, administradores)
-            '/Monquiz/app/administrador/verGraficosAno',
-            '/Monquiz/app/administrador/verGraficosAno'
+        2 => [ //RUTAS PARA EL ADMIN: )
+            '/Monquiz/app/usuario/logout',
+            '/Monquiz/app/administrador/administrador',
+            '/Monquiz/app/administrador/verGraficos',
+            '/Monquiz/app/administrador/verGraficosMes',
+            '/Monquiz/app/administrador/verGraficosSemana',
+            '/Monquiz/app/administrador/verGraficosDia',
+            '/Monquiz/app/Administrador/pdf',
+
 
         ]
     ];
@@ -57,37 +64,28 @@ class Router
     private function validateAccess($controllerName, $methodName)
     {
         $publicRoutes = [
-        '/Monquiz/app/usuario/login', // Página de inicio de sesión
+        '/Monquiz/app/usuario/login',
         '/Monquiz/app/usuario/register',
         '/Monquiz/app/logout',
         '/Monquiz/app/usuario/auth',
-            // Página de registro (si existe)
+
         ];
+
+        $currentPath = rtrim($this->getCurrentPath(), '/');
+
+
+        if (in_array($currentPath, $publicRoutes)) {
+            return;
+        }
 
         if (!isset($_SESSION['username'])) {
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
-
-        $currentPath = rtrim($this->getCurrentPath(), '/');
-
-        // Permitir acceso a rutas públicas sin validación
-        if (in_array($currentPath, $publicRoutes)) {
-            return; // Permitir continuar sin redirección
-        }
-
-        // Verificar si el usuario está autenticado
-
-
-        // Verificar si el usuario está validado
-
-
-        // Validar acceso según el tipo de cuenta
         $tipoCuenta = $_SESSION['tipo_cuenta'];
 
         if (!isset($this->allowedRoutes[$tipoCuenta]) ||
             !$this->isPathAllowed($currentPath, $this->allowedRoutes[$tipoCuenta])) {
-            // Redirigir al usuario a su ruta principal
             header('Location: ' . $this->allowedRoutes[$tipoCuenta][0]);
             exit();
         }
@@ -113,13 +111,11 @@ class Router
         return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     }
 
-    private function isPathAllowed($currentPath, $allowedRoutes)
+    private function isPathAllowed($currentPath, $allowedRoutes): bool
     {
-        // Obtener la ruta base sin parámetros
         $basePath = parse_url($currentPath, PHP_URL_PATH);
 
         foreach ($allowedRoutes as $route) {
-            // Compara la ruta base con las rutas permitidas
             if (strpos($basePath, rtrim($route, '/')) === 0) {
                 return true;
             }
