@@ -32,9 +32,6 @@ class PartidaModel
         }
     }
 
-    /**
-     * @throws \Random\RandomException
-     */
     public function traerPregunta($resultado_ruleta, $userId)
     {
         $nivelUsuario = $this->calcularTasaUsuario($userId);
@@ -47,9 +44,16 @@ class PartidaModel
             return null;
         }
 
-        $preguntaSeleccionada = null;
+        $respondidasSql = "SELECT pregunta_FK FROM preguntas_respondidas WHERE usuario_FK = $userId AND pregunta_FK IN (SELECT id FROM pregunta WHERE categoria_FK = $resultado_ruleta)";
+        $respondidasResult = $this->database->query($respondidasSql);
+        $respondidasCount = count($respondidasResult);
+
+
+        if ($respondidasCount == $count) {
+            $deleteSql = "DELETE FROM preguntas_respondidas WHERE usuario_FK = $userId AND pregunta_FK IN (SELECT id FROM pregunta WHERE categoria_FK = $resultado_ruleta)";
+            $this->database->execute($deleteSql);
+        }
         $intentos = 0;
-        $maxIntentos = 2;
 
         do {
             $random = random_int(0, $count - 1);
@@ -72,10 +76,10 @@ class PartidaModel
                     $esDificil = true;
                 }
             }
-            
+
 
             $intentos++;
-            if ($intentos > $count) {
+            if ($intentos > 50) {
 
                 $deleteSql = "DELETE FROM preguntas_respondidas WHERE usuario_FK = $userId AND pregunta_FK IN (SELECT id FROM pregunta WHERE categoria_FK = $resultado_ruleta)";
                 $this->database->execute($deleteSql);
