@@ -20,6 +20,7 @@ class Router
             '/Monquiz/app/partida/enviarReporte',
             '/Monquiz/app/partida/timeOut',
             '/Monquiz/app/lobby/enviarSugerencia/',
+            '/Monquiz/app/partida/perdiste',
             '/Monquiz/app/usuario/logout',
 
         ],

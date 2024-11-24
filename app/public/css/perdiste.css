@@ -19,19 +19,42 @@ form{
 
 .body{
     height: 100vh;
+    text-align: center;
 }
 
 .mono {
     position: absolute;
-    right: -8.88em;
+    right: -1.88em;
     top: 5em;
     height: 100%;
     z-index: -1;
     pointer-events: none;
 }
 
-button{
-    background-color: #422f25 !important;
-    color: white !important;
+.monoDos{
+    position: absolute;
+    left: -8.88em;
+    top: 5em;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
 
+button {
+    background-color: #422F25;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+    border-radius: 50px;
+}
+
+button:hover {
+    background-color: #A0522D;
+}
+
+button:focus {
+    outline: none;
 }

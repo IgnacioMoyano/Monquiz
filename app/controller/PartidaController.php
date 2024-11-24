@@ -151,9 +151,16 @@ class PartidaController{
             unset($_SESSION['pregunta_id']);
             unset($_SESSION['tiempo_entrega']);
             $this->model->finalizarPartida($id);
-            header('Location: /Monquiz/app/lobby/mostrarLobby');
+            header('Location: /Monquiz/app/partida/perdiste');
             exit();
         }
+    }
+
+    public function perdiste()
+    {
+
+        $this->presenter->show('perdiste');
+
     }
 
     public function reportar()
