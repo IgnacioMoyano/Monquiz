@@ -13,37 +13,6 @@ class AdministradorController
     }
 
 
-    public function mostrarAdministrador()
-    {
-
-        $cantidadJugadores = $this->model->verCantidadJugadores();
-        $cantidadPartidasJugadas = $this->model->verCantidadPartidasJugadas();
-        $verCantidadPreguntas = $this->model->verCantidadPreguntas();
-        $verCantidadDePreguntasCreadas = $this->model->verCantidadDePreguntasCreadas();
-
-        $verCantidadDeUsuariosNuevos = $this->verCantidadDeUsuariosNuevos();
-
-        $porcentajeRespuestasCorrectas = $this->model->verPorcentajeRespuestasCorrectas();
-        $verCantidadUsuariosPorPais = $this->model->verCantidadUsuariosPorPais();
-        $verCantidadUsuariosPorSexo = $this->model->verCantidadUsuariosPorSexo();
-
-
-        $data = [
-            'cantidadJugadores' => $cantidadJugadores,
-            'cantidadPartidasJugadas' => $cantidadPartidasJugadas,
-            'verCantidadPreguntas' => $verCantidadPreguntas,
-            'verCantidadDePreguntasCreadas' => $verCantidadDePreguntasCreadas,
-            'verCantidadDeUsuariosNuevos' => $verCantidadDeUsuariosNuevos,
-            'porcentajeRespuestasCorrectas' => $porcentajeRespuestasCorrectas,
-            'verCantidadUsuariosPorPais' => $verCantidadUsuariosPorPais,
-            'verCantidadUsuariosPorSexo' => $verCantidadUsuariosPorSexo
-
-
-        ];
-
-        $this->presenter->show("administrador", $data);
-    }
-
     public function verGraficos()
     {
 
@@ -149,7 +118,7 @@ class AdministradorController
         }
 
         $this->presenter->show("administrador", [
-            'data' => json_encode($data), // Convertir a JSON para enviarlo a la vista
+            'data' => json_encode($data),
         ]);
     }
 
@@ -257,7 +226,7 @@ class AdministradorController
         }
 
         $this->presenter->show("administrador", [
-            'data' => json_encode($data), // Convertir a JSON para enviarlo a la vista
+            'data' => json_encode($data),
         ]);
     }
 
@@ -364,7 +333,7 @@ class AdministradorController
         }
 
         $this->presenter->show("administrador", [
-            'data' => json_encode($data), // Convertir a JSON para enviarlo a la vista
+            'data' => json_encode($data),
         ]);
     }
 

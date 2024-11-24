@@ -10,6 +10,11 @@ form{
 
 .formConteiner{
     background-color: #be945b !important;
+
+}
+
+.body{
+    height: 100vh;
 }
 
 button{

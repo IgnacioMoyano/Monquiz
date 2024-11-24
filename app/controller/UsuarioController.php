@@ -91,7 +91,7 @@ class UsuarioController
             }
 
             elseif ( $_SESSION['tipo_cuenta']== 2) {
-                header ('Location: /Monquiz/app/administrador/administrador');
+                header ('Location: /Monquiz/app/administrador/verGraficos');
             }
 
             else {

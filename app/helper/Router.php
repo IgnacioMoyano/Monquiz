@@ -18,6 +18,8 @@ class Router
             '/Monquiz/app/partida/jugar',
             '/Monquiz/app/partida/reportar',
             '/Monquiz/app/partida/enviarReporte',
+            '/Monquiz/app/partida/timeOut',
+            '/Monquiz/app/lobby/enviarSugerencia/',
             '/Monquiz/app/usuario/logout',
 
         ],
@@ -29,13 +31,12 @@ class Router
             '/Monquiz/app/editor/verPreguntasReportadas',
             '/Monquiz/app/editor/verCrearPregunta',
             '/Monquiz/app/editor/editarPregunta',
-            '/MONQUIZ/app/editor/modificarPregunta',
+            '/Monquiz/app/editor/modificarPregunta',
             '/Monquiz/app/editor/enviarPregunta'
 
         ],
         2 => [ //RUTAS PARA EL ADMIN: )
             '/Monquiz/app/usuario/logout',
-            '/Monquiz/app/administrador/administrador',
             '/Monquiz/app/administrador/verGraficos',
             '/Monquiz/app/administrador/verGraficosMes',
             '/Monquiz/app/administrador/verGraficosSemana',
@@ -51,6 +52,8 @@ class Router
         $this->defaultController = $defaultController;
         $this->defaultMethod = $defaultMethod;
         $this->configuration = $configuration;
+
+
     }
 
     public function route($controllerName, $methodName)
@@ -59,37 +62,40 @@ class Router
 
         $controller = $this->getControllerFrom($controllerName);
         $this->executeMethodFromController($controller, $methodName);
+
+
     }
 
     private function validateAccess($controllerName, $methodName)
     {
         $publicRoutes = [
-        '/Monquiz/app/usuario/login',
-        '/Monquiz/app/usuario/register',
-        '/Monquiz/app/logout',
-        '/Monquiz/app/usuario/auth',
-
+            '/Monquiz/app/usuario/login',
+            '/Monquiz/app/usuario/register',
+            '/Monquiz/app/logout',
+            '/Monquiz/app/usuario/auth',
+            '/Monquiz/app/index.php',
+            '/Monquiz/app/usuario/createUser'
         ];
 
         $currentPath = rtrim($this->getCurrentPath(), '/');
-
 
         if (in_array($currentPath, $publicRoutes)) {
             return;
         }
 
-        if (!isset($_SESSION['username'])) {
+        if (!isset($_SESSION['username']) || !isset($_SESSION['tipo_cuenta'])) {
             header('Location: /Monquiz/app/usuario/login');
             exit();
         }
+
         $tipoCuenta = $_SESSION['tipo_cuenta'];
+
 
         if (!isset($this->allowedRoutes[$tipoCuenta]) ||
             !$this->isPathAllowed($currentPath, $this->allowedRoutes[$tipoCuenta])) {
             header('Location: ' . $this->allowedRoutes[$tipoCuenta][0]);
             exit();
         }
-
     }
 
 

@@ -74,7 +74,7 @@ class EditorController
 
         if ($resultado) {
 
-            header("Location: /MONQUIZ/app/editor/verPreguntas");
+            header("Location: /Monquiz/app/editor/verPreguntas");
             exit();
         } else {
 
