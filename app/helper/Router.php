@@ -7,20 +7,29 @@ class Router
     private $configuration;
     private $allowedRoutes = [
         0 => [
+            '/Monquiz/app/usuario/login',
             '/Monquiz/app/lobby/mostrarLobby',
             '/Monquiz/app/perfil/mostrarPerfil',
             '/Monquiz/app/ranking/mostrarRanking',
             '/Monquiz/app/partida/crearPartida/',
-            '/Monquiz/app/lobby/sugerirPregunta/'
-
+            '/Monquiz/app/lobby/mostrarSugerencia/',
+            '/Monquiz/app/partida/mostrarPregunta',
+            '/Monquiz/app/partida/resultado',
+            '/Monquiz/app/partida/jugar',
+            '/Monquiz/app/partida/reportar',
+            '/Monquiz/app/partida/enviarReporte',
+            '/Monquiz/app/usuario/logout',
 
         ],
         1 => [ // Rutas permitidas para tipo_cuenta = 1 (por ejemplo, editores)
-            '/Monquiz/app/editor/verPreguntas',
             '/Monquiz/app/editor/home',
+            '/Monquiz/app/editor/verPreguntas',
             '/Monquiz/app/editor/verPreguntasPendientes',
             '/Monquiz/app/editor/verPreguntasReportadas',
-            '/Monquiz/app/editor/verCrearPregunta'
+            '/Monquiz/app/editor/verCrearPregunta',
+            '/Monquiz/app/editor/editarPregunta',
+            '/MONQUIZ/app/editor/modificarPregunta',
+            '/Monquiz/app/editor/enviarPregunta'
 
         ],
         2 => [ // Rutas permitidas para tipo_cuenta = 2 (por ejemplo, administradores)
@@ -49,8 +58,16 @@ class Router
     {
         $publicRoutes = [
         '/Monquiz/app/usuario/login', // Página de inicio de sesión
-        '/Monquiz/app/usuario/register', // Página de registro (si existe)
+        '/Monquiz/app/usuario/register',
+        '/Monquiz/app/logout',
+        '/Monquiz/app/usuario/auth',
+            // Página de registro (si existe)
         ];
+
+        if (!isset($_SESSION['username'])) {
+            header('Location: /Monquiz/app/usuario/login');
+            exit();
+        }
 
         $currentPath = rtrim($this->getCurrentPath(), '/');
 
@@ -67,8 +84,9 @@ class Router
 
         // Validar acceso según el tipo de cuenta
         $tipoCuenta = $_SESSION['tipo_cuenta'];
-        if (isset($this->allowedRoutes[$tipoCuenta]) &&
-            !in_array($currentPath, $this->allowedRoutes[$tipoCuenta])) {
+
+        if (!isset($this->allowedRoutes[$tipoCuenta]) ||
+            !$this->isPathAllowed($currentPath, $this->allowedRoutes[$tipoCuenta])) {
             // Redirigir al usuario a su ruta principal
             header('Location: ' . $this->allowedRoutes[$tipoCuenta][0]);
             exit();
@@ -94,4 +112,19 @@ class Router
     {
         return parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     }
+
+    private function isPathAllowed($currentPath, $allowedRoutes)
+    {
+        // Obtener la ruta base sin parámetros
+        $basePath = parse_url($currentPath, PHP_URL_PATH);
+
+        foreach ($allowedRoutes as $route) {
+            // Compara la ruta base con las rutas permitidas
+            if (strpos($basePath, rtrim($route, '/')) === 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
+
