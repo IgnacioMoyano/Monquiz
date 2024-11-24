@@ -291,8 +291,8 @@ class PartidaModel
         if (is_array($result) && count($result) > 0) {
             $row = $result[0];
 
-            $cantidadCorrectas = $fila['cantidad_preg_correctas'] ?? null;
-            $cantidadVistas = $fila['cantidad_preg_vistas'] ?? null;
+            $cantidadCorrectas = $row['cantidad_preg_correctas'] ?? null;
+            $cantidadVistas = $row['cantidad_preg_vistas'] ?? null;
 
             if ($cantidadCorrectas === null || $cantidadVistas === null) {
                 return "Datos incompletos o inválidos";
