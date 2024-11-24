@@ -64,7 +64,6 @@ class UsuarioController
         $username = $_POST['username'];
         $pass = $_POST['password'];
 
-
         $validation = $this->model->validateLogin($username, $pass);
 
         if ($validation != null) {
@@ -78,10 +77,27 @@ class UsuarioController
                 $_SESSION['imagen'] = $validation['imagen'];
                 $_SESSION['validado'] = $validation['validado'];
                 $_SESSION['tipo_cuenta'] = $validation['tipo_cuenta'];
+
             }
 
-            header('location: /Monquiz/app/lobby/mostrarLobby');
-            exit();
+            if( $_SESSION['tipo_cuenta'] == 0) {
+                header('location: /Monquiz/app/lobby/mostrarLobby');
+
+                exit();
+            }
+
+            elseif ( $_SESSION['tipo_cuenta'] == 1) {
+                header ('Location: /Monquiz/app/editor/home');
+            }
+
+            elseif ( $_SESSION['tipo_cuenta']== 2) {
+                header ('Location: /Monquiz/app/administrador/administrador');
+            }
+
+            else {
+                echo "Tipo de usuario desconocido";
+            }
+
         }
         else {
             $data['error'] = "Usuario o contraseña incorrectos";

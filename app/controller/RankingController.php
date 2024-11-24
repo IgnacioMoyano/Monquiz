@@ -11,22 +11,6 @@ class RankingController
     }
 
     public function mostrarRanking() {
-        if (!isset($_SESSION['username'])) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-        if ($_SESSION['validado'] != 1) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-        if ($_SESSION['tipo_cuenta'] == 1) {
-            header('Location: /Monquiz/app/editor/verPreguntas');
-            exit();
-        }
-        if ($_SESSION['tipo_cuenta'] == 2) {
-            header('Location: /Monquiz/app/administrador/verGraficosAno');
-            exit();
-        }
         $ranking = $this->model->getRanking();
 
 
