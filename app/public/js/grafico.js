@@ -26,30 +26,30 @@ function drawChart() {
     const dataPais = google.visualization.arrayToDataTable(datosPais);
 
     const optionsPreguntas = {
-        title: 'Preguntas del Último Año',
+        title: 'PREGUNTAS',
     };
 
     const optionsJugadores = {
-        title: 'Jugadores del Último Año',
+        title: 'JUGADORES',
     };
 
     const optionsPartidas = {
-        title: 'Partidas del Último Año',
+        title: 'PARTIDAS',
     };
 
     const optionsEdad = {
-        title: 'Edad de Jugadores del Último Año',
+        title: 'EDAD',
     };
 
     const optionsPorcentaje = {
-        title: 'Porcentaje de respuestas Último año',
+        title: 'PORCENTAJE DE RESPUESTAS',
     };
 
     const optionsGenero = {
-        title: 'Porcentaje de generos Último año',
+        title: 'GENERO',
     };
     const optionsPais = {
-        title: 'Porcentaje de pais Último año',
+        title: 'PAIS',
     };
 
 

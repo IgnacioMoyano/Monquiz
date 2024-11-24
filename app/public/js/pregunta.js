@@ -10,9 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 tiempoRestante--;
                 contadorElemento.textContent = tiempoRestante;
             } else {
-
                 clearInterval(intervalo);
-                alert('Tiempo agotado. Has perdido la partida.');
                 window.location.href = '/Monquiz/app/partida/timeOut';
             }
         }, 1000);

@@ -201,7 +201,7 @@ class PartidaController{
         if ($userId) {
             $this->model->finalizarPartida($userId);
         }
-        header('Location: /Monquiz/app/lobby/mostrarLobby');
+        header('Location: /Monquiz/app/partida/perdiste');
         exit();
     }
 }
