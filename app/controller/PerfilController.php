@@ -11,22 +11,6 @@ class PerfilController{
         $this->presenter = $presenter;
     }
     public function mostrarPerfil() {
-        if (!isset($_SESSION['username'])) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-        if ($_SESSION['validado'] != 1) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-        if ($_SESSION['tipo_cuenta'] == 1) {
-            header('Location: /Monquiz/app/editor/verPreguntas');
-            exit();
-        }
-        if ($_SESSION['tipo_cuenta'] == 2) {
-            header('Location: /Monquiz/app/administrador/verGraficosAno');
-            exit();
-        }
 
         $imagenUserLogueado = $_SESSION['imagen'];
         $userLogueado = $_SESSION['username'];
@@ -59,8 +43,6 @@ class PerfilController{
         $esUsuarioLogeado = ($usernamePerfil === $userLogueado);
 
         $idUser = $_SESSION['id'];
-
-        $puntaje = $this->model->getPuntajeMaximo($idUser);
 
         $data = [
             'user' => $userLogueado,

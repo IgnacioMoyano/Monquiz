@@ -15,19 +15,6 @@ class AdministradorController
 
     public function mostrarAdministrador()
     {
-        if (!isset($_SESSION['username'])) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-        if ($_SESSION['validado'] != 1) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-        if ($_SESSION['tipo_cuenta'] == 1) {
-            header('Location: /Monquiz/app/editor/verPreguntas');
-            exit();
-        }
-
 
         $cantidadJugadores = $this->model->verCantidadJugadores();
         $cantidadPartidasJugadas = $this->model->verCantidadPartidasJugadas();

@@ -18,4 +18,5 @@ class PerfilModel
         return $result[0]['cantidad_preg_correctas'];
 
     }
+
 }

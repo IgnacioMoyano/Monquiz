@@ -12,22 +12,6 @@ class LobbyController{
     }
 
     public function mostrarLobby(){
-        if (!isset($_SESSION['username'])) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-        if ($_SESSION['validado'] != 1) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-        if ($_SESSION['tipo_cuenta'] == 1) {
-            header('Location: /Monquiz/app/editor/home');
-            exit();
-        }
-        if ($_SESSION['tipo_cuenta'] == 2) {
-            header('Location: /Monquiz/app/administrador/verGraficosAno');
-            exit();
-        }
 
         $idUser = $_SESSION['id'];
 
@@ -44,23 +28,6 @@ class LobbyController{
     public function mostrarSugerencia()
     {
 
-        if (!isset($_SESSION['username'])) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-        if ($_SESSION['validado'] != 1) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-        if ($_SESSION['tipo_cuenta'] == 1) {
-            header('Location: /Monquiz/app/editor/verPreguntas');
-            exit();
-        }
-        if ($_SESSION['tipo_cuenta'] == 2) {
-            header('Location: /Monquiz/app/administrador/verGraficosAno');
-            exit();
-        }
-
         $categorias = $this->model->getCategorias();
 
         $data = [
@@ -73,22 +40,7 @@ class LobbyController{
     }
 
     public function enviarSugerencia(){
-        if (!isset($_SESSION['username'])) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-        if ($_SESSION['validado'] != 1) {
-            header('Location: /Monquiz/app/usuario/login');
-            exit();
-        }
-        if ($_SESSION['tipo_cuenta'] == 1) {
-            header('Location: /Monquiz/app/editor/verPreguntas');
-            exit();
-        }
-        if ($_SESSION['tipo_cuenta'] == 2) {
-            header('Location: /Monquiz/app/administrador/verGraficosAno');
-            exit();
-        }
+
         $pregunta = $_POST['pregunta'];
         $respuesta_correcta = $_POST['respuesta_correcta'];
         $respuesta_incorrecta1 = $_POST['respuesta_incorrecta1'];
