@@ -72,10 +72,7 @@ class PartidaModel
                     $esDificil = true;
                 }
             }
-
-            if ($intentos >= $maxIntentos) {
-                break;
-            }
+            
 
             $intentos++;
             if ($intentos > $count) {
@@ -84,7 +81,7 @@ class PartidaModel
                 $this->database->execute($deleteSql);
                 $intentos = 0;
             }
-        } while (!empty($checkResult) || !$esDificil);
+        } while (!empty($checkResult) && !$esDificil);
 
 
         $insertSql = "INSERT INTO preguntas_respondidas (usuario_FK, pregunta_FK) VALUES ($userId, $preguntaId)";
