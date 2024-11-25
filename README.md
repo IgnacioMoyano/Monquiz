@@ -294,3 +294,9 @@ CREATE TABLE partida (
                          FOREIGN KEY (usuario_FK) REFERENCES usuario(id),
                          fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+
+INSERT INTO usuario (name, fecha_nac, tipo_cuenta, genero, pais, ciudad, correo, password, username, imagen, validado, token, cantidad_preg_vistas, cantidad_preg_correctas, fecha_creacion ) VALUES ('matias', '1940-11-01', 0, 'Hombre', 'Argentina', 'San Antonio de Padua', 'asd@asd.com', 'Holamundo1!', 'jugador', '/Monquiz/app/public/images/fotosPerfil/Designer.jpeg', 1, 0001, 0, 0, '2024-10-18 18:07:51');
+
+INSERT INTO usuario (name, fecha_nac, tipo_cuenta, genero, pais, ciudad, correo, password, username, imagen, validado, token, cantidad_preg_vistas, cantidad_preg_correctas, fecha_creacion ) VALUES ('martin', '2000-11-01', 1, 'Hombre', 'Chile', 'Santiago', 'asd1@asd.com', 'Holamundo1!', 'editor', '/Monquiz/app/public/images/fotosPerfil/Designer (2).jpeg', 1, 0001, 0, 0, '2024-11-25 13:07:51');
+
+INSERT INTO usuario (name, fecha_nac, tipo_cuenta, genero, pais, ciudad, correo, password, username, imagen, validado, token, cantidad_preg_vistas, cantidad_preg_correctas, fecha_creacion ) VALUES ('monica', '2010-11-01', 2, 'Mujer', 'Bolivia', 'La Paz', 'asd2@asd.com', 'Holamundo1!', 'admin', '/Monquiz/app/public/images/fotosPerfil/Designer (1).jpeg', 1, 0001, 0, 0, '2023-11-18 18:07:51');
