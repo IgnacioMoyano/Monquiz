@@ -58,3 +58,43 @@ button:hover {
 button:focus {
     outline: none;
 }
+
+@media (max-width: 1440px){
+    .mono{
+        position: absolute;
+        right: 0em;
+        top: 12em;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .monoDos{
+        position: absolute;
+        left: 0;
+        top: 10em;
+        height: 100%;
+        z-index: -1;
+        pointer-events: none;
+    }
+
+    .mono img{
+        height: 750px;
+        width: 500px;
+    }
+
+    .monoDos img{
+        height: 750px;
+        width: 500px;
+    }
+}
+
+@media (max-width: 425px){
+    .mono{
+        display: none;
+    }
+
+    .monoDos{
+        display: none;
+    }
+}

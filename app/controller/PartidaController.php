@@ -159,7 +159,12 @@ class PartidaController{
     public function perdiste()
     {
 
-        $this->presenter->show('perdiste');
+        $data = [
+            'user' => $_SESSION['username'],
+            'imagenHeader' => $_SESSION['imagen'],
+        ];
+
+        $this->presenter->show('perdiste', $data);
 
     }
 
